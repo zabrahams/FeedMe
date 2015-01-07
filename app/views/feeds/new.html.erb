@@ -1,0 +1,19 @@
+<h1>Add Content</h1>
+
+<form action="<%= feeds_url %>" method="post">
+
+  <label for="feed_name">Feed Name:</label>
+  <input type="text" id="feed_name" name="feed[name]" value="">
+  <br>
+  <br>
+
+  <label for="feed_url">Feed url:</label>
+  <input type="text" id="feed_url" url="feed[url]" value="">
+  <br>
+  <br>
+
+  <%= form_token %>
+
+  <input type="submit" value="Add Feed">
+
+</form>

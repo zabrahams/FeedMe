@@ -13,5 +13,7 @@ RSpec.describe User do
   it { should validate_uniqueness_of(:email) }
   it { should validate_uniqueness_of(:session_token) }
 
+  it { should have_many(:user_feeds) }
+  it { should have_many(:feeds) }
 
 end

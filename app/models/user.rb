@@ -3,6 +3,35 @@ class User < ActiveRecord::Base
   validates :activated, inclusion: [true, false]
   validates :password, length: {minimum: 6}, allow_nil: true
 
+  before_validation :ensure_session_token
+
   attr_reader: password
+
+  def password=
+    @password = password
+    self.password_digest = BCrypt::Password.create(password)
+  end
+
+  def has_password?(password)
+    BCrypt::Password.new(self.password_digest).is_password?(password)
+  end
+
+  def ensure_session_token
+    self.session_token || self.session_token = unique_session_token
+  end
+
+  def reset_session_token!
+    self.session_token = unique_session_token
+  end
+
+  def unique_session_token
+    users = User.all # is there a way to do this while caching users?
+    new_token = SecureRandom.urlsafe_base64
+    until users.none { |user| user.session_token == new_token }
+      new_token = SecureRandom.urlsafe_base64
+    end
+
+    new_token
+  end
 
 end

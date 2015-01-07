@@ -15,7 +15,7 @@ class UsersController < ApplicationController
       render :new
     elsif @user.save
       login(@user)
-      redirect_to user_url(@user)
+      redirect_to feeds_url
     else
       flash[:errors] = @user.errors.full_messages
       render :new
@@ -33,10 +33,10 @@ class UsersController < ApplicationController
       flash[:errors] = ["Password does not match Password Confirmation"]
       render :edit
     elsif @user.update(user_params)
-      redirect_to user_url(@user)
+      redirect_to feeds_url
     else
       flash[:errors] = @user.errors.full_messages
-      redner :edit
+      render :edit
     end
   end
 

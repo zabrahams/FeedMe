@@ -77,6 +77,7 @@ This project is a clone of [feedly](www.feedly.com), adding a number of social f
   * Most viewed feeds.
   * Articles archived and read in a feed
   * Overall articles read in different time-frames
+* Users can delete accounts
 
 ### Group Features
 * Users can form groups.

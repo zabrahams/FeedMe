@@ -47,6 +47,10 @@ group :test do
   gem 'guard-rspec'
   gem 'shoulda-matchers'
 end
+
+group :production do
+  gem 'rails_12factor'
+end
 # Use unicorn as the app server
 # gem 'unicorn'
 

@@ -4,7 +4,7 @@ class User < ActiveRecord::Base
   validates :activated, inclusion: [true, false]
   validates :password, length: {minimum: 6}, allow_nil: true
 
-  before_validation :ensure_session_token
+  after_initialize :ensure_session_token
 
   attr_reader :password
 

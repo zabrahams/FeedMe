@@ -1,0 +1,36 @@
+<% action = user.persisted?  ? user_url(user) : users_url  %>
+<% button_txt = user.persisted? ? "Update" : "Create" %>
+<% hidden = user.persisted? ? '<input type="hidden" name="_method" value="PATCH">'.html_safe : "" %>
+
+<form action="<%= action %>" method="POST">
+
+  <label for="user_username">Username:</label>
+  <input type="text" id="user_username" name="user[username]" value="<%= user.username %>">
+  <br>
+  <br>
+
+  <label for="user_email">Email:</label>
+  <input type="text" id="user_email" name="user[email]" value="<%= user.email %>">
+  <br>
+  <br>
+
+  <label for="user_password">Password:</label>
+  <input type="password" id="user_password" name="user[password]" value="">
+  <br>
+  <br>
+
+  <label for="user_password_confirmation">Password Confirmation:</label>
+  <input type="password_confirmation"
+         id="user_password_confirmation"
+         name="user[password_confirmation]"
+         value="">
+  <br>
+  <br>
+
+  <%= hidden %>
+  <%= form_token %>
+
+
+  <input type="submit" value="<%= button_txt %>">
+
+</form>

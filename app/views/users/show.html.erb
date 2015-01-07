@@ -1,0 +1,14 @@
+<h1>User Profile<h1>
+
+<dl>
+  <dt>Username:</dt>
+  <dd><%= @user.username %></dd>
+
+  <dt>Email:</dt>
+  <dd><%= @user.email  %></dd>
+
+</dl>
+
+<% if @user.id == current_user.id %>
+  <a href="<%= edit_user_url(@user) %>">Edit Profile</a>
+<% end %>

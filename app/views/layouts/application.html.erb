@@ -8,6 +8,16 @@
 </head>
 <body>
 
+<% if logged_in? %>
+  Logged in as:<a href="<%= user_url(current_user) %>"><%= current_user.username %><a>
+  <br>
+  <form action="<%= session_url %>" method="POST">
+    <input type="hidden" name="_method" value="DELETE">
+    <%= form_token %>
+    <input type="submit" value="Logout">
+  </form>
+<% end %>
+
 <%= yield %>
 
 </body>

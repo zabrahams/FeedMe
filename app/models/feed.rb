@@ -26,4 +26,22 @@ class Feed < ActiveRecord::Base
     self.save && self.entries.create(entries)
   end
 
+  def update_entries
+    # Should I set a condition to limit how often a feed can reload?
+    self.feed = Feedjira::Feed.fetch_and_parse(self.url)
+    newest = feed.entries.first.published
+    oldest = feed.entries.last.published
+    self.entries.where("published_at < ?", oldest).delete_all
+    entries = self.feed.entries.map do |entry|
+      {
+        guid: entry.entry_id,
+        title: entry.title,
+        link: entry.url,
+        published_at: entry.published,
+        json: entry.to_json
+      }
+    end
+  self.entries.create(entries)
+  end
+
 end

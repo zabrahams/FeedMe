@@ -19,8 +19,8 @@ class CategoriesController < ApplicationController
   end
 
   def create
-    @category = Category.new(category_params)
-    if @category.save
+    @category =  current_user.categories.create(category_params)
+    if @category.id
       redirect_to category_url(@category)
     else
       flash.now[:errors] = @category.errors.full_messages
@@ -49,7 +49,7 @@ class CategoriesController < ApplicationController
   private
 
   def category_params
-    params.require(category).permit(:name)
+    params.require(:category).permit(:name)
   end
 
   def set_category

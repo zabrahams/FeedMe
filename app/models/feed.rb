@@ -17,7 +17,24 @@ class Feed < ActiveRecord::Base
     feed = Feedjira::Feed.fetch_and_parse(self.url)
     self.name = feed.title
     self.save
-    self.update_entries!(feed.entries)
+
+    new_entries = Feedjira::Feed.fetch_and_parse(self.url).entries
+    new_entries = new_entries[0...40] if new_entries.length > 40
+
+    new_entries = new_entries.map do |entry|
+      {
+        guid: entry.entry_id,
+        title: entry.title,
+        link: entry.url,
+        published_at: entry.published,
+        json: entry.to_json
+      }
+    end
+
+    self.entries.create(new_entries)
+
+    # I should maybe self.touch here.  There's a slight possibility that I'll
+    # duplicate an entry if it is posted between the save and the fetch
   end
 
   def update_entries
@@ -31,18 +48,18 @@ class Feed < ActiveRecord::Base
   # are updated every n-minutes by a scheduled process. Less
   # popular feeds are updated using update_entries when there is a need
   # for them. For now I'm just updated everything as used.
-  def update_entries!(currEntries = nil)
-    currEntries || currEntries = Feedjira::Feed.fetch_and_parse(self.url).entries
-    currEntries = currEntries[0...40] if currEntries.length > 40
-    oldest = currEntries.last
+  def update_entries!
+    curr_entries = Feedjira::Feed.fetch_and_parse(self.url).entries
+    curr_entries = curr_entries[0...40] if curr_entries.length > 40
+    oldest = curr_entries.last
 
     self.entries.where("published_at < ?", oldest.published).delete_all
 
-    newEntries = currEntries.select do |currEntry|
-      currEntry.published > self.updated_at
+    new_entries = curr_entries.select do |curr_entry|
+      curr_entry.published > self.updated_at
     end
 
-    newEntries = newEntries.map do |entry|
+    new_entries = new_entries.map do |entry|
       {
         guid: entry.entry_id,
         title: entry.title,
@@ -52,7 +69,7 @@ class Feed < ActiveRecord::Base
       }
     end
 
-    self.entries.create(newEntries)
+    self.entries.create(new_entries)
     self.touch
   end
 

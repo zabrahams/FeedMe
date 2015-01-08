@@ -1,1 +1,13 @@
 <h1><%= @category.name %></h1>
+
+<a href="<%= edit_category_url(@category) %>">Edit Category</a>
+<br>
+<br>
+
+<% @entries.each do |entry| %>
+<li>
+  <a href="<%= entry_url(entry) %>"><%= entry.title %></a>
+  <a href="<%= feed_url(entry.feed) %>"><%= entry.feed.name %></a>
+  <%= entry.published_at %>
+</li>
+<% end %>

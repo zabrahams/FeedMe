@@ -6,5 +6,6 @@ class Category < ActiveRecord::Base
   belongs_to :user
   has_many :category_feeds, dependent: :destroy
   has_many :feeds, through: :category_feeds
+  has_many :entries, through: :feeds
 
 end

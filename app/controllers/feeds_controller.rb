@@ -28,7 +28,7 @@ class FeedsController < ApplicationController
     @feed = Feed.find(params[:id])
     if current_user.feeds.include?(@feed)
       @feed.update_entries!  # remove bang for production
-      @entries = @feed.entries
+      @entries = @feed.entries.order(published_at: :desc)
       render :show
     else
       flash[:errors] = ["You don't subscribe to that feed."]

@@ -9,18 +9,22 @@ class CategoriesController < ApplicationController
   end
 
   def show
+    @category.feeds.each { |feed| feed.update_entries! } # Remove bang for production
+    @entries = @category.entries.includes(:feed).order(published_at: :desc)
     render :show
   end
 
 
   def new
     @category = Category.new
+    @feeds = current_user.feeds
     render :new
   end
 
   def create
     @category =  current_user.categories.create(category_params)
     if @category.id
+      @category.feed_ids = params[:category][:feeds]
       redirect_to category_url(@category)
     else
       flash.now[:errors] = @category.errors.full_messages
@@ -29,11 +33,14 @@ class CategoriesController < ApplicationController
   end
 
   def edit
+    @feeds = current_user.feeds
+    @catFeeds = @category.feeds
     render :edit
   end
 
   def update
     if @category.update(category_params)
+      @category.feed_ids = params[:category][:feeds]
       redirect_to category_url(@category)
     else
       flash.now[:errors] = @category.errors.full_messages

@@ -3,7 +3,14 @@
 <ul>
 
   <% @feeds.each do |feed| %>
-    <li><a href="<%= feed_url(feed) %>"><%= feed.name %></li></a>
+    <li>
+      <a href="<%= feed_url(feed) %>"><%= feed.name %></a>
+      <form  action="<%= remove_feed_url(feed) %>" method="POST">
+        <%= form_token %>
+        <input type="hidden" name="_method" value="DELETE">
+        <input type="submit" value="Remove Feed">
+      </form>
+    </li>
   <% end %>
 
 </ul>

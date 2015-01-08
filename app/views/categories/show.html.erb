@@ -4,10 +4,4 @@
 <br>
 <br>
 
-<% @entries.each do |entry| %>
-<li>
-  <a href="<%= entry_url(entry) %>"><%= entry.title %></a>
-  <a href="<%= feed_url(entry.feed) %>"><%= entry.feed.name %></a>
-  <%= entry.published_at %>
-</li>
-<% end %>
+<%= render 'shared/aggregateFeed', entries: @entries %>

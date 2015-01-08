@@ -11,6 +11,7 @@ RSpec.describe Feed do
   it { should validate_uniqueness_of(:url) }
 
   it { should have_many(:user_feeds) }
+  it { should have_many(:entries) }
   it { should have_many(:users) }
 
 end

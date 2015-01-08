@@ -157,15 +157,16 @@ Table name: user_feeds
 |created_at      |:datetime |            |
 |updated_at      |:datetime |            ||
 
-### Article
+### Entry
 
-Table name: articles
+Table name: entries
 
 |Column          | Type     |  Properties|
 |----------------|----------|------------|
 |id              |:integer  | not null, primary key|
-|title           |:string   | not null   |
-|link            |:string   | not null   |
+|guid            |:string   | not null   |
+|title           |:string   |            |
+|link            |:string   |            |
 |published_at    |:datetime | not null   |
 |feed_id         |:integer  | not null, foreign key|
 |json            |:string   | not null   |
@@ -173,9 +174,9 @@ Table name: articles
 |updated_at      |:datetime |            ||
 
 
-### UserArticle
+### UserEntries
 
-Table name: user_articles
+Table name: user_entries
 
 |Column          | Type     |  Properties|
 |----------------|----------|------------|

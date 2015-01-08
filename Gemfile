@@ -27,6 +27,8 @@ gem 'bcrypt'
 
 gem 'feedjira'
 
+gem "backbone-on-rails"
+
 group :development, :test do
   gem 'rspec-rails'
   gem 'factory_girl_rails'

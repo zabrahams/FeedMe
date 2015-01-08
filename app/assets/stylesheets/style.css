@@ -1,0 +1,13 @@
+nav.sidebar {
+  display: block;
+  float: left;
+  width: 100px;
+  height: 800px;
+  border: 1px solid grey;
+
+}
+
+nav.sidebar a {
+  display: block;
+  float: left
+}

@@ -16,23 +16,31 @@
   </ul>
 <% end %>
 
-<% if logged_in? %>
-  Logged in as:<a href="<%= user_url(current_user) %>"><%= current_user.username %><a>
-  <br>
-  <form action="<%= session_url %>" method="POST">
-    <input type="hidden" name="_method" value="DELETE">
-    <%= form_token %>
-    <input type="submit" value="Logout">
-  </form>
-  <br>
-  <a href="<%= new_feed_url %>">Add New Feed</a>
-  <a href="<%= feeds_url %>">All Feeds</a>
-  <a href="<%= entries_url %>">All Entries</a>
-  <a href="<%= categories_url %>">Categories</a>
-  <a href="<%= recent_entries_url %>"> Recently Read Entries</a>
-<% end %>
+<content>
 
-<%= yield %>
+  <% if logged_in? %>
+    <nav class="sidebar">
+      <a href="<%= user_url(current_user) %>"><%= current_user.username %><a>
+      <br>
+      <form action="<%= session_url %>" method="POST">
+        <input type="hidden" name="_method" value="DELETE">
+        <%= form_token %>
+        <input type="submit" value="Logout">
+      </form>
+      <br>
+      <a href="<%= new_feed_url %>">Add New Feed</a>
+      <a href="<%= feeds_url %>">All Feeds</a>
+      <a href="<%= entries_url %>">All Entries</a>
+      <a href="<%= categories_url %>">Categories</a>
+      <a href="<%= recent_entries_url %>"> Recently Read Entries</a>
+    </nav>
+  <% end %>
+
+  <main>
+    <%= yield %>
+  </main>
+
+</content>
 
 </body>
 </html>

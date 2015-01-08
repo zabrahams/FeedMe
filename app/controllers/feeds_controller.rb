@@ -19,10 +19,10 @@ class FeedsController < ApplicationController
     if @feed
       current_user.feeds << @feed
       redirect_to feeds_url
-    elsif current_user.feeds.create(set_url: params[:feed][:url])
+    elsif (@feed = current_user.feeds.create(url: params[:feed][:url])).persisted?
       redirect_to feeds_url
     else
-      flash.now[:errors] = ["Problem creating feed!"]
+      flash.now[:errors] = @feed.errors.full_messages
       render :new
     end
   end

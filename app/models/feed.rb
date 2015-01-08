@@ -7,14 +7,23 @@ class Feed < ActiveRecord::Base
   has_many :user_feeds, dependent: :destroy
   has_many :users, through: :user_feeds
   has_many :entries, dependent: :destroy
-  has_many :category_feeds, dependent: :destroy
+  has_many :category_feeds, inverse_of: :feed, dependent: :destroy
   has_many :categories, through: :category_feeds
+
+  # before_validation :set_title_and_fetch_feeds, on: :create
 
   attr_accessor :feed
 
-  def set_url=(url)
-    self.url = url
+  def url=(url)
+    write_attribute(:url, url)
     feed = Feedjira::Feed.fetch_and_parse(self.url)
+
+    if feed == 200
+      errors[:url] << "does not point to a valid feed."
+      return
+    end
+
+
     self.name = feed.title
     self.save
 

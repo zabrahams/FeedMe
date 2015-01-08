@@ -18,13 +18,13 @@ class CategoriesController < ApplicationController
   def new
     @category = Category.new
     @feeds = current_user.feeds
+    @catFeeds = @category.feeds
     render :new
   end
 
   def create
-    @category =  current_user.categories.create(category_params)
-    if @category.id
-      @category.feed_ids = params[:category][:feeds]
+    @category = current_user.categories.new(category_params)
+    if @category.save
       redirect_to category_url(@category)
     else
       flash.now[:errors] = @category.errors.full_messages
@@ -40,7 +40,6 @@ class CategoriesController < ApplicationController
 
   def update
     if @category.update(category_params)
-      @category.feed_ids = params[:category][:feeds]
       redirect_to category_url(@category)
     else
       flash.now[:errors] = @category.errors.full_messages
@@ -56,7 +55,7 @@ class CategoriesController < ApplicationController
   private
 
   def category_params
-    params.require(:category).permit(:name)
+    params.require(:category).permit(:name, feed_ids: [])
   end
 
   def set_category

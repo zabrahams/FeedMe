@@ -11,13 +11,13 @@
 
   <% feeds.each do |feed| %>
     <input type="checkbox"
-           name="category[feeds][]"
+           name="category[feed_ids][]"
            id="category_feed_<%= feed.name %>"
            value="<%= feed.id %>"
            <%= "checked" if catFeeds.include?(feed) %>>
     <label for="cat_color_<%= feed.name %>"><%= feed.name %></label>
     <br>
-  <% end %>
+  <% end if feeds %>
   <br>
   <Br>
 

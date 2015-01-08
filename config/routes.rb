@@ -5,4 +5,5 @@ Rails.application.routes.draw do
   resources :users, only: [:new, :create, :edit, :show, :update]
   resources :feeds, only: [:index, :new, :create, :show]
   resources :entries, only: [:index, :show]
+  resources :categories
 end

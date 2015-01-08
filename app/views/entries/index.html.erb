@@ -1,0 +1,11 @@
+<h1>All Entries</h1>
+
+<ul>
+  <% @entries.each do |entry| %>
+    <li>
+      <a href="<%= entry_url(entry) %>"><%= entry.title %></a>
+      <a href="<%= feed_url(entry.feed) %>"><%= entry.feed.name %></a>
+      <%= entry.published_at %>
+    </li>
+  <% end %>
+</ul>

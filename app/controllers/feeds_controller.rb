@@ -2,6 +2,7 @@ class FeedsController < ApplicationController
 
   def index
     @feeds = current_user.feeds
+
     render :index
   end
 
@@ -24,8 +25,9 @@ class FeedsController < ApplicationController
   end
 
   def show
-    @feed = Feed.includes(:entries).find(params[:id])
+    @feed = Feed.find(params[:id])
     if current_user.feeds.include?(@feed)
+      @feed.update_entries!  # remove bang for production
       @entries = @feed.entries
       render :show
     else

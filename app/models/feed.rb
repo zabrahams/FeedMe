@@ -12,22 +12,25 @@ class Feed < ActiveRecord::Base
 
   def set_url=(url)
     self.url = url
-    self.feed = Feedjira::Feed.fetch_and_parse(url)
-    self.name = self.feed.title
-    entries = self.feed.entries.map do |entry|
-      {
-        guid: entry.entry_id,
-        title: entry.title,
-        link: entry.url,
-        published_at: entry.published,
-        json: entry.to_json
-      }
-    end
-    self.save && self.entries.create(entries)
+    feed = Feedjira::Feed.fetch_and_parse(self.url)
+    self.name = feed.title
+    self.save
+    self.update_entries!(feed.entries)
   end
 
-  def update_entries!
-    currEntries = Feedjira::Feed.fetch_and_parse(self.url).entries
+  def update_entries
+    update_entries! if self.updated_at < 1.minutes.ago
+  end
+
+
+  # Potential optimization for the future:
+  # Seperate feeds into two categories based on popularity.
+  # Popular feeds (maybes ones followed by x number of users)
+  # are updated every n-minutes by a scheduled process. Less
+  # popular feeds are updated using update_entries when there is a need
+  # for them. For now I'm just updated everything as used.
+  def update_entries!(currEntries = nil)
+    currEntries || currEntries = Feedjira::Feed.fetch_and_parse(self.url).entries
     currEntries = currEntries[0...40] if currEntries.length > 40
     oldest = currEntries.last
 
@@ -46,7 +49,7 @@ class Feed < ActiveRecord::Base
         json: entry.to_json
       }
     end
-    
+
     self.entries.create(newEntries)
     self.touch
   end

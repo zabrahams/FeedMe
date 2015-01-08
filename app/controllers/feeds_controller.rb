@@ -23,4 +23,15 @@ class FeedsController < ApplicationController
     end
   end
 
+  def show
+    @feed = Feed.includes(:entries).find(params[:id])
+    if current_user.feeds.include?(@feed)
+      @entries = @feed.entries
+      render :show
+    else
+      flash[:errors] = ["You don't subscribe to that feed."]
+      redirect_to feeds_url
+    end
+  end
+
 end

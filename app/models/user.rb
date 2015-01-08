@@ -8,6 +8,7 @@ class User < ActiveRecord::Base
 
   has_many :user_feeds, dependent: :destroy
   has_many :feeds, through: :user_feeds
+  has_many :entries, through: :feeds
 
   attr_reader :password
 

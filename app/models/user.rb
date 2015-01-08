@@ -10,6 +10,8 @@ class User < ActiveRecord::Base
   has_many :categories, dependent: :destroy
   has_many :feeds, through: :user_feeds
   has_many :entries, through: :feeds
+  has_many :user_read_entries, dependent: :destroy
+  has_many :read_entries, through: :user_read_entries, source: :entry
 
   attr_reader :password
 

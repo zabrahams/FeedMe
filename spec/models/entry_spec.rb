@@ -12,4 +12,6 @@ RSpec.describe Entry do
 
   it { should belong_to(:feed) }
 
+  it { should have_many(:user_read_entries) }
+
 end

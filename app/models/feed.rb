@@ -53,7 +53,9 @@ class Feed < ActiveRecord::Base
     curr_entries = curr_entries[0...40] if curr_entries.length > 40
     oldest = curr_entries.last
 
-    self.entries.where("published_at < ?", oldest.published).delete_all
+    # Delete would reduce queries, but I'd need to manually need to delete the
+    # dependent user_read_entries
+    self.entries.where("published_at < ?", oldest.published).destroy_all
 
     new_entries = curr_entries.select do |curr_entry|
       curr_entry.published > self.updated_at

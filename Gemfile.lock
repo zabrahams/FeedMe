@@ -58,6 +58,7 @@ GEM
       execjs
     coffee-script-source (1.8.0)
     columnize (0.9.0)
+    curb (0.8.6)
     debug_inspector (0.0.2)
     debugger-linecache (1.2.0)
     diff-lcs (1.2.5)
@@ -70,6 +71,10 @@ GEM
       railties (>= 3.0.0)
     faker (1.4.3)
       i18n (~> 0.5)
+    feedjira (1.6.0)
+      curb (~> 0.8)
+      loofah (~> 2.0)
+      sax-machine (~> 1.0)
     ffi (1.9.6)
     formatador (0.2.5)
     guard (2.11.0)
@@ -102,6 +107,8 @@ GEM
       celluloid (>= 0.15.2)
       rb-fsevent (>= 0.9.3)
       rb-inotify (>= 0.9)
+    loofah (2.0.1)
+      nokogiri (>= 1.5.9)
     lumberjack (1.0.9)
     mail (2.6.3)
       mime-types (>= 1.16, < 3)
@@ -180,6 +187,7 @@ GEM
       sass (~> 3.2.2)
       sprockets (~> 2.8, < 3.0)
       sprockets-rails (~> 2.0)
+    sax-machine (1.2.0)
     sdoc (0.4.1)
       json (~> 1.7, >= 1.7.7)
       rdoc (~> 4.0)
@@ -222,6 +230,7 @@ DEPENDENCIES
   coffee-rails (~> 4.0.0)
   factory_girl_rails
   faker
+  feedjira
   guard-rspec
   jbuilder (~> 2.0)
   jquery-rails

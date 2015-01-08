@@ -11,25 +11,16 @@ class FeedsController < ApplicationController
   end
 
   def create
-    @feed = Feed.find_by(url: params[:feed][:url],
-                         name: params[:feed][:name])
+    @feed = Feed.find_by(url: params[:feed][:url])
     if @feed
       current_user.feeds << @feed
       redirect_to feeds_url
+    elsif current_user.feeds.create(set_url: params[:feed][:url])
+      redirect_to feeds_url
     else
-      if current_user.feeds.create(feed_params)
-        redirect_to feeds_url
-      else
-        flash[:errors] = ["Problem creating feed!"]
-        render :new
-      end
+      flash[:errors] = ["Problem creating feed!"]
+      render :new
     end
-  end
-
-  private
-
-  def feed_params
-    params.require(:feed).permit(:url, :name)
   end
 
 end

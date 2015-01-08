@@ -3,31 +3,30 @@ class Feed < ActiveRecord::Base
 
   validates :name, :url, presence: true
   validates :name, :url, uniqueness: true
+  validate :url_must_lead_to_rss_feed
 
   has_many :user_feeds, dependent: :destroy
   has_many :users, through: :user_feeds
-  has_many :entries, dependent: :destroy
+  has_many :entries, inverse_of: :feed, dependent: :destroy
   has_many :category_feeds, inverse_of: :feed, dependent: :destroy
   has_many :categories, through: :category_feeds
 
-  # before_validation :set_title_and_fetch_feeds, on: :create
+  before_validation :set_name, on: :create
+  after_save :fetch_entries, on: :create
 
   attr_accessor :feed
 
-  def url=(url)
-    write_attribute(:url, url)
-    feed = Feedjira::Feed.fetch_and_parse(self.url)
-
-    if feed == 200
-      errors[:url] << "does not point to a valid feed."
-      return
+  def set_name
+    self.feed || self.feed = Feedjira::Feed.fetch_and_parse(self.url)
+    unless feed == 200 # Feedjira::Feed.fetch_and_parse returns 200 on failure
+      self.name = self.feed.title
     end
+  end
 
+  def fetch_entries
+    self.feed || self.feed = Feedjira::Feed.fetch_and_parse(self.url)
 
-    self.name = feed.title
-    self.save
-
-    new_entries = Feedjira::Feed.fetch_and_parse(self.url).entries
+    new_entries = self.feed.entries
     new_entries = new_entries[0...40] if new_entries.length > 40
 
     new_entries = new_entries.map do |entry|
@@ -41,9 +40,6 @@ class Feed < ActiveRecord::Base
     end
 
     self.entries.create(new_entries)
-
-    # I should maybe self.touch here.  There's a slight possibility that I'll
-    # duplicate an entry if it is posted between the save and the fetch
   end
 
   def update_entries
@@ -58,7 +54,8 @@ class Feed < ActiveRecord::Base
   # popular feeds are updated using update_entries when there is a need
   # for them. For now I'm just updated everything as used.
   def update_entries!
-    curr_entries = Feedjira::Feed.fetch_and_parse(self.url).entries
+    self.feed || self.feed = Feedjira::Feed.fetch_and_parse(self.url)
+    curr_entries = self.feed.entries
     curr_entries = curr_entries[0...40] if curr_entries.length > 40
     oldest = curr_entries.last
 
@@ -82,6 +79,15 @@ class Feed < ActiveRecord::Base
 
     self.entries.create(new_entries)
     self.touch
+  end
+
+  private
+
+  def url_must_lead_to_rss_feed
+    self.feed || self.feed = Feedjira::Feed.fetch_and_parse(self.url)
+    if self.feed == 200
+      errors.add(:url, "Url is not the location of an RSS feed.")
+    end
   end
 
 end

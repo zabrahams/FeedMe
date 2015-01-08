@@ -15,14 +15,12 @@ class FeedsController < ApplicationController
   end
 
   def create
-    @feed = Feed.find_by(url: params[:feed][:url])
-    if @feed
+    @feed = Feed.find_or_create_by(url: params[:feed][:url])
+    if @feed.persisted?
       current_user.feeds << @feed
-      redirect_to feeds_url
-    elsif (@feed = current_user.feeds.create(url: params[:feed][:url])).persisted?
-      redirect_to feeds_url
+      redirect_to feed_url(@feed)
     else
-      flash.now[:errors] = @feed.errors.full_messages
+      flash.now[:errors] = @feed.errors[:url]
       render :new
     end
   end

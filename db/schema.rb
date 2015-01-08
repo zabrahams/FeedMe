@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150108150303) do
+ActiveRecord::Schema.define(version: 20150108155448) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,6 +25,17 @@ ActiveRecord::Schema.define(version: 20150108150303) do
 
   add_index "categories", ["user_id", "name"], name: "index_categories_on_user_id_and_name", unique: true, using: :btree
   add_index "categories", ["user_id"], name: "index_categories_on_user_id", using: :btree
+
+  create_table "category_feeds", force: true do |t|
+    t.integer  "feed_id",     null: false
+    t.integer  "category_id", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "category_feeds", ["category_id"], name: "index_category_feeds_on_category_id", using: :btree
+  add_index "category_feeds", ["feed_id", "category_id"], name: "index_category_feeds_on_feed_id_and_category_id", unique: true, using: :btree
+  add_index "category_feeds", ["feed_id"], name: "index_category_feeds_on_feed_id", using: :btree
 
   create_table "entries", force: true do |t|
     t.text     "guid",         null: false

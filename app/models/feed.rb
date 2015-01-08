@@ -7,6 +7,8 @@ class Feed < ActiveRecord::Base
   has_many :user_feeds, dependent: :destroy
   has_many :users, through: :user_feeds
   has_many :entries, dependent: :destroy
+  has_many :category_feeds, dependent: :destroy
+  has_many :categories, through: :category_feeds
 
   attr_accessor :feed
 

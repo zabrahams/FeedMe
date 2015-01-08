@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150108002514) do
+ActiveRecord::Schema.define(version: 20150108010341) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -20,7 +20,7 @@ ActiveRecord::Schema.define(version: 20150108002514) do
     t.string   "guid",         null: false
     t.string   "title"
     t.string   "link"
-    t.string   "json",         null: false
+    t.text     "json",         null: false
     t.datetime "published_at", null: false
     t.integer  "feed_id",      null: false
     t.datetime "created_at"

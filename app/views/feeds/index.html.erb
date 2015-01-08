@@ -3,7 +3,7 @@
 <ul>
 
   <% @feeds.each do |feed| %>
-    <li><%= feed.name %></li>
+    <li><a href="<%= feed_url(feed) %>"><%= feed.name %></li></a>
   <% end %>
 
 </ul>

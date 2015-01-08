@@ -7,6 +7,7 @@ class User < ActiveRecord::Base
   after_initialize :ensure_session_token
 
   has_many :user_feeds, dependent: :destroy
+  has_many :categories, dependent: :destroy
   has_many :feeds, through: :user_feeds
   has_many :entries, through: :feeds
 

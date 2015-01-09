@@ -17,7 +17,7 @@ class Api::CategoriesController < ApplicationController
   def create
     @category = current_user.categories.new(name: params[:category][:name])
     if @category.save
-      redirect_to category_url(@category)
+      render :show
     else
       render json: @category.errors.full_messages, status: :unprocessable_entity
     end

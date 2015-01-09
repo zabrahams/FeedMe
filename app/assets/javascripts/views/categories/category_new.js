@@ -26,7 +26,7 @@ FeedMe.Views.CategoryNew = Backbone.View.extend({
     category.set(attrs);
     category.save({}, {
       success: function () {
-        FeedME.categories.add(category);
+        FeedMe.categories.add(category);
         Backbone.history.navigate("#/categories", { trigger: true })
       }.bind(this),
 

@@ -1,14 +1,10 @@
-FeedMe.Views.FeedShow = Backbone.View.extend({
+FeedMe.Views.EntryIndex = Backbone.View.extend({
 
-  initialize: function () {
-    this.listenTo( this.model, "sync", this.render );
-  },
-
-  template: JST['feeds/show'],
+  template: JST['entries/index'],
 
   render: function () {
-    this.$el.html(this.template({ feed: this.model }));
-    var entryList = new FeedMe.Views.EntryList({ collection: this.model.entries() });
+    this.$el.html(this.template());
+    var entryList = new FeedMe.Views.EntryList({ collection: this.collection });
     this._swapEntryList(entryList);
     return this;
   },

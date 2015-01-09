@@ -24,7 +24,7 @@ class Api::CategoriesController < ApplicationController
   #   end
   # end
   #
-  
+
   # def update
   #   if @category.update(category_params)
   #     redirect_to category_url(@category)
@@ -34,10 +34,10 @@ class Api::CategoriesController < ApplicationController
   #   end
   # end
 
-  # def destroy
-  #   @category.destroy
-  #   redirect_to categories_url
-  # end
+  def destroy
+    @category.destroy
+    render json: {}
+  end
 
   private
 

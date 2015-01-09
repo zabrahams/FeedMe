@@ -5,7 +5,7 @@ FeedMe.Collections.Feeds = Backbone.Collection.extend({
   model: FeedMe.Models.Feed,
 
   getOrFetch: function (id) {
-    var feed = FeedMe.feeds.find(id);
+    var feed = this.find(id);
 
     if (feed) {
       feed.fetch();

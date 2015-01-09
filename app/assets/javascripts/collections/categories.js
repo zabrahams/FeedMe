@@ -4,6 +4,8 @@ FeedMe.Collections.Categories = Backbone.Collection.extend({
 
   url: "/api/categories",
 
+  comparator: "name",
+
   getOrFetch: function (id) {
     var category = this.find(id);
 

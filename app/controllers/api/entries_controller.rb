@@ -9,7 +9,7 @@ class Api::EntriesController < ApplicationController
   def show
     @entry = Entry.find(params[:id])
     if current_user.entries.include?(@entry)
-      current_user.read_entries << @entry
+      current_user.read_entries << @entry unless current_user.read_entries.include?(@entry)
       render :show
     else
       render json: "{'errors': 'You don't subscribe to that feed.'}"

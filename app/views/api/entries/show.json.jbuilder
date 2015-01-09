@@ -1,1 +1,1 @@
-json.extract! @entry, :id, :title, :link, :json, :published_at, :json
+json.partial! "api/entries/single_entry", entry: @entry

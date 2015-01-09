@@ -1,4 +1,8 @@
-FeedMe.Views.EntryList = Backbone.View.extend({
+FeedMe.Views.EntryList = Backbone.ListView.extend({
+
+  initialize: function () {
+    Backbone.ListView.prototype.intialize.call(this);
+  },
 
   tagName: "ul",
 
@@ -10,22 +14,23 @@ FeedMe.Views.EntryList = Backbone.View.extend({
 
   render: function () {
     this.$el.html(this.template({ entries: this.collection }));
+    this.renderElems();
     return this;
   },
 
   toggleEntry: function (event) {
+    var $title, $article, entry;
     event.preventDefault()
 
-    var $title = $(event.currentTarget);
-    if ($title.hasClass("been-opened")) {
-      var $article = $title.siblings("article.entry");
-      $article.toggleClass("open closed")
-    } else {
+    $title = $(event.currentTarget);
+    $article = $title.siblings("article.entry");
+
+    $article.toggleClass("open closed")
+
+    if (!$title.hasClass("been-opened")) {
       $title.addClass("been-opened");
-      $article = $("<article>")
-        .addClass("entry open")
-        .html("I am an article!")
-      $title.parent().append($article);
+      entry = this.collection.get($article.data('id'));
+      this.addElemView($article, entry)
     }
   }
 

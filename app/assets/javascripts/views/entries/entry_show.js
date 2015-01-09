@@ -1,7 +1,5 @@
 FeedMe.Views.EntryShow = Backbone.View.extend({
 
-  tagName: "article",
-
   template: JST['entries/show'],
 
   render: function () {

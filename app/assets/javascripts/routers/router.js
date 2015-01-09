@@ -8,18 +8,23 @@ FeedMe.Routers.Router = Backbone.Router.extend({
     "":"feedsIndex",
     "feeds/new": "feedNew",
     "feeds/:id": "feedShow",
-    "entries" : "entryIndex"
+    "entries" : "entryIndex",
+    "categories": "categoryIndex"
   },
 
   feedsIndex: function () {
+    var feedsIndexView;
+
     FeedMe.feeds.fetch();
-    var feedsIndexView = new FeedMe.Views.FeedsIndex({ collection: FeedMe.feeds });
+    feedsIndexView = new FeedMe.Views.FeedsIndex({ collection: FeedMe.feeds });
     this._swapView(feedsIndexView);
   },
 
   feedShow: function (id) {
-    var feed = FeedMe.feeds.getOrFetch(id);
-    var feedShowView = new FeedMe.Views.FeedShow({ model: feed });
+    var feed, feedShowView;
+
+    feed = FeedMe.feeds.getOrFetch(id);
+    feedShowView = new FeedMe.Views.FeedShow({ model: feed });
     this._swapView(feedShowView);
   },
 
@@ -30,10 +35,19 @@ FeedMe.Routers.Router = Backbone.Router.extend({
 
   entryIndex: function () {
     var entries, entryIndexView
+
     entries = new FeedMe.Collections.Entries();
     entries.fetch();
     entryIndexView = new FeedMe.Views.EntryIndex({ collection: entries });
     this._swapView(entryIndexView);
+  },
+
+  categoryIndex: function () {
+    var categoryIndexView;
+
+    FeedMe.categories.fetch();
+    categoryIndexView = new FeedMe.Views.CategoryIndex({ collection: FeedMe.categories });
+    this._swapView(categoryIndexView)
   },
 
   _swapView: function (view) {

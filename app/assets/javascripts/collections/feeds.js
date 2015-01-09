@@ -4,6 +4,8 @@ FeedMe.Collections.Feeds = Backbone.Collection.extend({
 
   model: FeedMe.Models.Feed,
 
+  comparator: "name",
+
   getOrFetch: function (id) {
     var feed = this.find(id);
 

@@ -1,0 +1,10 @@
+<% if (feeds) { %>
+  <input type="text" name="category[feed_name]">
+  <ul class=feeds-to-add>
+    <% feeds.forEach(function (feed) { %>
+      <li><%= feed.escape("name") %></li>
+    <% }); %>
+  </ul>
+<% } else { %>
+  <h3>Add Feeds First!</h3>
+<% } %>

@@ -14,16 +14,15 @@ class Api::CategoriesController < ApplicationController
     render :show
   end
 
-  # def create
-  #   @category = current_user.categories.new(category_params)
-  #   if @category.save
-  #     redirect_to category_url(@category)
-  #   else
-  #     flash.now[:errors] = @category.errors.full_messages
-  #     render :new
-  #   end
-  # end
-  #
+  def create
+    @category = current_user.categories.new(name: params[:category][:name])
+    if @category.save
+      redirect_to category_url(@category)
+    else
+      render json: @category.errors.full_messages, status: :unprocessable_entity
+    end
+  end
+
 
   # def update
   #   if @category.update(category_params)
@@ -42,7 +41,7 @@ class Api::CategoriesController < ApplicationController
   private
 
   def category_params
-    params.require(:category).permit(:name, feed_ids: [])
+    params.require(:category).permit(:name, :feed_name)
   end
 
   def set_category

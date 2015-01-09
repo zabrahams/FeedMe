@@ -7,16 +7,15 @@ class Api::FeedsController < ApplicationController
     render :index
   end
 
-  # def create
-  #   @feed = Feed.find_or_create_by(url: params[:feed][:url])
-  #   if @feed.persisted?
-  #     current_user.feeds << @feed
-  #     redirect_to feed_url(@feed)
-  #   else
-  #     flash.now[:errors] = @feed.errors[:url]
-  #     render :new
-  #   end
-  # end
+  def create
+    @feed = Feed.find_or_create_by(url: params[:feed][:url])
+    if @feed.persisted?
+      current_user.feeds << @feed
+      render json: @feed
+    else
+      render json: @feed.errors.full_messages, status: :unprocessable_entity
+    end
+  end
 
   def show
     @feed.update_entries!  # remove bang for production

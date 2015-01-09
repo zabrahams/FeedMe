@@ -1,7 +1,7 @@
 class Feed < ActiveRecord::Base
   include Feedjira
 
-  validates :name, :url, presence: true
+  validates :url, presence: true
   validates :name, :url, uniqueness: true
   validate :url_must_lead_to_rss_feed
 
@@ -86,7 +86,7 @@ class Feed < ActiveRecord::Base
   def url_must_lead_to_rss_feed
     self.feed || self.feed = Feedjira::Feed.fetch_and_parse(self.url)
     if self.feed == 200
-      errors.add(:url, "Url is not the location of an RSS feed.")
+      errors.add(:url, " is not the location of an RSS feed.")
     end
   end
 

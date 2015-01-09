@@ -6,6 +6,7 @@ FeedMe.Routers.Router = Backbone.Router.extend({
 
   routes: {
     "":"feedsIndex",
+    "feeds/new": "feedNew",
     "feeds/:id": "feedShow"
   },
 
@@ -19,6 +20,11 @@ FeedMe.Routers.Router = Backbone.Router.extend({
     var feed = FeedMe.feeds.getOrFetch(id);
     var feedShowView = new FeedMe.Views.FeedShow({ model: feed });
     this._swapView(feedShowView);
+  },
+
+  feedNew: function () {
+    var feedNewView = new FeedMe.Views.FeedNew({ collection: FeedMe.feeds });
+    this._swapView(feedNewView);
   },
 
   _swapView: function (view) {

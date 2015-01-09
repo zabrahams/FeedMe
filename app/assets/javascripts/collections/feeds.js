@@ -2,7 +2,7 @@ FeedMe.Collections.Feeds = Backbone.Collection.extend({
 
   url: "/api/feeds",
 
-  mode: FeedMe.Models.Feed,
+  model: FeedMe.Models.Feed,
 
   getOrFetch: function (id) {
     var feed = FeedMe.feeds.find(id);

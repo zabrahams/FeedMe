@@ -5,3 +5,11 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+
+user = User.create(username: 'z', email: 'z@z.z', password: '123456')
+user.feeds.create([
+    { url: "http://feeds.feedburner.com/Metafilter" },
+    { url: "http://feeds.feedburner.com/AskMetafilter" },
+    { url: "http://feeds.mashable.com/Mashable" },
+    { url: "http://www.polygon.com/rss/index.xml" }
+])

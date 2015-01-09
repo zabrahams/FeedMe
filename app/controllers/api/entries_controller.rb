@@ -6,14 +6,13 @@ class Api::EntriesController < ApplicationController
     render :index
   end
 
-  def show
+  def read
     @entry = Entry.find(params[:id])
-    if current_user.entries.include?(@entry)
-      current_user.read_entries << @entry unless current_user.read_entries.include?(@entry)
-      render :show
-    else
-      render json: "{'errors': 'You don't subscribe to that feed.'}"
+    unless current_user.read_entries.include?(@entry)
+      current_user.read_entries << @entry
     end
+
+    render json: @entry
   end
 
   def recent

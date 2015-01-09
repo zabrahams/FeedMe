@@ -9,6 +9,7 @@ FeedMe.Routers.Router = Backbone.Router.extend({
     "feeds/new": "feedNew",
     "feeds/:id": "feedShow",
     "entries" : "entryIndex",
+    "entries/recent": "recentlyRead",
     "categories": "categoryIndex",
     "categories/new": "categoryNew",
     "categories/:id": "categoryShow"
@@ -42,6 +43,15 @@ FeedMe.Routers.Router = Backbone.Router.extend({
     entries.fetch();
     entryIndexView = new FeedMe.Views.EntryIndex({ collection: entries });
     this._swapView(entryIndexView);
+  },
+
+  recentlyRead: function () {
+    var readEntries, recentlyReadView;
+
+    readEntries = new FeedMe.Collections.RecentlyRead();
+    readEntries.fetch();
+    recentlyReadView = new FeedMe.Views.RecentlyReadIndex({ collection: readEntries });
+    this._swapView(recentlyReadView);
   },
 
   categoryIndex: function () {

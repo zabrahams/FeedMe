@@ -20,7 +20,7 @@ FeedMe.Views.EntryList = Backbone.ListView.extend({
   },
 
   toggleEntry: function (event) {
-    var $title, $article, entry;
+    var $title, $article, entryId, entry;
     event.preventDefault()
 
     $title = $(event.currentTarget);
@@ -30,8 +30,13 @@ FeedMe.Views.EntryList = Backbone.ListView.extend({
 
     if (!$title.hasClass("been-opened")) {
       $title.addClass("been-opened");
-      entry = this.collection.get($article.data('id'));
+      entryId = $article.data("id");
+      entry = this.collection.get(entryId);
       this.addElemView($article, entry)
+
+      $.ajax("/api/entries/" + entryId + "/read", {
+        type: "POST"
+      });
     }
   }
 

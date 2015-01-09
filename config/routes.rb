@@ -4,10 +4,11 @@ Rails.application.routes.draw do
     resources :feeds, only: [:index, :new, :create, :show] do
       delete 'remove', on: :member
     end
-    resources :entries, only: [:index, :show] do
+    resources :entries, only: [:index] do
       get 'recent', on: :collection
+      post 'read', on: :member
     end
-    resources :categories, only: [:index, :show, :create, :destroy] 
+    resources :categories, only: [:index, :show, :create, :destroy]
   end
 
   root to: 'static_pages#root'

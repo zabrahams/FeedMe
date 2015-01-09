@@ -1,0 +1,16 @@
+<h1>Categories</h1>
+
+<a href="<%= new_category_url %>">New Category</a>
+
+<ul>
+  <% @categories.each do |category| %>
+    <li>
+      <a href="<%= category_url(category) %>"><%= category.name %></a>
+      <form action="<%= category_url(category) %>" method="POST">
+        <input type="hidden" name="_method" value="DELETE">
+        <%= form_token %>
+        <input type="submit" value="Delete Category">
+      </form>
+    </li>
+  <% end %>
+</ul>

@@ -7,14 +7,17 @@ class User < ActiveRecord::Base
   after_initialize :ensure_session_token
 
   has_many :user_feeds, dependent: :destroy
+  has_many :categories, dependent: :destroy
   has_many :feeds, through: :user_feeds
   has_many :entries, through: :feeds
+  has_many :user_read_entries, dependent: :destroy
+  has_many :read_entries, through: :user_read_entries, source: :entry
 
   attr_reader :password
 
   def self.find_by_credentials(username, password)
     user = User.find_by(username: username)
-    user.has_password?(password) ? user : nil
+    user && user.has_password?(password) ? user : nil
   end
 
   def password=(password)

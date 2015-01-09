@@ -174,17 +174,15 @@ Table name: entries
 |updated_at      |:datetime |            ||
 
 
-### UserEntries
+### UserReadEntries
 
-Table name: user_entries
+Table name: user_read_entries
 
 |Column          | Type     |  Properties|
 |----------------|----------|------------|
 |id              |:integer  | not null, primary key|
 |user_id         |:integer  | not null, foreign key|
-|article_id      |:integer  | not null, foreign key|
-|read            |:boolean  | default false|
-|archived        |:boolean  | default false|
+|entry_id      |:integer  | not null, foreign key|
 |created_at      |:datetime |            |
 |updated_at      |:datetime |            ||
 

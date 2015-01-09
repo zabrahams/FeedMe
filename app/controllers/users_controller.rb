@@ -17,7 +17,7 @@ class UsersController < ApplicationController
       login(@user)
       redirect_to feeds_url
     else
-      flash[:errors] = @user.errors.full_messages
+      flash.now[:errors] = @user.errors.full_messages
       render :new
     end
   end
@@ -30,12 +30,12 @@ class UsersController < ApplicationController
   def update
     @user = User.find(params[:id])
     if params[:user][:password] != params[:user][:password_confirmation]
-      flash[:errors] = ["Password does not match Password Confirmation"]
+      flash.now[:errors] = ["Password does not match Password Confirmation"]
       render :edit
     elsif @user.update(user_params)
       redirect_to feeds_url
     else
-      flash[:errors] = @user.errors.full_messages
+      flash.now[:errors] = @user.errors.full_messages
       render :edit
     end
   end

@@ -11,13 +11,34 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150108010341) do
+ActiveRecord::Schema.define(version: 20150108171520) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "categories", force: true do |t|
+    t.string   "name",       null: false
+    t.integer  "user_id",    null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "categories", ["user_id", "name"], name: "index_categories_on_user_id_and_name", unique: true, using: :btree
+  add_index "categories", ["user_id"], name: "index_categories_on_user_id", using: :btree
+
+  create_table "category_feeds", force: true do |t|
+    t.integer  "feed_id",     null: false
+    t.integer  "category_id", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "category_feeds", ["category_id"], name: "index_category_feeds_on_category_id", using: :btree
+  add_index "category_feeds", ["feed_id", "category_id"], name: "index_category_feeds_on_feed_id_and_category_id", unique: true, using: :btree
+  add_index "category_feeds", ["feed_id"], name: "index_category_feeds_on_feed_id", using: :btree
+
   create_table "entries", force: true do |t|
-    t.string   "guid",         null: false
+    t.text     "guid",         null: false
     t.string   "title"
     t.string   "link"
     t.text     "json",         null: false
@@ -27,6 +48,7 @@ ActiveRecord::Schema.define(version: 20150108010341) do
     t.datetime "updated_at"
   end
 
+  add_index "entries", ["feed_id"], name: "index_entries_on_feed_id", using: :btree
   add_index "entries", ["guid"], name: "index_entries_on_guid", unique: true, using: :btree
 
   create_table "feeds", force: true do |t|
@@ -47,7 +69,20 @@ ActiveRecord::Schema.define(version: 20150108010341) do
     t.datetime "updated_at"
   end
 
+  add_index "user_feeds", ["feed_id"], name: "index_user_feeds_on_feed_id", using: :btree
   add_index "user_feeds", ["user_id", "feed_id"], name: "index_user_feeds_on_user_id_and_feed_id", unique: true, using: :btree
+  add_index "user_feeds", ["user_id"], name: "index_user_feeds_on_user_id", using: :btree
+
+  create_table "user_read_entries", force: true do |t|
+    t.integer  "user_id",    null: false
+    t.integer  "entry_id",   null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "user_read_entries", ["entry_id"], name: "index_user_read_entries_on_entry_id", using: :btree
+  add_index "user_read_entries", ["user_id", "entry_id"], name: "index_user_read_entries_on_user_id_and_entry_id", unique: true, using: :btree
+  add_index "user_read_entries", ["user_id"], name: "index_user_read_entries_on_user_id", using: :btree
 
   create_table "users", force: true do |t|
     t.string   "username",                        null: false

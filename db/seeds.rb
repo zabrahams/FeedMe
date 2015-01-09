@@ -11,5 +11,6 @@ user.feeds.create([
     { url: "http://feeds.feedburner.com/Metafilter" },
     { url: "http://feeds.feedburner.com/AskMetafilter" },
     { url: "http://feeds.mashable.com/Mashable" },
-    { url: "http://www.polygon.com/rss/index.xml" }
+    { url: "http://www.polygon.com/rss/index.xml" },
+    { url: "http://lorem-rss.herokuapp.com/feed/?unit=minute&interval=5" }
 ])

@@ -1,4 +1,11 @@
 Rails.application.routes.draw do
+
+  namespace :api, defaults: { format: :json } do
+    resources :feeds, only: [:index, :new, :create, :show] do
+      delete 'remove', on: :member
+    end
+  end
+
   root to: 'static_pages#root'
 
   resource :session, only: [:new, :create, :destroy]

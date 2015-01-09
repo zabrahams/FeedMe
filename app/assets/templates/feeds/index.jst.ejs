@@ -1,0 +1,16 @@
+<h1>All</h1>
+
+<ul>
+
+  <% feeds.forEach( function(feed) { %>
+  <li>
+    <a href="#"><%= feed.name %></a>
+    <form  action="#" method="POST">
+      <%= form_token %>
+      <input type="hidden" name="_method" value="DELETE">
+      <input type="submit" value="Remove Feed">
+    </form>
+  </li>
+  <% }); %>
+
+</ul>

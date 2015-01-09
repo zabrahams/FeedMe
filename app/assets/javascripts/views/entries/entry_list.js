@@ -2,6 +2,7 @@ FeedMe.Views.EntryList = Backbone.ListView.extend({
 
   initialize: function () {
     Backbone.ListView.prototype.intialize.call(this);
+    this.listenTo(this.collection, "add remove reset sync", this.render)
   },
 
   tagName: "ul",

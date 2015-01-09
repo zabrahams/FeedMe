@@ -1,3 +1,7 @@
+.closed {
+  display: none;
+}
+
 nav.sidebar {
   display: block;
   float: left;

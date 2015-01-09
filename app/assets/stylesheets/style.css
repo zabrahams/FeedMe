@@ -1,13 +1,22 @@
 nav.sidebar {
   display: block;
   float: left;
-  width: 100px;
+  width: 150px;
   height: 800px;
   border: 1px solid grey;
-
+  padding: 10px;
 }
 
 nav.sidebar a {
   display: block;
   float: left
+}
+
+main {
+  display: block;
+  float: left;
+  width: 900px;
+  height: 800px;
+  border: 1px solid black;
+  padding: 10px;
 }

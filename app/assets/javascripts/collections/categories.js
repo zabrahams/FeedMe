@@ -5,19 +5,19 @@ FeedMe.Collections.Categories = Backbone.Collection.extend({
   url: "/api/categories",
 
   getOrFetch: function (id) {
-    var feed = this.find(id);
+    var category = this.find(id);
 
-    if (feed) {
-      feed.fetch();
+    if (category) {
+      category.fetch();
     } else {
-      feed = new FeedMe.Models.Feed( {id: id} );
-      feed.fetch({
+      category = new FeedMe.Models.Category( {id: id} );
+      category.fetch({
         success: function () {
-          this.add(feed, { merge: true });
+          this.add(category, { merge: true });
         }.bind(this)
       });
     }
-    return feed
+    return category
   }
 
 });

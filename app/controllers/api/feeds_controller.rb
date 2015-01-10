@@ -23,14 +23,14 @@ class Api::FeedsController < ApplicationController
     render :show
   end
 
-  # def remove
-  #   if @feed.user_feeds.size == 1
-  #     @feed.destroy
-  #   else
-  #     current_user.feeds.delete(@feed)
-  #   end
-  #   render @feed
-  # end
+  def remove
+    if @feed.user_feeds.size == 1
+      @feed.destroy
+    else
+      current_user.feeds.delete(@feed)
+    end
+    render json: {}
+  end
 
   private
 

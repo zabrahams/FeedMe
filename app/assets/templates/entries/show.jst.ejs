@@ -1,0 +1,15 @@
+<% var jsonEntry = JSON.parse(entry.get('json')); %>
+
+<a href="<%= jsonEntry.url %>" class="link-to-original">Original Article</a>
+
+<% if (jsonEntry.summary) { %>
+  <p class="entry-summary"><%= jsonEntry.summary%></p>
+<% } %>
+
+<% if (jsonEntry.content && !jsonEntry.summary)  { %>
+  <p class="entry-content"><%= jsonEntry.content%></p>
+<% } %>
+
+<% if (jsonEntry.author) { %>
+  <label class="entry-author"><%= jsonEntry.author%></p>
+<% } %>

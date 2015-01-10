@@ -1,0 +1,11 @@
+<h1>All</h1>
+
+<ul>
+  <% feeds.forEach( function(feed) { %>
+  <li>
+    <a href="#/feeds/<%=feed.id%>"><%= feed.escape("name") %></a>
+    <button class="remove-feed" data-id=<%=feed.id%>>Remove Feed</button>
+  </li>
+  <% }); %>
+
+</ul>

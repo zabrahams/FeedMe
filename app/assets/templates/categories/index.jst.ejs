@@ -1,0 +1,13 @@
+<h1>Categories</h1>
+
+<a href="/#/categories/new" class="new-category">New Category</a>
+
+<ul>
+  <% categories.forEach(function (category) { %>
+  <li>
+    <a href="/#/categories/<%= category.id %>"><%= category.escape("name") %></a>
+    <button class="delete" data-id="<%= category.id %>">Delete Category</button>
+    <a href="/categories/<%= category.id %>/edit">Edit Category</a>
+  </li>
+  <% }); %>
+</ul>

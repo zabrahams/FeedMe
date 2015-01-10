@@ -1,0 +1,8 @@
+<% entries.forEach(function (entry) { %>
+<li>
+  <a href="#" class="entry-title"><%= entry.escape("title") %></a>
+  <a href="#/feeds/<%= entry.escape('feed_id') %>"><%= entry.escape("feed_name") %></a>
+  <%= entry.escape("published_at") %>
+  <article class="entry closed" data-id="<%= entry.id %>"></article>
+</li>
+<% }); %>

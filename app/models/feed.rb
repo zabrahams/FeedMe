@@ -1,7 +1,7 @@
 class Feed < ActiveRecord::Base
   include Feedjira
 
-  validates :name, :url, presence: true
+  validates :url, presence: true
   validates :name, :url, uniqueness: true
   validate :url_must_lead_to_rss_feed
 
@@ -35,7 +35,7 @@ class Feed < ActiveRecord::Base
         title: entry.title,
         link: entry.url,
         published_at: entry.published,
-        json: entry.to_json
+        json: entry_to_json(entry)
       }
     end
 
@@ -73,7 +73,7 @@ class Feed < ActiveRecord::Base
         title: entry.title,
         link: entry.url,
         published_at: entry.published,
-        json: entry.to_json
+        json: entry_to_json(entry)
       }
     end
 
@@ -86,26 +86,19 @@ class Feed < ActiveRecord::Base
   def url_must_lead_to_rss_feed
     self.feed || self.feed = Feedjira::Feed.fetch_and_parse(self.url)
     if self.feed == 200
-      errors.add(:url, "Url is not the location of an RSS feed.")
+      errors.add(:url, " is not the location of an RSS feed.")
     end
   end
 
-  def update_entries
-    # Should I set a condition to limit how often a feed can reload?
-    self.feed = Feedjira::Feed.fetch_and_parse(self.url)
-    newest = feed.entries.first.published
-    oldest = feed.entries.last.published
-    self.entries.where("published_at < ?", oldest).delete_all
-    entries = self.feed.entries.map do |entry|
-      {
-        guid: entry.entry_id,
-        title: entry.title,
-        link: entry.url,
-        published_at: entry.published,
-        json: entry.to_json
-      }
+  def entry_to_json(entry)
+    convertable_entry = {}
+    properties = %w(title summary content author url entry_id published)
+
+    properties.each do |property|
+      convertable_entry[property] = entry[property]
     end
-  self.entries.create(entries)
+
+    convertable_entry.to_json
   end
 
 end

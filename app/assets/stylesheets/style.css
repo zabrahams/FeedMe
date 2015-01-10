@@ -13,7 +13,8 @@ nav.sidebar {
 
 nav.sidebar a {
   display: block;
-  float: left
+  float: left;
+  width: 95px;
 }
 
 main {

@@ -20,6 +20,7 @@
 
   <% if logged_in? %>
     <nav class="sidebar">
+      <h3>FeedMe</h3>
       <a href="<%= user_url(current_user) %>"><%= current_user.username %><a>
       <br>
       <form action="<%= session_url %>" method="POST">
@@ -34,6 +35,14 @@
       <a href="/#/categories">Categories</a>
       <a href="/#/entries/recent"> Recently Read Entries</a>
     </nav>
+
+  <% else %>
+  <nav class="sidebar">
+    <h3>FeedMe</h3>
+    <a href="<%= new_user_url %>">Sign Up</a>
+    <a href="<%= new_session_url %>">Sign In</a>
+  </nav>
+
   <% end %>
 
   <main>

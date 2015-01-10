@@ -40,7 +40,7 @@ class CategoriesController < ApplicationController
 
   def update
     if @category.update(category_params)
-      redirect_to category_url(@category)
+      redirect_to "/#/categories/#{@category.id}"
     else
       flash.now[:errors] = @category.errors.full_messages
       render :edit

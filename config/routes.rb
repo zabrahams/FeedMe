@@ -2,7 +2,7 @@ Rails.application.routes.draw do
 
   namespace :api, defaults: { format: :json } do
     resources :feeds, only: [:index, :new, :create, :show] do
-      delete 'remove', on: :member
+      post 'remove', on: :member
     end
     resources :entries, only: [:index] do
       get 'recent', on: :collection

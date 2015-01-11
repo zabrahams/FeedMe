@@ -35,6 +35,9 @@ section.content {
   font-weight: 16px;
 }
 
+
+/* forms */
+
 form {
   border: 1px solid #ccc;
   border-radius: 5px;
@@ -162,4 +165,18 @@ header {
   text-transform: lowercase;
   font-size: 36px;
   text-align: center;
+}
+
+/* Entry Lists */
+
+ul.entry-list {
+  border-top: 1px solid #999;
+  width: 1000px;
+  margin: 0px auto;
+  padding-top: 30px;
+}
+
+.entry-list-elem {
+  padding: 5px;
+  border-bottom: 1px dotted #999;
 }

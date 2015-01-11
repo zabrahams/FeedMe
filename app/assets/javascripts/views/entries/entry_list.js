@@ -7,6 +7,8 @@ FeedMe.Views.EntryList = Backbone.ListView.extend({
 
   tagName: "ul",
 
+  className: "entry-list",
+
   events: {
     "click a.entry-title": "toggleEntry"
   },

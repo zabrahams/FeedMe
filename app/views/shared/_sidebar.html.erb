@@ -1,0 +1,41 @@
+<nav class="sidebar group">
+  <h3 class="logo">FeedMe</h3>
+  <% if logged_in? %>
+
+    <a href="<%= user_url(current_user) %>" class="user-link">
+      <%= current_user.username %>
+    <a>
+
+    <form action="<%= session_url %>" method="POST">
+      <input type="hidden" name="_method" value="DELETE">
+      <%= form_token %>
+      <input class="logout" type="submit" value="logout">
+    </form>
+      <ul class="nav-list">
+        <li class="nav-list-item">
+          <a href="/#/feeds/new">Add New Feed</a>
+        </li>
+        <li class="nav-list-item">
+          <a href="/#">All Feeds</a>
+        </li>
+        <li class="nav-list-item">
+          <a href="/#/entries">All Entries</a>
+        </li>
+        <li class="nav-list-item">
+          <a href="/#/categories">Categories</a>
+        </li>
+        <li class="nav-list-item">
+          <a href="/#/entries/recent"> Recently Read Entries</a>
+        </li>
+      </ul>
+    <% else %>
+    <ul class="nav-list">
+      <li class="nav-list-item">
+        <a href="<%= new_user_url %>">Sign Up</a>
+      </li>
+      <li class="nav-list-item">
+        <a href="<%= new_session_url %>">Sign In</a>
+      </li>
+    </ul>
+    <% end %>
+  </nav>

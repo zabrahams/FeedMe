@@ -1,27 +1,111 @@
+/* reset */
+
+div, section, article, main, h1, h2, h3, h4, p, a, form, button, input,
+     body, ul, li {
+  padding: 0;
+  margin: 0;
+  border: 0;
+  font: inherit;
+  text-decoration: inherit;
+  text-align: inherit;
+  color: inherit;
+  background: transparent;
+}
+
+/* general styles */
+
+.group::after {
+  content: "";
+  display: block;
+  clear: both;
+}
+
 .closed {
   display: none;
 }
 
+ul {
+  list-style: none;
+}
+
+section.content {
+  position: relative;
+  font-weight: 16px;
+}
+
+/* sidebar */
+
 nav.sidebar {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 150px;
+  background: #ccc;
+  border-right: 1px solid grey;
+  padding: 20px;
+
+}
+
+.logo {
+  font-weight: bold;
+  font-size: 24px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #999;
+  text-align: center;
+}
+
+.sidebar .nav-list {
+  margin-top: 30px;
+  font-variant: small-caps;
+}
+
+.nav-list-item {
   display: block;
-  float: left;
-  width: 100px;
-  height: 800px;
-  border: 1px solid grey;
-  padding: 10px;
+  padding-left: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px dotted #999;
+  margin-bottom: 10px;
 }
 
 nav.sidebar a {
   display: block;
-  float: left;
-  width: 95px;
 }
 
-main {
+a.user-link {
+  font-weight: bold;
+  font-size: 16px;
+  margin-top: 20px;
+  text-align: center;
+}
+
+nav a:hover {
+  color: #999;
+}
+
+.logout {
+  width: 100px;
+  border: 1px solid #999;
+  border-radius: 5px;
+  margin-top: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 5px 10px;
+  text-align: center;
   display: block;
-  float: left;
-  width: 900px;
-  height: 800px;
-  border: 1px solid black;
-  padding: 10px;
+}
+
+.logout:hover {
+  background: #999;
+  color: #ccc;
+}
+
+
+/* main content */
+
+main.display {
+  position: absolute;
+  top: 0;
+  left: 191px;
+  min-height: 500px;
 }

@@ -1,8 +1,11 @@
 <% entries.forEach(function (entry) { %>
-<li class="entry-list-elem">
-  <a href="#/feeds/<%= entry.escape('feed_id') %>"><%= entry.escape("feed_name") %></a>
+<li class="entry-list-elem group">
+  <a href="#/feeds/<%= entry.escape('feed_id') %>"
+     class="entry-feed">
+    <%= entry.escape("feed_name") %>
+  </a>
   <a href="#" class="entry-title"><%= entry.escape("title") %></a>
-  <%= TimeUtils.getTimeDiff(entry.escape("published_at")) %>
+  <time class="pub-diff"><%= TimeUtils.getTimeDiff(entry.escape("published_at"))%></time>
   <article class="entry closed" data-id="<%= entry.id %>"></article>
 </li>
 <% }); %>

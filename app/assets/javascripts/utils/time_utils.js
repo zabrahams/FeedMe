@@ -11,7 +11,6 @@ TimeUtils.YEAR = 31104000;
 
 TimeUtils.getTimeDiff = function (time) {
   var seconds = Math.round((Date.now() - Date.parse(time)) / 1000);
-  console.log(Date.parse(time));
 
   if (seconds < TimeUtils.MIN) {
     return seconds.toString() + "s ago";

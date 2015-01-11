@@ -19,6 +19,7 @@ class Feed < ActiveRecord::Base
   def set_name
     self.feed || self.feed = Feedjira::Feed.fetch_and_parse(self.url)
     unless feed == 200 # Feedjira::Feed.fetch_and_parse returns 200 on failure
+      puts feed
       self.name = self.feed.title
     end
   end
@@ -78,7 +79,7 @@ class Feed < ActiveRecord::Base
     end
 
     self.entries.create(new_entries)
-    self.touch
+    self.touch unless new_entries.count === 0;
   end
 
   private

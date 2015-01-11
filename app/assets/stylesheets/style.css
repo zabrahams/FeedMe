@@ -135,7 +135,8 @@ nav a:hover {
 }
 
 .logout {
-  }
+  background: #ddd;
+}
 
 .logout:hover {
   background: #999;
@@ -179,4 +180,30 @@ ul.entry-list {
 .entry-list-elem {
   padding: 5px;
   border-bottom: 1px dotted #999;
+}
+
+.entry-list-elem:hover {
+  background: #eee;
+}
+
+.entry-list-elem .entry-feed {
+  color: #666;
+  display: block;
+  width: 250px;
+  float: left;
+}
+
+.entry-list-elem .entry-title {
+  display: block;
+  width: 650px;
+  padding-left: 5px;
+  float: left;
+}
+
+.entry-list-elem time {
+  color: #f280a1;   /* Light pink */
+  display: block;
+  float: left;
+  width: 75px;
+  padding-left: 5px;
 }

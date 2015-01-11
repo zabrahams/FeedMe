@@ -6,7 +6,7 @@
       <%= current_user.username %>
     <a>
 
-    <form action="<%= session_url %>" method="POST">
+    <form class = "sidebar-form" action="<%= session_url %>" method="POST">
       <input type="hidden" name="_method" value="DELETE">
       <%= form_token %>
       <input class="logout" type="submit" value="logout">

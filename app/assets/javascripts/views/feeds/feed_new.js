@@ -4,8 +4,6 @@ FeedMe.Views.FeedNew = Backbone.View.extend({
     "submit": "createFeed"
   },
 
-  tagName: "form",
-
   template: JST['feeds/new'],
 
   render: function () {

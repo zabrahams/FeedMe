@@ -1,3 +1,5 @@
-<h1>Edit <%= @category.name %></h1>
+<header>
+  <h1 class="page-title">Edit <%= @category.name %></h1>
+</header>
 
 <%= render "categories/form", category: @category, feeds: @feeds, catFeeds: @catFeeds %>

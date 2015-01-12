@@ -1,6 +1,7 @@
 <h3 class=feed-list-header>Your Feeds </h3>
 <% feeds.forEach(function (feed) { %>
-  <li class="feed-list-item feed-<%= feed.id %> group">
+  <li class="feed-list-item feed-<%= feed.id %> group"
+      data-id="<%= feed.id %>">
     <label class="feed-list-label">
       <%= feed.escape("name") %>
     </label>

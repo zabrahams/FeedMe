@@ -1,6 +1,6 @@
 FeedMe.Views.FeedList = Backbone.View.extend({
 
-  initialize: function () {
+  initialize: function (options) {
     this.listenTo(this.collection, "add remove reset", this.render);
   },
 

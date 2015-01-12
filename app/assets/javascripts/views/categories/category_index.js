@@ -5,7 +5,10 @@ FeedMe.Views.CategoryIndex = Backbone.View.extend({
   },
 
   events: {
-    "click button.delete": "deleteCategory"
+    "click button.delete-category": "deleteCategory",
+    "click button.expand": "expandCategory",
+    "click button.remove-feed": "removeFeed"
+
   },
 
   template: JST['categories/index'],
@@ -28,6 +31,39 @@ FeedMe.Views.CategoryIndex = Backbone.View.extend({
       }.bind(this),
       error: function () {
         console.log("Error deleting category.")
+      }
+    });
+  },
+
+  expandCategory: function (event) {
+    var $button, catId, $feedList;
+    event.preventDefault();
+
+    $button = $(event.currentTarget);
+    catId = $button.data("id");
+    $feedList = this.$(".cat-" + catId);
+    $feedList.toggleClass("closed");
+  },
+
+  removeFeed: function (event) {
+    var $button, feedId, feed, catId, category;
+    event.preventDefault();
+
+    $button = $(event.currentTarget);
+    feedId = $button.data("feed-id");
+    feed = FeedMe.feeds.get(feedId);
+    catId = $button.data("cat-id")
+    category = this.collection.get(catId);
+
+    category.feeds().remove(feed);
+    category.save({}, {
+
+      success: function (model, resp) {
+        $("ul.cat-" + catId + " li.feed-" + feedId).remove();
+      }.bind(this),
+
+      error: function () {
+        console.log("Error updating the catgory.");
       }
     });
   }

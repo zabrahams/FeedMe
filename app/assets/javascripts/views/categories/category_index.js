@@ -15,6 +15,7 @@ FeedMe.Views.CategoryIndex = Backbone.CompositeView.extend({
 
     this.$el.html(this.template( {categories: this.collection} ));
     this.attachFeedList();
+
     this.attachNewCatForm();
 
     var $catList = this.$(".category-list");

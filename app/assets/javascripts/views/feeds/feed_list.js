@@ -8,6 +8,10 @@ FeedMe.Views.FeedList = Backbone.View.extend({
 
   render: function () {
     this.$el.html(this.template({ feeds: this.collection }));
+    this.$('li.feed-list-item').draggable({
+      revert: "invalid",
+      helper: "clone"
+    });
     return this;
   }
 

@@ -12,6 +12,10 @@ div, section, article, main, h1, h2, h3, h4, p, a, form, button, input,
   background: transparent;
 }
 
+button:focus {
+  outline: none;
+}
+
 /* general styles */
 
 .group::after {
@@ -45,6 +49,8 @@ section.content {
   color: #f280a1;
   cursor: pointer;
 }
+
+
 
 /* forms */
 
@@ -284,6 +290,10 @@ ul.entry-list {
 
 .category-list-item .edit:hover {
   color: #f280a1;
+}
+
+.category-list-item.highlighted {
+  border: 1px solid #f280a1;
 }
 
 .category-feed-item {

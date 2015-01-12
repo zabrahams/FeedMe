@@ -5,50 +5,26 @@ FeedMe.Views.CategoryIndex = Backbone.CompositeView.extend({
   },
 
   events: {
-    "click button.delete-category": "deleteCategory",
-    "click button.expand": "expandCategory",
-    "click button.remove-feed": "removeFeed",
     "click section.new-category label": "newCategory"
   },
 
   template: JST['categories/index'],
 
   render: function () {
+    var view = this;
+
     this.$el.html(this.template( {categories: this.collection} ));
     this.attachFeedList();
-    var $newEl = this.$("section.new-category");
-    var categoryNewView = new FeedMe.Views.CategoryNew({});
-    this.addSubView(categoryNewView, $newEl)
+    this.attachNewCatForm();
+
+    var $catList = this.$(".category-list");
+    this.collection.each(function (category) {
+      view.attachCatEntry(category, $catList);
+    });
 
     return this;
   },
 
-  deleteCategory: function (event) {
-    var $button, catId, category;
-    event.preventDefault();
-
-    $button = $(event.currentTarget);
-    catId = $button.data("id");
-    category = this.collection.get(catId);
-    category.destroy({
-      success: function () {
-        this.render();
-      }.bind(this),
-      error: function () {
-        console.log("Error deleting category.")
-      }
-    });
-  },
-
-  expandCategory: function (event) {
-    var $button, catId, $feedList;
-    event.preventDefault();
-
-    $button = $(event.currentTarget);
-    catId = $button.data("id");
-    $feedList = this.$(".cat-" + catId);
-    $feedList.toggleClass("closed");
-  },
 
   newCategory: function (event) {
     event.preventDefault();
@@ -56,28 +32,6 @@ FeedMe.Views.CategoryIndex = Backbone.CompositeView.extend({
     $(".new-cat-form").toggleClass("closed");
   },
 
-  removeFeed: function (event) {
-    var $button, feedId, feed, catId, category;
-    event.preventDefault();
-
-    $button = $(event.currentTarget);
-    feedId = $button.data("feed-id");
-    feed = FeedMe.feeds.get(feedId);
-    catId = $button.data("cat-id")
-    category = this.collection.get(catId);
-
-    category.feeds().remove(feed);
-    category.save({}, {
-
-      success: function (model, resp) {
-        $("ul.cat-" + catId + " li.feed-" + feedId).remove();
-      }.bind(this),
-
-      error: function () {
-        console.log("Error updating the catgory.");
-      }
-    });
-  },
 
   attachFeedList: function () {
     FeedMe.feeds.fetch();
@@ -90,6 +44,17 @@ FeedMe.Views.CategoryIndex = Backbone.CompositeView.extend({
 
     this.$el.append($feedDiv);
     this.addSubView(feedList, $feedDiv);
+  },
+
+  attachNewCatForm: function () {
+    var $newEl = this.$("section.new-category");
+    var categoryNewView = new FeedMe.Views.CategoryNew({});
+    this.addSubView(categoryNewView, $newEl);
+  },
+
+  attachCatEntry: function (category, $catList) {
+    var categoryView = new FeedMe.Views.CatFeeds( { model: category });
+    this.addSubView(categoryView, $catList);
   }
 
 });

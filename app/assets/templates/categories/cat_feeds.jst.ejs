@@ -1,0 +1,23 @@
+<li class="category-list-item group">
+
+  <header class="category-header">
+    <a href="/#/categories/<%= category.id %>" class="category-title">
+      <%= category.escape("name") %>
+    </a>
+    <button class="delete-category delete">X</button>
+    <button class="edit expand">edit</button>
+  </header>
+
+  <ul class="cat-feed-list closed">
+    <% category.feeds().forEach(function (feed) { %>
+      <li class="category-feed-item feed-<%= feed.id %> group">
+        <label class="category-feed-label">
+          <%= feed.escape("name") %>
+        </label>
+        <button class="remove-feed delete data-feed-id="<%=feed.id%>">x</button>
+      </li>
+    <% }); %>
+  </ul>
+
+
+ </li>

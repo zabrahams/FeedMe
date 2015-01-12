@@ -1,20 +1,25 @@
-FeedMe.Views.CategoryIndex = Backbone.View.extend({
+FeedMe.Views.CategoryIndex = Backbone.CompositeView.extend({
 
   initialize: function () {
-    this.listenTo(this.collection, "add remove reset change:name", this.render);
+    this.listenTo(this.collection, "add remove reset", this.render);
   },
 
   events: {
     "click button.delete-category": "deleteCategory",
     "click button.expand": "expandCategory",
-    "click button.remove-feed": "removeFeed"
-
+    "click button.remove-feed": "removeFeed",
+    "click section.new-category label": "newCategory"
   },
 
   template: JST['categories/index'],
 
   render: function () {
     this.$el.html(this.template( {categories: this.collection} ));
+    this.attachFeedList();
+    var $newEl = this.$("section.new-category");
+    var categoryNewView = new FeedMe.Views.CategoryNew({});
+    this.addSubView(categoryNewView, $newEl)
+
     return this;
   },
 
@@ -45,6 +50,12 @@ FeedMe.Views.CategoryIndex = Backbone.View.extend({
     $feedList.toggleClass("closed");
   },
 
+  newCategory: function (event) {
+    event.preventDefault();
+
+    $(".new-cat-form").toggleClass("closed");
+  },
+
   removeFeed: function (event) {
     var $button, feedId, feed, catId, category;
     event.preventDefault();
@@ -66,6 +77,19 @@ FeedMe.Views.CategoryIndex = Backbone.View.extend({
         console.log("Error updating the catgory.");
       }
     });
+  },
+
+  attachFeedList: function () {
+    FeedMe.feeds.fetch();
+    var $feedUL = $("<ul>").addClass("feed-list");
+    var $feedDiv = $("<div>").addClass("cat-feed-list-container");
+    var feedList = new FeedMe.Views.FeedList({
+      collection: FeedMe.feeds,
+      el: $feedUL.get()
+    });
+
+    this.$el.append($feedDiv);
+    this.addSubView(feedList, $feedDiv);
   }
 
 });

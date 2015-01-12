@@ -1,9 +1,5 @@
 FeedMe.Views.CategoryNew = Backbone.View.extend({
 
-  initialize: function () {
-    this.listenTo( this.collection, "add reset remove", this.render)
-  },
-
   events: {
     "submit": "createCategory"
   },
@@ -11,7 +7,7 @@ FeedMe.Views.CategoryNew = Backbone.View.extend({
   template: JST['categories/form'],
 
   render: function () {
-    this.$el.html(this.template( { feeds: this.collection }));
+    this.$el.html(this.template());
     return this;
   },
 
@@ -21,7 +17,7 @@ FeedMe.Views.CategoryNew = Backbone.View.extend({
 
     attrs = this.$el.find('form').serializeJSON();
     category = new FeedMe.Models.Category();
-    category.set(attrs);
+    category.set(attrs.category);
     category.save({}, {
       success: function () {
         FeedMe.categories.add(category);

@@ -27,7 +27,7 @@ gem 'sdoc', '~> 0.4.0',          group: :doc
 gem 'bcrypt'
 
 gem 'feedjira'
-gem 'resque'
+gem 'resque', "~> 1.22.0"
 
 gem "backbone-on-rails"
 
@@ -58,7 +58,7 @@ group :production do
   gem 'rails_12factor'
 end
 # Use unicorn as the app server
-# gem 'unicorn'
+gem 'unicorn'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development

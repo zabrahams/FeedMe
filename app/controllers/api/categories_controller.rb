@@ -11,7 +11,12 @@ class Api::CategoriesController < ApplicationController
   end
 
   def show
-    @category.feeds.each { |feed| Resque.enqueue(UpdateEntries, feed.id) } # Remove bang for production
+    @category.feeds.each do |feed|
+      if feed.updated_at < 30.seconds.ago
+        Resque.enqueue(UpdateEntries, feed.id) 
+      end
+    end
+
     @entries = @category.entries.includes(:feed).order(published_at: :desc)
     render :show
   end

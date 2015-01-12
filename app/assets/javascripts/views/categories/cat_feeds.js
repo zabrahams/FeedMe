@@ -47,7 +47,6 @@ FeedMe.Views.CatFeeds = Backbone.View.extend({
     feedId = ui.draggable.data("id");
     feed = FeedMe.feeds.get(feedId);
     category = this.model;
-    console.log(this.model);
 
     category.feeds().add(feed, { merge: true });
     category.save( {}, {

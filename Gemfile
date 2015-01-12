@@ -28,6 +28,7 @@ gem 'bcrypt'
 
 gem 'feedjira'
 gem 'resque', "~> 1.22.0"
+gem 'redis'
 
 gem "backbone-on-rails"
 

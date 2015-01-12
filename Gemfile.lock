@@ -287,6 +287,7 @@ DEPENDENCIES
   quiet_assets
   rails (= 4.1.7)
   rails_12factor
+  redis
   resque (~> 1.22.0)
   rspec-rails
   sass-rails (~> 4.0.3)

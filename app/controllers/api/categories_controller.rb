@@ -13,7 +13,7 @@ class Api::CategoriesController < ApplicationController
   def show
     @category.feeds.each do |feed|
       if feed.updated_at < 30.seconds.ago
-        Resque.enqueue(UpdateEntries, feed.id) 
+        Resque.enqueue(UpdateEntries, feed.id)
       end
     end
 

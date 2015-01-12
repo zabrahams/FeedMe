@@ -36,7 +36,7 @@ FeedMe.Routers.Router = Backbone.Router.extend({
   },
 
   entryIndex: function () {
-    var entries, entryIndexView
+    var entries, entryIndexView;
 
     entries = new FeedMe.Collections.Entries();
     entries.fetch();

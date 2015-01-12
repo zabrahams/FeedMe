@@ -8,7 +8,7 @@ Rails.application.routes.draw do
       get 'recent', on: :collection
       post 'read', on: :member
     end
-    resources :categories, only: [:index, :show, :create, :destroy]
+    resources :categories, only: [:index, :show, :create, :update, :destroy]
   end
 
   root to: 'static_pages#root'

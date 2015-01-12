@@ -1,10 +1,12 @@
 class Api::CategoriesController < ApplicationController
 
+  wrap_parameters false
+
   before_action :set_category, only: [:show, :update, :destroy]
   before_action :require_ownership, only: [:show, :update, :destroy]
 
   def index
-    @categories = current_user.categories
+    @categories = current_user.categories.includes(:feeds)
     render :index
   end
 
@@ -24,14 +26,15 @@ class Api::CategoriesController < ApplicationController
   end
 
 
-  # def update
-  #   if @category.update(category_params)
-  #     redirect_to category_url(@category)
-  #   else
-  #     flash.now[:errors] = @category.errors.full_messages
-  #     render :edit
-  #   end
-  # end
+  def update
+    if @category.update(category_params)
+      @category.feeds.delete_all if params[:category][:feed_ids].nil?
+      @categories = current_user.categories.includes(:feeds)
+      render :index
+    else
+      render json: @category.errors.full_messages
+    end
+  end
 
   def destroy
     @category.destroy
@@ -41,7 +44,7 @@ class Api::CategoriesController < ApplicationController
   private
 
   def category_params
-    params.require(:category).permit(:name, :feed_name)
+    params.require(:category).permit(:name, feed_ids: [])
   end
 
   def set_category

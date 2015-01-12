@@ -2,34 +2,37 @@
   <h1 class="page-title">Categories</h1>
 </header>
 
-<a href="/#/categories/new" class="new-category">New Category</a>
+<section class="cat-list-container">
+  <section class="new-category">
+    <label> New Category</label>
+  </section>
+  <ul class="category-list group">
 
-<ul class="category-list group">
+    <% categories.forEach(function (category) { %>
+    <li class="category-list-item group">
 
-  <% categories.forEach(function (category) { %>
-  <li class="category-list-item group">
+        <header class="category-header">
+          <a href="/#/categories/<%= category.id %>" class="category-title">
+            <%= category.escape("name") %>
+          </a>
+          <button class="delete-category delete" data-id="<%= category.id %>">X</button>
+          <button class="edit expand" data-id="<%= category.id %>">edit</button>
+        </header>
 
-      <header class="category-header">
-        <a href="/#/categories/<%= category.id %>" class="category-title">
-          <%= category.escape("name") %>
-        </a>
-        <button class="delete-category delete" data-id="<%= category.id %>">X</button>
-        <button class="edit expand" data-id="<%= category.id %>">edit</button>
-      </header>
+        <ul class="cat-feed-list cat-<%= category.id%> closed">
+          <% category.feeds().forEach(function (feed) { %>
+            <li class="category-feed-item feed-<%= feed.id %> group">
+              <label class="category-feed-label">
+                <%= feed.escape("name") %>
+              </label>
+              <button class="remove-feed delete"
+                      data-feed-id="<%=feed.id%>"
+                      data-cat-id="<%=category.id%>">x</button>
+            </li>
+          <% }); %>
+        </ul>
 
-      <ul class="cat-feed-list cat-<%= category.id%> closed">
-        <% category.feeds().forEach(function (feed) { %>
-          <li class="category-feed-item feed-<%= feed.id %> group">
-            <label class="category-feed-label">
-              <%= feed.escape("name") %>
-            </label>
-            <button class="remove-feed delete"
-                    data-feed-id="<%=feed.id%>"
-                    data-cat-id="<%=category.id%>">x</button>
-          </li>
-        <% }); %>
-      </ul>
-
-  </li>
-  <% }); %>
-</ul>
+    </li>
+    <% }); %>
+  </ul>
+</section>

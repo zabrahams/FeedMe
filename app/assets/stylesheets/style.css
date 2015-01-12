@@ -299,3 +299,62 @@ ul.entry-list {
   height: 20px;
   overflow: hidden;
 }
+
+.cat-list-container {
+  display: block;
+  float: right;
+  width: 400px;
+  margin-right: 150px;
+  margin-top: 30px;
+}
+
+.new-category {
+  display: block;
+  width: 300px;
+  font-size: 18px;
+  font-weight: bold;
+  padding: 10px 20px;
+  border-radius: 5px;
+  border: 1px solid #999;
+}
+
+.new-category > label {
+  display: block;
+}
+
+.new-category:hover {
+  border: 1px solid #f280a1;
+}
+.new-category form.new-cat-form {
+  background: #eee;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+form.new-cat-form input {
+  background: white;
+}
+
+form.new-cat-form input[type=text] {
+  width: 220px;
+  display: block;
+  border: 1px solid #ccc;
+}
+
+.cat-feed-list-container .feed-list{
+  width: 400px;
+  display: block;
+  float: left;
+  margin-left: 150px;
+  margin-top: 30px;
+}
+
+
+.cat-feed-list-container .feed-list .feed-list-header{
+  font-size: 18px;
+  font-weight: bold;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #999;
+}

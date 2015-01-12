@@ -11,7 +11,6 @@ FeedMe.Routers.Router = Backbone.Router.extend({
     "entries" : "entryIndex",
     "entries/recent": "recentlyRead",
     "categories": "categoryIndex",
-    "categories/new": "categoryNew",
     "categories/:id": "categoryShow"
   },
 
@@ -68,11 +67,6 @@ FeedMe.Routers.Router = Backbone.Router.extend({
     category = FeedMe.categories.getOrFetch(id);
     categoryShowView = new FeedMe.Views.CategoryShow({ model: category });
     this._swapView(categoryShowView);
-  },
-
-  categoryNew: function () {
-    var categoryNewView = new FeedMe.Views.CategoryNew({ collection: FeedMe.feeds });
-    this._swapView(categoryNewView);
   },
 
   _swapView: function (view) {

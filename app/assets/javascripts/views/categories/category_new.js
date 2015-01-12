@@ -21,13 +21,13 @@ FeedMe.Views.CategoryNew = Backbone.View.extend({
     category.save({}, {
       success: function () {
         FeedMe.categories.add(category);
-        Backbone.history.navigate("#/categories", { trigger: true })
+        Backbone.history.navigate("#/categories", { trigger: true });
       }.bind(this),
 
       error: function (model, resp) {
-        console.log(resp.responseText)
+        console.log(resp.responseText);
       }
-    })
+    });
 
   }
 

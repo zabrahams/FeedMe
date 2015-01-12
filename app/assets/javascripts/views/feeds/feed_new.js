@@ -15,7 +15,7 @@ FeedMe.Views.FeedNew = Backbone.View.extend({
     event.preventDefault();
     var feed, feeds, attr;
 
-    feeds = this.collection
+    feeds = this.collection;
     feed = new FeedMe.Models.Feed();
 
     attrs = $(event.currentTarget).serializeJSON();

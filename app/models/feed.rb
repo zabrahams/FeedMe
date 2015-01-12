@@ -32,10 +32,10 @@ class Feed < ActiveRecord::Base
 
     new_entries = new_entries.map do |entry|
       {
-        guid: entry.entry_id,
+        guid: entry.entry_id || SecureRandom.urlsafe_base64,
         title: entry.title,
         link: entry.url,
-        published_at: entry.published,
+        published_at: entry.published || Time.now,
         json: entry_to_json(entry)
       }
     end
@@ -62,21 +62,24 @@ class Feed < ActiveRecord::Base
 
     # Delete would reduce queries, but I'd need to manually need to delete the
     # dependent user_read_entries
-    self.entries.where("published_at < ?", oldest.published).destroy_all
+    self.entries.where("published_at < ?", oldest.published || 1.second.ago).destroy_all
+
 
     new_entries = curr_entries.select do |curr_entry|
-      curr_entry.published > self.updated_at
+      !curr_entry.published || curr_entry.published > self.updated_at
     end
 
     new_entries = new_entries.map do |entry|
       {
-        guid: entry.entry_id,
+        guid: entry.entry_id || SecureRandom.urlsafe_base64,
         title: entry.title,
         link: entry.url,
-        published_at: entry.published,
+        published_at: (entry.published || Time.now) ,
         json: entry_to_json(entry)
       }
     end
+
+    puts new_entries
 
     self.entries.create(new_entries)
     self.touch unless new_entries.count === 0;

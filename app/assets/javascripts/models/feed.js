@@ -11,7 +11,7 @@ FeedMe.Models.Feed = Backbone.Model.extend({
 
     if (resp.entries) {
       this.entries().set(resp.entries);
-      delete resp.entries
+      delete resp.entries;
     }
 
     return resp;

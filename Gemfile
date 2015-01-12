@@ -27,6 +27,7 @@ gem 'sdoc', '~> 0.4.0',          group: :doc
 gem 'bcrypt'
 
 gem 'feedjira'
+gem 'resque'
 
 gem "backbone-on-rails"
 

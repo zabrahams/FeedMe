@@ -11,7 +11,7 @@ class Api::CategoriesController < ApplicationController
   end
 
   def show
-    @category.feeds.each { |feed| feed.update_entries! } # Remove bang for production
+    @category.feeds.each { |feed| Resque.enqueue(UpdateEntries, feed.id) } # Remove bang for production
     @entries = @category.entries.includes(:feed).order(published_at: :desc)
     render :show
   end

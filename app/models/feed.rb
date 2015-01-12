@@ -43,18 +43,13 @@ class Feed < ActiveRecord::Base
     self.entries.create(new_entries)
   end
 
-  def update_entries
-    update_entries! if self.updated_at < 1.minutes.ago
-  end
-
-
   # Potential optimization for the future:
   # Seperate feeds into two categories based on popularity.
   # Popular feeds (maybes ones followed by x number of users)
   # are updated every n-minutes by a scheduled process. Less
   # popular feeds are updated using update_entries when there is a need
   # for them. For now I'm just updated everything as used.
-  def update_entries!
+  def update_entries
     self.feed || self.feed = Feedjira::Feed.fetch_and_parse(self.url)
     curr_entries = self.feed.entries
     curr_entries = curr_entries[0...40] if curr_entries.length > 40

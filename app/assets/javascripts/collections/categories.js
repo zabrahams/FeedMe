@@ -10,12 +10,21 @@ FeedMe.Collections.Categories = Backbone.Collection.extend({
     var category = this.find(id);
 
     if (category) {
-      category.fetch();
+      category.fetch({
+        success: function () {
+          if (category.get("updating") === true) {
+            window.setTimeout( category.fetch.bind(category), 4000);
+          }
+        }
+      });
     } else {
       category = new FeedMe.Models.Category( {id: id} );
       category.fetch({
         success: function () {
           this.add(category, { merge: true });
+          if (category.get("updating") === true) {
+            window.setTimeout( category.fetch.bind(category), 4000);
+          }
         }.bind(this)
       });
     }

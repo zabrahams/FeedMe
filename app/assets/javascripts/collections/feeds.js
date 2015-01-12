@@ -12,10 +12,8 @@ FeedMe.Collections.Feeds = Backbone.Collection.extend({
     if (feed) {
       feed.fetch({
         success: function () {
-          console.log("1" + feed.get('updating'));
-          console.log(feed);
           if (feed.get("updating") === true) {
-            window.setTimeout( feed.fetch, 4000);
+            window.setTimeout( feed.fetch.bind(feed), 4000);
           }
         }
       });

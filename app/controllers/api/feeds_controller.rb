@@ -18,7 +18,9 @@ class Api::FeedsController < ApplicationController
   end
 
   def show
-    Resque.enqueue(UpdateEntries, @feed.id) if @feed.updated_at < 20.seconds.ago
+    if @feed.updated_at < 30.seconds.ago
+      Resque.enqueue(UpdateEntries, @feed.id)
+    end
     @entries = @feed.entries.order(published_at: :desc)
     render :show
   end

@@ -1,7 +1,11 @@
 class Api::EntriesController < ApplicationController
 
   def index
-    current_user.feeds.each { |feed| Resque.enqueue(UpdateEntries, feed.id) }  # remove bang for production
+    current_user.feeds.each do |feed|
+      if feed.updated_at < 30.seconds.ago
+        Resque.enqueue(UpdateEntries, feed.id)
+      end
+    end
     @entries = current_user.entries.includes(:feed).order(published_at: :desc)
     render :index
   end

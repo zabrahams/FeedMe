@@ -1,7 +1,7 @@
 /* reset */
 
 div, section, article, main, h1, h2, h3, h4, p, a, form, button, input,
-     body, ul, li {
+     body, ul, li, em {
   padding: 0;
   margin: 0;
   border: 0;
@@ -15,6 +15,24 @@ div, section, article, main, h1, h2, h3, h4, p, a, form, button, input,
 button:focus {
   outline: none;
 }
+
+input[type=text] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+input[type=text]:focus {
+  outline: none;
+  border-color: #f280a1;
+}
+
+input[type=password]:focus {
+  outline: none;
+  border-color:  #f280a1;
+}
+
+
 
 /* general styles */
 
@@ -32,6 +50,9 @@ ul {
   list-style: none;
 }
 
+em {
+  color: #f280a1;
+}
 
 section.content {
   min-height: 500px;
@@ -224,6 +245,47 @@ ul.entry-list {
   padding-left: 5px;
 }
 
+/* entry show styles */
+
+article.entry {
+  margin: 20px auto;
+  padding: 20px 0;
+  width: 850px;
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+}
+
+.entry .link-to-original {
+  display: block;
+  color: #f280a1;
+  font-variant: small-caps;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 10px
+}
+
+.entry img {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.entry div {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.entry p {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.entry-author {
+  display: block;
+  color: #f280a1;
+  text-align: center;
+  margin-top: 10px;
+}
+
 /* feed list styles (maybe some should be general list styles?) */
 
 .feed-list {
@@ -367,4 +429,24 @@ form.new-cat-form input[type=text] {
   font-weight: bold;
   padding-bottom: 10px;
   border-bottom: 1px solid #999;
+}
+
+/* Splash Page */
+
+.banner {
+  font-size: 84px;
+  text-align: center;
+  width: 700px;
+  padding: 50px 100px;
+  margin: auto;
+  margin-top: 100px;
+
+  font-weight: bold;
+}
+
+.splash-text {
+  font-size: 36px;
+  text-align: center;
+  display: block;
+  padding: 25px 100px
 }

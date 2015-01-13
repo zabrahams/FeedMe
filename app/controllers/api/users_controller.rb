@@ -1,0 +1,15 @@
+class Api::UsersController < ApplicationController
+
+  before_action :require_login, only: :update
+
+  def index
+    @users = User.all
+    render :index
+  end
+
+  def show
+    @user = User.find(params[:id])
+    render :show
+  end
+
+end

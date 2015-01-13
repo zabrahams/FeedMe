@@ -26,10 +26,21 @@ gem 'sdoc', '~> 0.4.0',          group: :doc
 # Use ActiveModel has_secure_password
 gem 'bcrypt'
 
+# Used for fetching and parsing rss feeds.
 gem 'feedjira'
+
+#Used for queueing feed updates
 gem 'resque', "~> 1.22.0"
 gem 'redis'
 
+# Keeps my secrets nice and safe.
+gem "figaro"
+
+# Handles image uploading
+gem "paperclip"
+gem "aws-sdk"
+
+# Sets up backbone
 gem "backbone-on-rails"
 
 group :development, :test do

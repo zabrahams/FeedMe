@@ -123,14 +123,19 @@ Table name: users
 
 |Column         | Type     |  Properties|
 |---------------|----------|------------|
-|id             |:integer  | not null, primary key|
-|username       |:string   | not null|
-|email          |:string   | not null|
-|password_digest|:string   | not null|
-|session_token  |:string   | not null|
-|activated      |:boolean  | not null|
-|created_at     |:datetime |         |
-|updated_at     |:datetime |         ||
+|id              |:integer   | not null, primary key|
+|username        |:string    | not null|
+|email           |:string    | not null|
+|password_digest |:string    | not null|
+|session_token   |:string    | not null|
+|activated       |:boolean   | not null|
+|activation_token|:string    | not null|
+|description     |:text      |         |
+|fname           |:string    |         |
+|lname           |:string    |         |
+|image           |:attachment|         |
+|created_at      |:datetime  |         |
+|updated_at      |:datetime  |         ||
 
 ### Feed
 
@@ -164,12 +169,12 @@ Table name: entries
 |Column          | Type     |  Properties|
 |----------------|----------|------------|
 |id              |:integer  | not null, primary key|
-|guid            |:string   | not null   |
+|guid            |:text     | not null   |
 |title           |:string   |            |
 |link            |:string   |            |
 |published_at    |:datetime | not null   |
 |feed_id         |:integer  | not null, foreign key|
-|json            |:string   | not null   |
+|json            |:text     | not null   |
 |created_at      |:datetime |            |
 |updated_at      |:datetime |            ||
 

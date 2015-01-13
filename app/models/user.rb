@@ -1,10 +1,17 @@
 class User < ActiveRecord::Base
+  has_attached_file :image, default_url: "fly_trap.jpg"
+
+  validates_attachment_content_type :image, :content_type => /\Aimage\/.*\Z/
   validates :username, :email, :password_digest, :session_token, presence: true
   validates :username, :email, :session_token, uniqueness: true
   validates :activated, inclusion: [true, false]
   validates :password, length: {minimum: 6}, allow_nil: true
 
+
+
+  before_validation :ensure_activation_token, on: :create
   after_initialize :ensure_session_token
+
 
   has_many :user_feeds, dependent: :destroy
   has_many :categories, dependent: :destroy
@@ -36,6 +43,10 @@ class User < ActiveRecord::Base
   def reset_session_token!
     self.session_token = unique_session_token
     self.save!
+  end
+
+  def ensure_activation_token
+    self.activation_token || self.activation_token = SecureRandom.urlsafe_base64
   end
 
   def unique_session_token

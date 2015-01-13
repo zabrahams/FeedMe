@@ -1,0 +1,22 @@
+<div class=".profile-pic">
+  <img src="<%= user.get('image_url') %>" alt="Profile Picture">
+</div>
+
+<table>
+  <tr>
+    <th>Username:</th>
+    <td><%= user.escape('username') %></td>
+  </tr>
+
+  <tr>
+    <th>First Name:</th>
+    <td><%= user.escape('fname') %></td>
+  </tr>
+
+  <tr>
+    <th>Last Name:</th>
+    <td><%= user.escape('lname') %></td>
+  </tr>
+</table>
+
+<p class="description"><%= user.escape('description') %></p>

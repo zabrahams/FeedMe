@@ -34,5 +34,12 @@ Rails.application.configure do
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
-  
+
+  # Sets rails logs to be sent to STDOUT since unicorn doesn't load
+  # rails logger.
+  config.logger = Logger.new(STDOUT)
+  config.logger.level = Logger.const_get(
+  ENV['LOG_LEVEL'] ? ENV['LOG_LEVEL'].upcase : 'DEBUG'
+  )
+
 end

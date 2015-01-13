@@ -11,7 +11,8 @@ FeedMe.Routers.Router = Backbone.Router.extend({
     "entries" : "entryIndex",
     "entries/recent": "recentlyRead",
     "categories": "categoryIndex",
-    "categories/:id": "categoryShow"
+    "categories/:id": "categoryShow",
+    "users/:id": "userShow"
   },
 
   feedsIndex: function () {
@@ -58,7 +59,7 @@ FeedMe.Routers.Router = Backbone.Router.extend({
 
     FeedMe.categories.fetch();
     categoryIndexView = new FeedMe.Views.CategoryIndex({ collection: FeedMe.categories });
-    this._swapView(categoryIndexView)
+    this._swapView(categoryIndexView);
   },
 
   categoryShow: function (id) {
@@ -67,6 +68,14 @@ FeedMe.Routers.Router = Backbone.Router.extend({
     category = FeedMe.categories.getOrFetch(id);
     categoryShowView = new FeedMe.Views.CategoryShow({ model: category });
     this._swapView(categoryShowView);
+  },
+
+  showUser: function (id) {
+    var user, userShowView;
+
+    user = FeedMe.users.getOrFetch(id);
+    userShowView = new FeedMe.Views.UserShow({ model: user });
+    this._swapView(userShowView);
   },
 
   _swapView: function (view) {

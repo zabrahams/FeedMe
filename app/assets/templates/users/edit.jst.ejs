@@ -12,6 +12,10 @@
   <label for="user_description">About You:</label>
   <textarea name="user[description]" id="user_description"><%= user.escape('description') %></textarea>
 
+  <label for="user_image">Profile Picture:</label>
+  <input type="file" name="user[image]" id="user_image" value="">
+
+
   <input type="submit" value="Update!">
 
 </form>

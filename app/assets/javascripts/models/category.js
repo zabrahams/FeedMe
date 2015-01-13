@@ -17,12 +17,19 @@ FeedMe.Models.Category = Backbone.Model.extend({
 
     if (resp.entries) {
       this.entries().set(resp.entries);
-      delete resp.entries
+      delete resp.entries;
     }
 
     if (resp.feeds) {
       this.feeds().set(resp.feeds);
-      delete resp.feeds
+      delete resp.feeds;
+    }
+
+    if (resp.updating) {
+      if (resp.updating === true) {
+        window.setTimeout( this.fetch.bind(this), Constants.UPDATING_TIMEOUT);
+      }
+      delete resp.updating;
     }
 
     return resp;

@@ -5,7 +5,8 @@ FeedMe.Views.UserEdit = Backbone.View.extend({
   },
 
   events: {
-    "submit form": "updateUser"
+    "submit form": "updateUser",
+    "change #user_image": "fileInputChange"
   },
 
   template: JST['users/edit'],
@@ -27,6 +28,23 @@ FeedMe.Views.UserEdit = Backbone.View.extend({
        }
     });
 
+  },
+
+  fileInputChange: function (event) {
+
+    var that = this;
+    var file = event.currentTarget.files[0];
+    var reader = new FileReader();
+
+    reader.onloadend = function() {
+      that.model._image = reader.result;
+    };
+
+    if (file) {
+      reader.readAsDataURL(file);
+    } else {
+      delete this.model._image;
+    }
   }
 
 });

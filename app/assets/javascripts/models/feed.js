@@ -14,6 +14,14 @@ FeedMe.Models.Feed = Backbone.Model.extend({
       delete resp.entries;
     }
 
+    if (resp.updating) {
+      console.log(resp.updating);
+      if (resp.updating === true) {
+        window.setTimeout( this.fetch.bind(this), Constants.UPDATING_TIMEOUT);
+      }
+      delete resp.updating;
+    }
+
     return resp;
   }
 });

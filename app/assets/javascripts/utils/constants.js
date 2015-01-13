@@ -3,6 +3,6 @@
     window.Constants = {};
   }
 
-  Constants.UPDATING_TIMEOUT = 3000;
+  Constants.UPDATING_TIMEOUT = 1000;
 
 })();

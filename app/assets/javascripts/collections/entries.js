@@ -5,11 +5,13 @@ FeedMe.Collections.Entries = Backbone.Collection.extend({
   url: "/api/entries",
 
   parse: function (resp) {
-    var updating = resp.updating;
+    if (resp.updating) {
 
-    if (updating === true) {
-      window.setTimeout(this.fetch.bind(this), Constants.UPDATING_TIMEOUT);
+      if (resp.updating === true) {
+        window.setTimeout(this.fetch.bind(this), Constants.UPDATING_TIMEOUT);
+      }
     }
+
 
     return resp.entries;
   }

@@ -26,7 +26,7 @@ class Api::UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:fname, :lname, :email, :description)
+    params.require(:user).permit(:fname, :lname, :email, :description, :image)
   end
 
   def require_ownership

@@ -8,7 +8,7 @@ FeedMe.Collections.Entries = Backbone.Collection.extend({
     var updating = resp.updating;
 
     if (updating === true) {
-      window.setTimeout(this.fetch.bind(this), 1000);
+      window.setTimeout(this.fetch.bind(this), Constants.UPDATING_TIMEOUT);
     }
 
     return resp.entries;

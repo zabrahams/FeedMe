@@ -13,7 +13,7 @@ FeedMe.Collections.Feeds = Backbone.Collection.extend({
       feed.fetch({
         success: function () {
           if (feed.get("updating") === true) {
-            window.setTimeout( feed.fetch.bind(feed), 1000);
+            window.setTimeout( feed.fetch.bind(feed), Constants.UPDATING_TIMEOUT);
           }
         }
       });
@@ -23,7 +23,7 @@ FeedMe.Collections.Feeds = Backbone.Collection.extend({
         success: function () {
           this.add(feed, { merge: true });
           if (feed.get("updating") === true) {
-            window.setTimeout(feed.fetch.bind(feed), 1000);
+            window.setTimeout(feed.fetch.bind(feed), Constants.UPDATING_TIMEOUT);
           }
         }.bind(this)
       });

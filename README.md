@@ -137,6 +137,18 @@ Table name: users
 |created_at      |:datetime  |         |
 |updated_at      |:datetime  |         ||
 
+### UserFollows
+
+Table name: user_follows
+
+|Column         | Type     |  Properties|
+|---------------|----------|------------|
+|id             |:integer  | not null, primary key|
+|followed_id    |:integer  | not null   |
+|following_id   |:integer  | not null   |
+|created_at     |:datetime | not null   |
+|updated_at     |:datetime | not null   ||
+
 ### Feed
 
 Table name: feeds

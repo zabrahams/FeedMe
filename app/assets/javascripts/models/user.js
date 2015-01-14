@@ -13,3 +13,40 @@ FeedMe.Models.User = Backbone.Model.extend({
   }
 
 });
+
+FeedMe.Models.CurrentUser = FeedMe.Models.User.extend({
+
+  initialize: function () {
+    this.listenTo(this, "change", this.loginStatusChange);
+  },
+
+  url: "api/session",
+
+  loggedIn: function () {
+    return !this.isNew();
+  },
+
+  logout: function () {
+    var model = this;
+
+    $.ajax({
+      type: "DELETE",
+      url: this.url,
+      dataType: "json",
+      success: function () {
+        model.clear();
+      }
+    });
+
+  },
+
+  loginStatusChange: function () {
+    if (this.loggedIn()) {
+      this.trigger("logIn");
+    } else {
+      this.trigger("logOut");
+    }
+  }
+
+
+});

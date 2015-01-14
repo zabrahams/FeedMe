@@ -1,0 +1,27 @@
+
+  <h3 class="logo">FeedMe</h3>
+
+    <a href="#/users/<%= user.id %>/edit" class="user-link">
+      <%= user.escape("username") %>
+    <a>
+
+    <button class="logout">logout</button>
+
+      <ul class="nav-list">
+        <li class="nav-list-item">
+          <a href="/#/feeds/new">Add New Feed</a>
+        </li>
+        <li class="nav-list-item">
+          <a href="/#">All Feeds</a>
+        </li>
+        <li class="nav-list-item">
+          <a href="/#/entries">All Entries</a>
+        </li>
+        <li class="nav-list-item">
+          <a href="/#/categories">Categories</a>
+        </li>
+        <li class="nav-list-item">
+          <a href="/#/entries/recent"> Recently Read Entries</a>
+        </li>
+      </ul>
+  </nav>

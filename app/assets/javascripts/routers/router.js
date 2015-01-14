@@ -117,6 +117,7 @@ FeedMe.Routers.Router = Backbone.Router.extend({
   userEdit: function (id) {
     var user, userEditView;
 
+    FeedMe.currentUser.fetch();
     if (!this._requireLogin()) {return false;}
     user = FeedMe.users.getOrFetch(FeedMe.currentUser.id);
     userEditView = new FeedMe.Views.UserEdit({ model: user });

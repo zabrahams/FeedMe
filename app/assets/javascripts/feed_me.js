@@ -11,13 +11,27 @@ window.FeedMe = {
     this.users = new FeedMe.Collections.Users();
     this.users.fetch();
 
-    this.currentUser = new FeedMe.Models.CurrentUser();
-    this.currentUser.fetch();
 
-    new FeedMe.Routers.Router ({
-      $mainEl:    $("main"),
-      $sidebarEl: $("#sidebar-sec")
+    this.currentUser = new FeedMe.Models.CurrentUser();
+    this.currentUser.fetch({
+      success: function () {
+        new FeedMe.Routers.Router ({
+          $mainEl:    $("main"),
+          $sidebarEl: $("#sidebar-sec")
+        });
+        Backbone.history.start();
+      },
+
+        error: function () {
+        new FeedMe.Routers.Router ({
+          $mainEl:    $("main"),
+          $sidebarEl: $("#sidebar-sec")
+        });
+        Backbone.history.start();
+      
+      }
     });
-    Backbone.history.start();
+
+
   }
 };

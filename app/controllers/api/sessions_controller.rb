@@ -5,7 +5,8 @@ class Api::SessionsController < ApplicationController
 
   def show
     if current_user
-      render json: @current_user;
+      @user = current_user
+      render 'api/users/show'
     else
       render json: {errors: "Problem logging in."}
     end

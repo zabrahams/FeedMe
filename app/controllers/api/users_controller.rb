@@ -14,6 +14,15 @@ class Api::UsersController < ApplicationController
     render :show
   end
 
+  def create
+    @user = User.new
+    if @user.save(user_params)
+      render json: {notice: "You have successfully created an account."}
+    else
+      render json: @user.errors.full_messages
+    end
+  end
+
   def update
     @user = User.find(params[:id])
     if @user.update(user_params)
@@ -26,7 +35,13 @@ class Api::UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:fname, :lname, :email, :description, :image)
+    params.require(:user).permit(:fname,
+                                 :lname,
+                                 :email,
+                                 :description,
+                                 :image,
+                                 :username,
+                                 :password)
   end
 
   def require_ownership

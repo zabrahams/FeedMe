@@ -11,8 +11,8 @@ FeedMe.Routers.Router = Backbone.Router.extend({
   },
 
   routes: {
-    "":"feedsIndex",
-    "splash": "splash",
+    "": "splash",
+    "feeds":"feedsIndex",
     "feeds/new": "feedNew",
     "feeds/:id": "feedShow",
     "entries" : "entryIndex",
@@ -28,6 +28,7 @@ FeedMe.Routers.Router = Backbone.Router.extend({
   feedsIndex: function () {
     var feedsIndexView;
 
+    if (!this._requireLogin()) {return false;}
     FeedMe.feeds.fetch();
     feedsIndexView = new FeedMe.Views.FeedsIndex({ collection: FeedMe.feeds });
     this._swapView(feedsIndexView);
@@ -43,19 +44,24 @@ FeedMe.Routers.Router = Backbone.Router.extend({
   feedShow: function (id) {
     var feed, feedShowView;
 
+    if (!this._requireLogin()) {return false;}
     feed = FeedMe.feeds.getOrFetch(id);
     feedShowView = new FeedMe.Views.FeedShow({ model: feed });
     this._swapView(feedShowView);
   },
 
   feedNew: function () {
-    var feedNewView = new FeedMe.Views.FeedNew({ collection: FeedMe.feeds });
+    var feedNewView;
+
+    if (!this._requireLogin()) {return false;}
+    feedNewView = new FeedMe.Views.FeedNew({ collection: FeedMe.feeds });
     this._swapView(feedNewView);
   },
 
   entryIndex: function () {
     var entries, entryIndexView;
 
+    if (!this._requireLogin()) {return false;}
     entries = new FeedMe.Collections.Entries();
     entries.fetch();
     entryIndexView = new FeedMe.Views.EntryIndex({ collection: entries });
@@ -65,6 +71,7 @@ FeedMe.Routers.Router = Backbone.Router.extend({
   recentlyRead: function () {
     var readEntries, recentlyReadView;
 
+    if (!this._requireLogin()) {return false;}
     readEntries = new FeedMe.Collections.RecentlyRead();
     readEntries.fetch();
     recentlyReadView = new FeedMe.Views.RecentlyReadIndex({ collection: readEntries });
@@ -74,6 +81,7 @@ FeedMe.Routers.Router = Backbone.Router.extend({
   categoryIndex: function () {
     var categoryIndexView;
 
+    if (!this._requireLogin()) {return false;}
     FeedMe.categories.fetch();
     categoryIndexView = new FeedMe.Views.CategoryIndex({ collection: FeedMe.categories });
     this._swapView(categoryIndexView);
@@ -82,6 +90,7 @@ FeedMe.Routers.Router = Backbone.Router.extend({
   categoryShow: function (id) {
     var category, categoryShowView;
 
+    if (!this._requireLogin()) {return false;}
     category = FeedMe.categories.getOrFetch(id);
     categoryShowView = new FeedMe.Views.CategoryShow({ model: category });
     this._swapView(categoryShowView);
@@ -90,6 +99,7 @@ FeedMe.Routers.Router = Backbone.Router.extend({
   userNew: function () {
     var user, userNewView;
 
+    if (!this._requireLogout()) {return false;}
     user = new FeedMe.Models.User();
     userNewView = new FeedMe.Views.UserNew({ model: user });
     this._swapView(userNewView);
@@ -98,6 +108,7 @@ FeedMe.Routers.Router = Backbone.Router.extend({
   userShow: function (id) {
     var user, userShowView;
 
+    if (!this._requireLogin()) {return false;}
     user = FeedMe.users.getOrFetch(id);
     userShowView = new FeedMe.Views.UserShow({ model: user });
     this._swapView(userShowView);
@@ -106,14 +117,15 @@ FeedMe.Routers.Router = Backbone.Router.extend({
   userEdit: function (id) {
     var user, userEditView;
 
-    user = FeedMe.users.getOrFetch(id);
-    userEditView = new FeedMe.Views.UserEdit({ model: user });
+    if (!this._requirelogin()) {return false;}
+    userEditView = new FeedMe.Views.UserEdit({ model: FeedMe.currentUser });
     this._swapView(userEditView);
   },
 
   sessionNew: function () {
     var sessionNewView;
 
+    if (!this._requireLogout()) {return false;}
     sessionNewView = new FeedMe.Views.SessionNew();
     this._swapView(sessionNewView);
   },
@@ -122,5 +134,24 @@ FeedMe.Routers.Router = Backbone.Router.extend({
     this._currentView && this._currentView.remove();
     this._currentView = view;
     this.$mainEl.html(view.render().$el);
-  }
+  },
+
+  _requireLogin: function () {
+    var loggedIn = FeedMe.currentUser.loggedIn();
+    if (!loggedIn) {
+      Backbone.history.navigate("", { trigger: true });
+    }
+    return loggedIn;
+  },
+
+  _requireLogout: function () {
+    var loggedOut = !FeedMe.currentUser.loggedIn();
+
+    if (!loggedOut) {
+      Backbone.history.navigate("", { trigger: true });
+    }
+    return loggedOut;
+  },
+
+
 });

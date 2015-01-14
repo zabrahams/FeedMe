@@ -15,8 +15,8 @@ class Api::UsersController < ApplicationController
   end
 
   def create
-    @user = User.new
-    if @user.save(user_params)
+    @user = User.new(user_params)
+    if @user.save
       render json: {notice: "You have successfully created an account."}
     else
       render json: @user.errors.full_messages

@@ -12,7 +12,7 @@ Rails.application.routes.draw do
     end
     resources :categories, only: [:index, :show, :create, :update, :destroy]
     resources :users, only: [:index, :show, :create, :update]
-    resource :session, only: [:create, :destroy]
+    resource :session, only: [:show, :create, :destroy]
   end
 
   root to: 'static_pages#root'

@@ -1,7 +1,15 @@
 class Api::SessionsController < ApplicationController
   wrap_parameters false
 
-  skip_before_action :require_login, only: [:new, :create]
+  skip_before_action :require_login, only: [:show, :create]
+
+  def show
+    if current_user
+      render json: @current_user;
+    else
+      render json: {errors: "Problem logging in."}
+    end
+  end
 
   def create
     @user = User.find_by_credentials(params[:user][:username],

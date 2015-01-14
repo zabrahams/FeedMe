@@ -16,8 +16,7 @@ FeedMe.Views.SessionNew = Backbone.View.extend({
 
     event.preventDefault();
     attrs = this.$('form').serializeJSON();
-    session = new FeedMe.Models.Session();
-    session.save(attrs, {
+    FeedMe.currentUser.save(attrs, {
       success: function () {
         Backbone.history.navigate("", { trigger: true });
       }

@@ -1,11 +1,18 @@
 FeedMe.Routers.Router = Backbone.Router.extend({
 
   initialize: function (options) {
+    var sidebarView;
+
     this.$mainEl = options.$mainEl;
+    this.$sidebarEl = options.$sidebarEl;
+
+    sidebarView = new FeedMe.Views.Sidebar();
+    this.$sidebarEl.html(sidebarView.render().$el);
   },
 
   routes: {
     "":"feedsIndex",
+    "splash": "splash",
     "feeds/new": "feedNew",
     "feeds/:id": "feedShow",
     "entries" : "entryIndex",
@@ -24,6 +31,13 @@ FeedMe.Routers.Router = Backbone.Router.extend({
     FeedMe.feeds.fetch();
     feedsIndexView = new FeedMe.Views.FeedsIndex({ collection: FeedMe.feeds });
     this._swapView(feedsIndexView);
+  },
+
+  splash: function () {
+    var splashView;
+
+    splashView = new FeedMe.Views.Splash();
+    this._swapView(splashView);
   },
 
   feedShow: function (id) {

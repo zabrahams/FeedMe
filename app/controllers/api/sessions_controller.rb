@@ -8,7 +8,7 @@ class Api::SessionsController < ApplicationController
     params[:user][:password])
     if @user
       login(@user)
-      render json: {notice: "Welcome Back."}
+      render json: @user;
     else
       render json: {errors: "Invalid Username/Password."}
     end

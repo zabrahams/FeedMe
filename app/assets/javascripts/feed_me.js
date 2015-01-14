@@ -10,8 +10,12 @@ window.FeedMe = {
     this.categories.fetch();
     this.users = new FeedMe.Collections.Users();
     this.users.fetch();
+
+    this.currentUser = new FeedMe.Models.CurrentUser();
+
     new FeedMe.Routers.Router ({
-      $mainEl: $("main")
+      $mainEl:    $("main"),
+      $sidebarEl: $("#sidebar-sec")
     });
     Backbone.history.start();
   }

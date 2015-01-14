@@ -1,4 +1,5 @@
-class Api::SessionController < ApplicationController
+class Api::SessionsController < ApplicationController
+  wrap_parameters false
 
   skip_before_action :require_login, only: [:new, :create]
 
@@ -7,14 +8,14 @@ class Api::SessionController < ApplicationController
     params[:user][:password])
     if @user
       login(@user)
-      render :json {notice: "Welcome Back."}
+      render json: {notice: "Welcome Back."}
     else
-      render :json {errors: "Invalid Username/Password."}
+      render json: {errors: "Invalid Username/Password."}
     end
   end
 
   def destroy
     logout
-    render :json {notice: "You are logged out."}
+    render json: {notice: "You are logged out."}
   end
 end

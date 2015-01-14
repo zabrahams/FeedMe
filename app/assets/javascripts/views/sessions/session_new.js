@@ -2,7 +2,7 @@ FeedMe.Views.SessionNew = Backbone.View.extend({
 
   events: {
     "submit form": "login"
-  };
+  },
 
   template: JST['sessions/new'],
 
@@ -16,13 +16,12 @@ FeedMe.Views.SessionNew = Backbone.View.extend({
 
     event.preventDefault();
     attrs = this.$('form').serializeJSON();
-
     session = new FeedMe.Models.Session();
     session.save(attrs, {
       success: function () {
         Backbone.history.navigate("", { trigger: true });
-      });
-    }
+      }
+    });
   }
 
 });

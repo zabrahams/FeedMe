@@ -1,0 +1,33 @@
+<header>
+  <h1 class=page-title>New User</h1>
+</header>
+
+<form>
+
+  <label for="user_username">Username:</label>
+  <input type="text"
+         id="user_username"
+         name="user[username]"
+         value="<%= user.escape('username') %>">
+
+  <label for="user_email">Email:</label>
+  <input type="text"
+         id="user_email"
+         name="user[email]"
+         value="<%= user.escape('email') %>">
+
+  <label for="user_password">Password:</label>
+  <input type="password"
+         id="user_password"
+         name="user[password]"
+         value="">
+
+  <label for="user_password_confirmation">Password Confirmation:</label>
+  <input type="password"
+         id="user_password_confirmation"
+         name="user[password_confirmation]"
+         value="">
+
+  <input type="submit" value="Sign Up!">
+
+</form>

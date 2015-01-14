@@ -12,8 +12,10 @@ FeedMe.Routers.Router = Backbone.Router.extend({
     "entries/recent": "recentlyRead",
     "categories": "categoryIndex",
     "categories/:id": "categoryShow",
+    "users/new": "userNew",
     "users/:id": "userShow",
-    "users/:id/edit": "userEdit"
+    "users/:id/edit": "userEdit",
+    "session/new": "sessionNew"
   },
 
   feedsIndex: function () {
@@ -71,6 +73,14 @@ FeedMe.Routers.Router = Backbone.Router.extend({
     this._swapView(categoryShowView);
   },
 
+  userNew: function () {
+    var user, userNewView;
+
+    user = new FeedMe.Models.User();
+    userNewView = new FeedMe.Views.UserNew({ model: user });
+    this._swapView(userNewView);
+  },
+
   userShow: function (id) {
     var user, userShowView;
 
@@ -85,6 +95,13 @@ FeedMe.Routers.Router = Backbone.Router.extend({
     user = FeedMe.users.getOrFetch(id);
     userEditView = new FeedMe.Views.UserEdit({ model: user });
     this._swapView(userEditView);
+  },
+
+  sessionNew: function () {
+    var sessionNewView;
+
+    sessionNewView = new FeedMe.Views.SessionNew();
+    this._swapView(sessionNewView);
   },
 
   _swapView: function (view) {

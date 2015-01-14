@@ -16,7 +16,9 @@ class Api::UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
-    if @user.save
+    if (params[:user][:password] != params[:user][:password_confirmation])
+        render json: {errors: "Password does not match Password Confirmation"}
+    elsif @user.save
       render json: {notice: "You have successfully created an account."}
     else
       render json: @user.errors.full_messages
@@ -25,7 +27,12 @@ class Api::UsersController < ApplicationController
 
   def update
     @user = User.find(params[:id])
-    if @user.update(user_params)
+    params[:user][:password] = nil if params[:user][:password] === ""
+
+    if (params[:user][:password] != params[:user][:password_confirmation]) &&
+      !params[:user][:password].nil?
+      render json: {errors: "Password does not match Password  Confirmation"}
+    elsif  @user.update(user_params)
       render :show
     else
       render json: @user.errors.full_messages, status: :unprocessable_entity

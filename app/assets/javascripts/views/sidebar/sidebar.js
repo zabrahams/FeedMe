@@ -21,8 +21,6 @@ FeedMe.Views.Sidebar = Backbone.View.extend({
   },
 
   render: function () {
-    console.log("rendering sidebar");
-    console.log(FeedMe.currentUser);
     this.$el.html(this.template()( { user: FeedMe.currentUser } ));
     return this;
   },

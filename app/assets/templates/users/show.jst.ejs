@@ -1,23 +1,27 @@
-<div class=".profile-pic">
-  <img src="<%= user.get('image_url') %>" alt="Profile Picture">
-</div>
+<header>
+  <h1 class="page-title"><%= user.escape("username") %>'s profile</h1>
+</header>
 
-<table>
-  <tr>
-    <th>Username:</th>
-    <td><%= user.escape('username') %></td>
-  </tr>
+<section class="show-user">
 
-  <tr>
-    <th>First Name:</th>
-    <td><%= user.escape('fname') %></td>
-  </tr>
+  <section class="profile-left">
+  <div class="profile-pic">
+    <img src="<%= user.get('image_url') %>" alt="Profile Picture">
+  </div>
 
-  <tr>
-    <th>Last Name:</th>
-    <td><%= user.escape('lname') %></td>
-  </tr>
-</table>
+  <label for="user_description" class="user-info">About <%= user.escape("username")%>:</label>
+  <p class="user-description"><%= user.escape('description') %></p>
+  </section>
 
-<label class="description-label">About <%= user.escape('username') %>:</label>
-<p class="description"><%= user.escape('description') %></p>
+  <section class="profile-right">
+
+    <label class="user-label" for="user_fname">First Name:</label>
+    <p class="user-info" id="user_fname" ><%= user.escape('fname') %></p>
+
+    <label class="user-label" for="user_lname">Last Name:</label>
+    <p class="user-info" id="user_lname"><%= user.escape('lname') %></p>
+
+  <button class=follow-btn>Follow!</button>
+  </section>
+
+</section>

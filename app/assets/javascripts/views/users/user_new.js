@@ -23,9 +23,10 @@ FeedMe.Views.UserNew = Backbone.View.extend({
     } else {
       delete attrs["user"]["password_confirmation"]
       user = new FeedMe.Models.User();
-      user.save(attrs, {
+      user.set(attrs);
+
+      user.save({}, {
         success: function () {
-          console.log(user )
           FeedMe.users.add(user);
           Backbone.history.navigate("", { trigger: true });
         },

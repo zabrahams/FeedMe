@@ -12,6 +12,7 @@ window.FeedMe = {
     this.users.fetch();
 
     this.currentUser = new FeedMe.Models.CurrentUser();
+    this.currentUser.fetch();
 
     new FeedMe.Routers.Router ({
       $mainEl:    $("main"),

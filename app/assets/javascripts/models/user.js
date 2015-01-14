@@ -5,6 +5,8 @@ FeedMe.Models.User = Backbone.Model.extend({
   toJSON: function () {
     var json = { user: _.clone(this.attributes.user) };
 
+    console.log(json);
+
     if (this._image) {
       json.user.image = this._image;
     }

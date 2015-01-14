@@ -20,8 +20,8 @@ FeedMe.Routers.Router = Backbone.Router.extend({
     "categories": "categoryIndex",
     "categories/:id": "categoryShow",
     "users/new": "userNew",
+    "users/edit": "userEdit",
     "users/:id": "userShow",
-    "users/:id/edit": "userEdit",
     "session/new": "sessionNew"
   },
 
@@ -117,8 +117,9 @@ FeedMe.Routers.Router = Backbone.Router.extend({
   userEdit: function (id) {
     var user, userEditView;
 
-    if (!this._requirelogin()) {return false;}
-    userEditView = new FeedMe.Views.UserEdit({ model: FeedMe.currentUser });
+    if (!this._requireLogin()) {return false;}
+    user = FeedMe.users.getOrFetch(FeedMe.currentUser.id);
+    userEditView = new FeedMe.Views.UserEdit({ model: user });
     this._swapView(userEditView);
   },
 

@@ -9,3 +9,5 @@ if @feed.updated_at > 30.seconds.ago
 else
   json.updating true
 end
+
+json.updated_at @feed.updated_at

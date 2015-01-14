@@ -74,10 +74,9 @@ class Feed < ActiveRecord::Base
       }
     end
 
-    puts new_entries
-
     self.entries.create(new_entries)
-    self.touch unless new_entries.count === 0;
+    self.touch;
+    puts "touched!"
   end
 
   private

@@ -1,4 +1,9 @@
 FeedMe.Models.Feed = Backbone.Model.extend({
+
+  initialize: function () {
+    this.update_limit = 0
+  },
+
   urlRoot: "/api/feeds",
 
   entries: function () {
@@ -16,8 +21,13 @@ FeedMe.Models.Feed = Backbone.Model.extend({
 
     if (resp.updating) {
       console.log(resp.updating);
-      if (resp.updating === true) {
+      console.log(resp.updated_at);
+      console.log(resp.name);
+      if (resp.updating === true && this.update_limit < 2) {
         window.setTimeout( this.fetch.bind(this), Constants.UPDATING_TIMEOUT);
+        this.update_limit ++;
+      } else if (resp.updating === false) {
+        this.update_limit = 0;
       }
       delete resp.updating;
     }

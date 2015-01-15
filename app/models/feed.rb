@@ -7,20 +7,24 @@ class Feed < ActiveRecord::Base
 
   has_many :user_feeds, dependent: :destroy
   has_many :users, through: :user_feeds
-  has_many :entries, inverse_of: :feed, dependent: :destroy
+
+  has_many :feed_entries
+  has_many :entries, through: :feed_entries, source: :entry
+
   has_many :category_feeds, inverse_of: :feed, dependent: :destroy
   has_many :categories, through: :category_feeds
   belongs_to :curator, class_name: "User", foreign_key: "curator_id"
 
   before_validation :set_name, on: :create
   after_save :fetch_entries, on: :create
+  before_destroy :destroy_entries_unless_curated
 
   attr_accessor :feed
 
   def set_name
     unless self.curated
       self.feed || self.feed = Feedjira::Feed.fetch_and_parse(self.url)
-      unless feed.is_a?(Fixnum) # Feedjira::Feed.fetch_and_parse returns 200 on failure
+      unless feed.is_a?(Fixnum) # Feedjira::Feed.fetch_and_parse returns a status code on failure
         puts feed
         self.name = self.feed.title
       end
@@ -47,6 +51,8 @@ class Feed < ActiveRecord::Base
       end
 
     self.entries.create(new_entries)
+    # saved_entries = new_entries.map { |entry| Entry.create(entry) }
+    # saved_entries.each { |saved_entry| self.entries << saved_entry }
     end
   end
 
@@ -81,6 +87,8 @@ class Feed < ActiveRecord::Base
       }
     end
 
+
+
     self.entries.create(new_entries)
     self.touch;
   end
@@ -105,6 +113,10 @@ class Feed < ActiveRecord::Base
     end
 
     convertable_entry.to_json
+  end
+
+  def destroy_entries_unless_curated
+    self.entries.destroy_all unless self.curated
   end
 
 end

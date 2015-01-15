@@ -3,11 +3,11 @@ class Api::EntriesController < ApplicationController
   def index
     @feeds = current_user.feeds
     @feeds.each do |feed|
-      if feed.updated_at < 30.seconds.ago
+      if feed.updated_at < 30.seconds.ago && !feed.curated
         Resque.enqueue(UpdateEntries, feed.id)
       end
     end
-    @entries = current_user.entries.includes(:feed).order(published_at: :desc)
+    @entries = current_user.entries.includes(:feeds).order(published_at: :desc)
     render :index
   end
 
@@ -19,7 +19,7 @@ class Api::EntriesController < ApplicationController
   end
 
   def recent
-    @entries = current_user.read_entries.includes(:feed).order(published_at: :desc)
+    @entries = current_user.curated_feed.entries.includes(:feeds).order(published_at: :desc)
     render :recent
   end
 

@@ -158,6 +158,8 @@ Table name: feeds
 |id             |:integer  | not null, primary key|
 |name           |:string   | not null |
 |url            |:string   | not null |
+|curated        |:boolean  | default false|
+|curator_id     |:integer  |
 |created_at     |:datetime |         |
 |updated_at     |:datetime |         ||
 
@@ -190,6 +192,13 @@ Table name: entries
 |created_at      |:datetime |            |
 |updated_at      |:datetime |            ||
 
+### FeedEntry
+
+|Column          | Type     |  Properties|
+|----------------|----------|------------|
+|id              |:integer  | not null, primary key|
+|entry_id        |:integer  | not null   |
+|feed_id         |:integer  | not null   ||
 
 ### UserReadEntries
 

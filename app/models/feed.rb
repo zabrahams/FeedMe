@@ -2,7 +2,7 @@ class Feed < ActiveRecord::Base
   include Feedjira
 
   validates :url, presence: true
-  validates :name, :url, uniqueness: true
+  validates :name, uniqueness: {scope: :url}
   validate :url_must_lead_to_rss_feed
 
   has_many :user_feeds, dependent: :destroy
@@ -10,6 +10,7 @@ class Feed < ActiveRecord::Base
   has_many :entries, inverse_of: :feed, dependent: :destroy
   has_many :category_feeds, inverse_of: :feed, dependent: :destroy
   has_many :categories, through: :category_feeds
+  belongs_to :curator, class_name: "User", foreign_key: "curator_id"
 
   before_validation :set_name, on: :create
   after_save :fetch_entries, on: :create
@@ -17,30 +18,36 @@ class Feed < ActiveRecord::Base
   attr_accessor :feed
 
   def set_name
-    self.feed || self.feed = Feedjira::Feed.fetch_and_parse(self.url)
-    unless feed == 200 # Feedjira::Feed.fetch_and_parse returns 200 on failure
-      puts feed
-      self.name = self.feed.title
+    unless self.curated
+      self.feed || self.feed = Feedjira::Feed.fetch_and_parse(self.url)
+      unless feed.is_a?(Fixnum) # Feedjira::Feed.fetch_and_parse returns 200 on failure
+        puts feed
+        self.name = self.feed.title
+      end
     end
   end
 
   def fetch_entries
-    self.feed || self.feed = Feedjira::Feed.fetch_and_parse(self.url)
+    if self.curated
+      self.entries === self.curator.read_entries
+    else
+      self.feed || self.feed = Feedjira::Feed.fetch_and_parse(self.url)
 
-    new_entries = self.feed.entries
-    new_entries = new_entries[0...40] if new_entries.length > 40
+      new_entries = self.feed.entries
+      new_entries = new_entries[0...40] if new_entries.length > 40
 
-    new_entries = new_entries.map do |entry|
-      {
-        guid: entry.entry_id || SecureRandom.urlsafe_base64,
-        title: entry.title,
-        link: entry.url,
-        published_at: entry.published || Time.now,
-        json: entry_to_json(entry)
-      }
-    end
+      new_entries = new_entries.map do |entry|
+        {
+          guid: entry.entry_id || SecureRandom.urlsafe_base64,
+          title: entry.title,
+          link: entry.url,
+          published_at: entry.published || Time.now,
+          json: entry_to_json(entry)
+        }
+      end
 
     self.entries.create(new_entries)
+    end
   end
 
   # Potential optimization for the future:
@@ -76,15 +83,16 @@ class Feed < ActiveRecord::Base
 
     self.entries.create(new_entries)
     self.touch;
-    puts "touched!"
   end
 
   private
 
   def url_must_lead_to_rss_feed
-    self.feed || self.feed = Feedjira::Feed.fetch_and_parse(self.url)
-    if self.feed == 200
-      errors.add(:url, " is not the location of an RSS feed.")
+    unless self.curated
+      self.feed || self.feed = Feedjira::Feed.fetch_and_parse(self.url)
+      if self.feed.is_a?(Fixnum)
+        errors.add(:url, " is not the location of an RSS feed.")
+      end
     end
   end
 

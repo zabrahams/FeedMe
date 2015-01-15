@@ -115,6 +115,46 @@ form input[type=submit]:hover {
   background: #999;
 }
 
+/* Generic Lists */
+
+.gen-list-item:last-child {
+  border: 0;
+}
+
+.gen-list-item a {
+  display: block;
+  float: left;
+  text-align: center;
+  font-size: 24px;
+}
+
+.gen-list{
+  width: 400px;
+  display: block;
+  float: left;
+  margin-left: 150px;
+  margin-top: 30px;
+}
+
+
+.gen-list-header{
+  font-size: 18px;
+  font-weight: bold;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #999;
+  margin-top: 20px;
+}
+
+.gen-list {
+  display: block;
+  float: left;
+  width: 400px;
+  border: 1px solid #999;
+  border-radius: 5px;
+  padding: 10px 20px;
+  margin: 10px auto;
+}
+
 /* sidebar */
 
 nav.sidebar {
@@ -311,12 +351,6 @@ article.entry {
   border: 0;
 }
 
-.feed-list-item .feed-link {
-  display: block;
-  float: left;
-  text-align: center;
-  font-size: 24px;
-}
 
 .feed-list-item .remove-feed {
   display: block;
@@ -385,6 +419,18 @@ article.entry {
   margin-top: 30px;
 }
 
+.cat-feed-list-container {
+  width: 400px;
+  margin-left: 150px;
+  margin-top: 50px;
+}
+
+.cat-feed-list {
+  width: 400px;
+}
+
+
+
 .new-category {
   display: block;
   width: 300px;
@@ -420,21 +466,6 @@ form.new-cat-form input[type=text] {
   border: 1px solid #ccc;
 }
 
-.cat-feed-list-container .feed-list{
-  width: 400px;
-  display: block;
-  float: left;
-  margin-left: 150px;
-  margin-top: 30px;
-}
-
-
-.cat-feed-list-container .feed-list .feed-list-header{
-  font-size: 18px;
-  font-weight: bold;
-  padding-bottom: 10px;
-  border-bottom: 1px solid #999;
-}
 
 /* Splash Page */
 
@@ -540,6 +571,25 @@ p.user-description {
 
 /* Users Index */
 
-.user-index-header {
-  margin-top: 50px;
+.user-list {
+  display: block;
+  float: left;
+  margin-right: 20px;
+  width: 300px;
+}
+
+.user-list-item {
+  display: block;
+  padding: 5px;
+  border-bottom: 1px dotted #999
+}
+
+.user-list-item:last-child {
+  border-bottom: 0;
+}
+
+.user-list-container {
+  display: block;
+  width: 1100px;
+  margin: auto;
 }

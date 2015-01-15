@@ -2,24 +2,26 @@
   <h1 class="page-title">All the Users!</h1>
 </header>
 
-<h3 class="user-index-header">All Users</h3>
-<ul class="all-users">
-  <% users.forEach(function (user) { %>
-    <li><a href="#/users/<%= user.id %>"><%= user.escape("username") %></a>
-  <% }); %>
-</ul>
+  <section class="user-list-container group">
+  <ul class="all-users gen-list user-list">
+  <h3 class="user-index-header gen-list-header">All Users</h3>
+    <% users.forEach(function (user) { %>
+      <li class="gen-list-item user-list-item group"><a href="#/users/<%= user.id %>"><%= user.escape("username") %></a>
+    <% }); %>
+  </ul>
 
-<h3 class="user-index-header">Your Curators!</h3>
-<ul class="curators">
-  <% curators.forEach(function (user) { %>
-    <li><a href="#/users/<%= user.id %>"><%= user.escape("username") %></a>
-  <% }); %>
-</ul>
+  <ul class="curators gen-list user-list">
+  <h3 class="user-index-header gen-list-header">Your Curators!</h3>
+    <% curators.forEach(function (user) { %>
+      <li class="gen-list-item user-list-item group"><a href="#/users/<%= user.id %>"><%= user.escape("username") %></a>
+    <% }); %>
+  </ul>
 
 
-<h3 class="user-index-header">Users that watch you!</h3>
-<ul class="watchers">
-  <% watchers.forEach(function (user) { %>
-    <li><a href="#/users/<%= user.id %>"><%= user.escape("username") %></a>
-  <% }); %>
-</ul>
+  <ul class="watchers gen-list user-list">
+  <h3 class="user-index-header gen-list-header">Users that watch you!</h3>
+    <% watchers.forEach(function (user) { %>
+      <li class="gen-list-item user-list-item group"><a href="#/users/<%= user.id %>"><%= user.escape("username") %></a>
+    <% }); %>
+  </ul>
+</section>

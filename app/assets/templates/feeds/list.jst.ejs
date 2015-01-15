@@ -1,8 +1,8 @@
-<h3 class=feed-list-header>Your Feeds </h3>
+<h3 class="feed-list-header gen-list-header">Your Feeds </h3>
 <% feeds.forEach(function (feed) { %>
-  <li class="feed-list-item feed-<%= feed.id %> group"
+  <li class="feed-list-item feed-<%= feed.id %> gen-list-item group"
       data-id="<%= feed.id %>">
-    <label class="feed-list-label">
+    <label class="feed-list-label gen-list-label">
       <%= feed.escape("name") %>
     </label>
   </li>

@@ -36,8 +36,8 @@ FeedMe.Views.CategoryIndex = Backbone.CompositeView.extend({
 
   attachFeedList: function () {
     FeedMe.feeds.fetch();
-    var $feedUL = $("<ul>").addClass("feed-list");
-    var $feedDiv = $("<div>").addClass("cat-feed-list-container");
+    var $feedUL = $("<ul>").addClass("feed-list gen-list cat-feed-list");
+    var $feedDiv = $("<div>").addClass("cat-feed-list-container group");
     var feedList = new FeedMe.Views.FeedList({
       collection: FeedMe.feeds,
       el: $feedUL.get()

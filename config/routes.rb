@@ -12,6 +12,7 @@ Rails.application.routes.draw do
     end
     resources :categories, only: [:index, :show, :create, :update, :destroy]
     resources :users, only: [:index, :show, :create, :update] do
+      get 'personal_feed', on: :member
       resource :followings, only: [:create, :destroy]
     end
     resource :session, only: [:show, :create, :destroy]

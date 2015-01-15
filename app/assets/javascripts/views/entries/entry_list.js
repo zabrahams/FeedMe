@@ -55,10 +55,20 @@ FeedMe.Views.EntryList = Backbone.ListView.extend({
 
 
   toggleEntry: function (event) {
-    var $title, $article, entryId, entry;
-    event.preventDefault();
+    var $title, $selected, $article, entryId, entry;
 
-    $title = $(event.currentTarget);
+    if (typeof event === "undefined") {
+      $selected = $(".selected");
+      if ($selected.length === 0)
+        return;
+        else{
+          $title = $selected.find('.entry-title');
+        }
+    }  else {
+      event.preventDefault();
+      $title = $(event.currentTarget);
+    }
+
     $article = $title.siblings("article.entry");
     entryId = $article.data("id");
 
@@ -76,12 +86,26 @@ FeedMe.Views.EntryList = Backbone.ListView.extend({
     }
   },
 
+  openEntry: function () {
+    var $selected, urlToOpen;
+
+    $selected = $('.selected');
+    if ($selected.length !== 0) {
+      urlToOpen = $selected.find(".hidden-link").attr('value');
+      window.open(urlToOpen);
+    }
+  },
+
   keyAction: function (key) {
-    console.log(event);
+    console.log(key);
     if (key === Constants.KEYS.n) {
       this.selectNext();
+    } else if (key === Constants.KEYS.o) {
+      this.openEntry();
     } else if (key === Constants.KEYS.p) {
       this.selectPrevious();
+    } else if (key === Constants.KEYS.v) {
+      this.toggleEntry();
     }
 
   },

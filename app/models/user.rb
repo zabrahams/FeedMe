@@ -13,16 +13,16 @@ class User < ActiveRecord::Base
   after_initialize :ensure_session_token
 
 
-  has_many :followed_user_follows,
+  has_many :watcher_user_follows,
            class_name: "UserFollow",
-           foreign_key: :followed_id,
+           foreign_key: :curator_id,
            dependent: :destroy
-  has_many :following_user_follows,
+  has_many :curator_user_follows,
            class_name: "UserFollow",
-           foreign_key: :following_id,
+           foreign_key: :watcher_id,
            dependent: :destroy
-  has_many :followeds, through: :followed_user_follows, source: :following
-  has_many :followings, through: :following_user_follows, source: :followed
+  has_many :watchers, through: :watcher_user_follows, source: :watcher
+  has_many :curators, through: :curator_user_follows, source: :curator
 
   has_many :user_feeds, dependent: :destroy
   has_many :categories, dependent: :destroy

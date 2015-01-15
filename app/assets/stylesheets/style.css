@@ -537,3 +537,9 @@ p.user-description {
   background: #f280a1;
   color: #555;
 }
+
+/* Users Index */
+
+.user-index-header {
+  margin-top: 50px;
+}

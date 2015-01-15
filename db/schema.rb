@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150114015643) do
+ActiveRecord::Schema.define(version: 20150115011419) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -74,15 +74,15 @@ ActiveRecord::Schema.define(version: 20150114015643) do
   add_index "user_feeds", ["user_id"], name: "index_user_feeds_on_user_id", using: :btree
 
   create_table "user_follows", force: true do |t|
-    t.integer  "followed_id",  null: false
-    t.integer  "following_id", null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "watcher_id", null: false
+    t.integer  "curator_id", null: false
   end
 
-  add_index "user_follows", ["followed_id", "following_id"], name: "index_user_follows_on_followed_id_and_following_id", unique: true, using: :btree
-  add_index "user_follows", ["followed_id"], name: "index_user_follows_on_followed_id", using: :btree
-  add_index "user_follows", ["following_id"], name: "index_user_follows_on_following_id", using: :btree
+  add_index "user_follows", ["curator_id"], name: "index_user_follows_on_curator_id", using: :btree
+  add_index "user_follows", ["watcher_id", "curator_id"], name: "index_user_follows_on_watcher_id_and_curator_id", unique: true, using: :btree
+  add_index "user_follows", ["watcher_id"], name: "index_user_follows_on_watcher_id", using: :btree
 
   create_table "user_read_entries", force: true do |t|
     t.integer  "user_id",    null: false

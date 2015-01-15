@@ -12,12 +12,12 @@ class Api::CategoriesController < ApplicationController
 
   def show
     @category.feeds.each do |feed|
-      if feed.updated_at < 30.seconds.ago
+      if feed.updated_at < 30.seconds.ago && !feed.curated
         Resque.enqueue(UpdateEntries, feed.id)
       end
     end
 
-    @entries = @category.entries.includes(:feed).order(published_at: :desc)
+    @entries = @category.entries.includes(:feeds).order(published_at: :desc)
     render :show
   end
 

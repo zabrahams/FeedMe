@@ -11,7 +11,9 @@ Rails.application.routes.draw do
       post 'read', on: :member
     end
     resources :categories, only: [:index, :show, :create, :update, :destroy]
-    resources :users, only: [:index, :show, :create, :update]
+    resources :users, only: [:index, :show, :create, :update] do
+      resource :followings, only: [:create, :destroy]
+    end
     resource :session, only: [:show, :create, :destroy]
   end
 

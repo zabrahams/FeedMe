@@ -1,9 +1,9 @@
 class UserFollow < ActiveRecord::Base
-  validates :followed_id, :following_id, presence: true;
-  validates :followed_id, uniqueness: { scope: :following_id }
+  validates :watcher_id, :curator_id, presence: true;
+  validates :watcher_id, uniqueness: { scope: :curator_id }
 
-  belongs_to :followed, class_name: "User", foreign_key: :followed_id
-  belongs_to :following, class_name: "User", foreign_key: :following_id
+  belongs_to :watcher, class_name: "User", foreign_key: :watcher_id
+  belongs_to :curator, class_name: "User", foreign_key: :curator_id
 
 
 end

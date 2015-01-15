@@ -11,18 +11,19 @@ FeedMe.Routers.Router = Backbone.Router.extend({
   },
 
   routes: {
-    "": "splash",
-    "feeds":"feedsIndex",
-    "feeds/new": "feedNew",
-    "feeds/:id": "feedShow",
-    "entries" : "entryIndex",
+    "":              "splash",
+    "feeds":          "feedsIndex",
+    "feeds/new":      "feedNew",
+    "feeds/:id":      "feedShow",
+    "entries" :       "entryIndex",
     "entries/recent": "recentlyRead",
-    "categories": "categoryIndex",
+    "categories":     "categoryIndex",
     "categories/:id": "categoryShow",
-    "users/new": "userNew",
-    "users/edit": "userEdit",
-    "users/:id": "userShow",
-    "session/new": "sessionNew"
+    "users":          "userIndex",
+    "users/new":      "userNew",
+    "users/edit":     "userEdit",
+    "users/:id":      "userShow",
+    "session/new":    "sessionNew"
   },
 
   feedsIndex: function () {
@@ -122,6 +123,19 @@ FeedMe.Routers.Router = Backbone.Router.extend({
     user = FeedMe.users.getOrFetch(FeedMe.currentUser.id);
     userEditView = new FeedMe.Views.UserEdit({ model: user });
     this._swapView(userEditView);
+  },
+
+  userIndex: function () {
+    var user, userIndexView;
+
+    if (!this._requireLogin()) {return false;}
+    FeedMe.users.fetch();
+    user = FeedMe.users.getOrFetch(FeedMe.currentUser.id);
+    userIndexView = new FeedMe.Views.UserIndex({
+      collection: FeedMe.users,
+      model:      user
+    });
+    this._swapView(userIndexView);
   },
 
   sessionNew: function () {

@@ -5,6 +5,10 @@ FeedMe.Routers.Router = Backbone.Router.extend({
 
     this.$mainEl = options.$mainEl;
     this.$sidebarEl = options.$sidebarEl;
+    this.$modalEl = options.$modalEl;
+
+    keyCommandView = new FeedMe.Views.KeyboardCommands();
+    this.$modalEl.append(keyCommandView.render().$el);
 
     sidebarView = new FeedMe.Views.Sidebar();
     this.$sidebarEl.html(sidebarView.render().$el);

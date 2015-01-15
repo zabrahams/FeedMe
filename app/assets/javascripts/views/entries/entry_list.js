@@ -12,7 +12,7 @@ FeedMe.Views.EntryList = Backbone.ListView.extend({
   className: "entry-list",
 
   events: {
-    "click a.entry-title": "toggleEntry",
+    "click a.entry-title": "toggleEntry"
   },
 
   template: JST['entries/list'],
@@ -65,6 +65,7 @@ FeedMe.Views.EntryList = Backbone.ListView.extend({
           $title = $selected.find('.entry-title');
         }
     }  else {
+
       event.preventDefault();
       $title = $(event.currentTarget);
     }
@@ -73,24 +74,33 @@ FeedMe.Views.EntryList = Backbone.ListView.extend({
     entryId = $article.data("id");
 
     $article.toggleClass("open closed");
-    this._toggleOpenEntry(entryId);
-
-
+    this._toggleOpenEntry(entryId);;
     if (!$title.hasClass("been-opened")) {
       $title.addClass("been-opened");
-      entry = this.collection.get(entryId);
-      this.addElemView($article, entry);
-      $.ajax("/api/entries/" + entryId + "/read", {
-        type: "POST"
-      });
+      this.markRead(entryId, $title);
     }
   },
 
+  markRead: function (entryId, $title) {
+    var entry;
+
+    $article = $title.siblings("article.entry");
+    entry = this.collection.get(entryId);
+    this.addElemView($article, entry);
+    $.ajax("/api/entries/" + entryId + "/read", {
+      type: "POST"
+    });
+  },
+
   openEntry: function () {
-    var $selected, urlToOpen;
+    var $selected, $title, entryId, urlToOpen;
 
     $selected = $('.selected');
     if ($selected.length !== 0) {
+      $title = $selected.find(".entry-title")
+      entryId = $title.siblings("article.entry").data('id');
+      this.markRead(entryId, $title);
+
       urlToOpen = $selected.find(".hidden-link").attr('value');
       window.open(urlToOpen);
     }

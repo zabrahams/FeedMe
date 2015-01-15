@@ -13,9 +13,7 @@ class Api::EntriesController < ApplicationController
 
   def read
     @entry = Entry.find(params[:id])
-    unless current_user.read_entries.include?(@entry)
-      current_user.read_entries << @entry
-    end
+    current_user.read_entry(@entry)
 
     render json: @entry
   end

@@ -12,6 +12,7 @@ class User < ActiveRecord::Base
 
 
   before_validation :ensure_activation_token, on: :create
+  after_create :setup_curated_feed
   after_initialize :ensure_session_token
 
 
@@ -23,8 +24,14 @@ class User < ActiveRecord::Base
            class_name: "UserFollow",
            foreign_key: :watcher_id,
            dependent: :destroy
+
   has_many :watchers, through: :watcher_user_follows, source: :watcher
   has_many :curators, through: :curator_user_follows, source: :curator
+
+  has_one :curated_feed,
+          class_name: "Feed",
+          foreign_key: :curator_id,
+          dependent: :destroy
 
   has_many :user_feeds, dependent: :destroy
   has_many :categories, dependent: :destroy
@@ -72,6 +79,21 @@ class User < ActiveRecord::Base
     new_token
   end
 
+  def read_entry(entry)
+    unless self.read_entries.include?(entry)
+      self.read_entries << entry
+      self.curated_feed.entries << entry
+    end
+  end
+
+  def setup_curated_feed
+    self.curated_feed = Feed.new(
+      name: "#{self.username}'s Recent Reading!'",
+      url:  "Local Feed",
+      curated: true,
+    )
+  end
+
   def make_feed
     feed = RSS::Maker.make("atom") do |maker|
 
@@ -91,7 +113,6 @@ class User < ActiveRecord::Base
           item.author = parsedEntry['author'] if parsedEntry['author']
           item.summary = parsedEntry['summary'] if parsedEntry['summary']
           item.content= parsedEntry['content'] if parsedEntry['content']
-
         end
       end
 

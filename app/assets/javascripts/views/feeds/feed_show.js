@@ -1,5 +1,9 @@
 FeedMe.Views.FeedShow = Backbone.View.extend({
 
+  initialize: function () {
+    this.listenTo(this.model, "sync", this.renderHeader);
+  },
+
   template: JST['feeds/show'],
 
   render: function () {
@@ -8,6 +12,12 @@ FeedMe.Views.FeedShow = Backbone.View.extend({
     var entryList = new FeedMe.Views.EntryList({ collection: this.model.entries() });
     this._swapEntryList(entryList);
     return this;
+  },
+
+  // Super hacky, unless I move the headers out to subviews!
+
+  renderHeader: function () {
+    $(".page-title").html(this.model.get('name'));
   },
 
   remove: function () {

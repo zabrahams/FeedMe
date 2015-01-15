@@ -9,6 +9,7 @@ FeedMe.Views.Sidebar = Backbone.View.extend({
   className: "sidebar group",
 
   events: {
+    "click a.key-command-open": "openKeyCommand",
     "click button.logout": "logoutCurrentUser"
   },
 
@@ -23,6 +24,14 @@ FeedMe.Views.Sidebar = Backbone.View.extend({
   render: function () {
     this.$el.html(this.template()( { user: FeedMe.currentUser } ));
     return this;
+  },
+
+  openKeyCommand: function (event) {
+    var keyMapView, $dialog;
+
+    event.preventDefault();
+    $(".modal-container").removeClass("closed");
+
   },
 
   logoutCurrentUser: function () {

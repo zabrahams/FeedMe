@@ -6,18 +6,29 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-user = User.create(username: 'z', email: 'z@z.z', password: '123456')
+user1 = User.create(username: 'z', email: 'z@z.z', password: '123456')
 
-user.feeds.create([
-    { url: "http://feeds.feedburner.com/Metafilter" },
-    { url: "http://feeds.feedburner.com/AskMetafilter" },
-    { url: "http://feeds.mashable.com/Mashable" },
-    { url: "http://www.polygon.com/rss/index.xml" },
-    { url: "http://lorem-rss.herokuapp.com/feed/?unit=minute&interval=5" },
-    { url: "http://lorem-rss.herokuapp.com/feed/?unit=second&interval=10" }
+
+feed1 = Feed.create(url: "http://feeds.feedburner.com/Metafilter")
+feed2 = Feed.create( url: "http://feeds.feedburner.com/AskMetafilter")
+feed3 = Feed.create( url: "http://feeds.mashable.com/Mashable")
+feed4 = Feed.create( url: "http://www.polygon.com/rss/index.xml")
+feed5 = Feed.create( url: "http://lorem-rss.herokuapp.com/feed/?unit=minute&interval=5" )
+feed6 = Feed.create( url: "http://lorem-rss.herokuapp.com/feed/?unit=second&interval=10")
+
+
+user1.feeds << feed3
+user1.feeds << feed4
+user1.feeds << feed5
+user1.feeds << feed6
+
+user1.categories.create([
+    { name: "Tech", feed_ids: [feed3.id, feed4.id]},
+    { name: "Latin", feed_ids: [feed5.id, feed6.id]}
 ])
 
-user.categories.create([
-    { name: "Tech", feed_ids: [3, 4]},
-    { name: "Latin", feed_ids: [5]}
-])
+user2 = User.create(username: 'mefi', email: 'mefi@example.com', password: '123456')
+
+
+user2.feeds << feed1
+user2.feeds << feed2

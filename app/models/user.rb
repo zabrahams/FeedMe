@@ -1,3 +1,5 @@
+require 'rss'
+
 class User < ActiveRecord::Base
   has_attached_file :image, default_url: "fly_trap.jpg"
 
@@ -68,6 +70,34 @@ class User < ActiveRecord::Base
     end
 
     new_token
+  end
+
+  def make_feed
+    feed = RSS::Maker.make("atom") do |maker|
+
+      maker.channel.author = self.username
+      maker.channel.updated = Time.now.to_s
+      maker.channel.title = "#{self.username}'s FeedMe Feed!!!!'"
+      maker.channel.about = "http://google.com"
+
+      self.read_entries[0...20].each do |entry|
+        maker.items.new_item do |item|
+          item.id = entry.guid
+          item.title = entry.title
+          item.link = entry.link
+          item.updated = entry.published_at.to_s || Time.now.to_s
+
+          parsedEntry = JSON::parse(entry.json)
+          item.author = parsedEntry['author'] if parsedEntry['author']
+          item.summary = parsedEntry['summary'] if parsedEntry['summary']
+          item.content= parsedEntry['content'] if parsedEntry['content']
+
+        end
+      end
+
+    end
+
+    return feed
   end
 
 end

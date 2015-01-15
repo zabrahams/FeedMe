@@ -39,6 +39,11 @@ class Api::UsersController < ApplicationController
     end
   end
 
+  def personal_feed
+    @user = User.find(params[:id])
+    render text: @user.make_feed
+  end
+
   private
 
   def user_params

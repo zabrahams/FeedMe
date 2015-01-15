@@ -27,6 +27,7 @@ FeedMe.Views.Sidebar = Backbone.View.extend({
 
   logoutCurrentUser: function () {
     FeedMe.currentUser.logout();
-  }
+  },
+
 
 });

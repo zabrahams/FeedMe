@@ -71,6 +71,9 @@ section.content {
   cursor: pointer;
 }
 
+.selected {
+  background: #ccc;
+}
 
 
 /* forms */
@@ -265,7 +268,7 @@ ul.entry-list {
 }
 
 .entry-list-elem:hover {
-  background: #eee;
+  background: #ccc;
 }
 
 .entry-list-elem .entry-feed {

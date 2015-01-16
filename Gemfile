@@ -43,6 +43,9 @@ gem "aws-sdk"
 # Sets up backbone
 gem "backbone-on-rails"
 
+# User faker for seeding the db
+gem 'faker'
+
 group :development, :test do
   gem 'rspec-rails'
   gem 'factory_girl_rails'
@@ -60,7 +63,6 @@ group :development do
 end
 
 group :test do
-  gem 'faker'
   gem 'capybara'
   gem 'launchy'
   gem 'guard-rspec'

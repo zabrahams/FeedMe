@@ -1,7 +1,8 @@
 FeedMe.Views.SessionNew = Backbone.View.extend({
 
   events: {
-    "submit form": "login"
+    "submit form": "login",
+    "click button#test-user": "autoFillTest"
   },
 
   template: JST['sessions/new'],
@@ -26,6 +27,16 @@ FeedMe.Views.SessionNew = Backbone.View.extend({
         FeedMe.vent.trigger("errorFlash", error);
       }
     });
+  },
+
+  autoFillTest: function () {
+    var $username, $password;
+
+    $username = this.$("#user_username");
+    $password = this.$("#user_password");
+
+    $username.val("test");
+    $password.val("123456");
   }
 
 });

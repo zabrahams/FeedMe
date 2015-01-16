@@ -690,7 +690,7 @@ p.user-description {
   color:  #84D66F;
   border: 1px solid #5DAD49;
   background: #ccc;
-  opacity: 1;
+  opacity: .9;
   border-radius: 5px;
   text-shadow: 1px 1px #666, 1px -1px #666, -1px -1px #666, -1px 1px #666;
 }
@@ -699,7 +699,7 @@ p.user-description {
   color:  #6EC9D4;
   border: 1px solid #59A3AB;
   background: #ccc;
-  opacity: 1;
+  opacity: .9;
   border-radius: 5px;
   text-shadow: 1px 1px #666, 1px -1px #666, -1px -1px #666, -1px 1px #666;
 }

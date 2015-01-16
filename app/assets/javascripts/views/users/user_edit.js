@@ -23,8 +23,12 @@ FeedMe.Views.UserEdit = Backbone.View.extend({
     attrs = this.$("form").serializeJSON();
     this.model.set(attrs);
     this.model.save({}, {
-       error: function(model, response) {
-         console.log(response);
+       error: function(model, resp) {
+         FeedMe.vent.trigger("errorFlash", resp.responseJSON);
+       },
+
+       success: function() {
+         FeedMe.vent.trigger("noticeFlash", "Profile Updated");
        }
     });
 

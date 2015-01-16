@@ -26,13 +26,13 @@ class Api::UsersController < ApplicationController
   end
 
   def update
+    @user = User.find(params[:id])
     params[:user][:password] = nil if params[:user][:password] === ""
     params[:user][:password_confirmation] = nil if params[:user][:password_confirmation] === ""
-    check_password_confirmation
-    if  @user.update(user_params)
+    if  @user.update(user_params) && check_password_confirmation
       render :show
     else
-      render json: :errors, status: :unprocessable_entity
+      render json: @user.errors.full_messages, status: :unprocessable_entity
     end
   end
 
@@ -48,7 +48,7 @@ class Api::UsersController < ApplicationController
         login(@user)
         redirect_to root_url
       else
-        render json: {error: "We apolize but there is a problem with your authentication. Please try again. If you continue having difficulties, please email support@feed--me.herokuapp.com"}
+        render text: "We apolize but there is a problem with your authentication. Please try again. If you continue having difficulties, please email support@feed--me.herokuapp.com"
   end
 end
 
@@ -73,7 +73,9 @@ end
   def check_password_confirmation
     if (params[:user][:password] != params[:user][:password_confirmation])
       @user.errors.add(:password, "does not match Password Confirmation")
-      render :errors, status: :unprocessable_entity
+      false
+    else
+      true
     end
   end
 

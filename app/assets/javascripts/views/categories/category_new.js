@@ -25,7 +25,7 @@ FeedMe.Views.CategoryNew = Backbone.View.extend({
       }.bind(this),
 
       error: function (model, resp) {
-        console.log(resp.responseText);
+        FeedMe.vent.trigger("errorFlash", resp.responseText);
       }
     });
 

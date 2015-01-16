@@ -30,7 +30,7 @@ FeedMe.Views.FeedsIndex = Backbone.View.extend({
       }.bind(this),
 
       error: function () {
-        console.log("Error removing feed!");
+        FeedMe.vent.trigger("errorFlash", "Error removing feed!");
       }
     })
 

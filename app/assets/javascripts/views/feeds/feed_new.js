@@ -23,10 +23,11 @@ FeedMe.Views.FeedNew = Backbone.View.extend({
       success: function () {
         feeds.add(feed, { merge: true });
         Backbone.history.navigate("#/feeds/" + feed.id, { trigger: true });
+        FeedMe.vent.trigger("noticeFlash", "Feed successfully added.");
       },
 
       error: function (model, resp) {
-        console.log(resp.responseText);
+        FeedMe.vent.trigger("errorFlash", resp.responseJSON);
       }
     });
   }

@@ -88,7 +88,10 @@ FeedMe.Views.EntryList = Backbone.ListView.extend({
     entry = this.collection.get(entryId);
     this.addElemView($article, entry);
     $.ajax("/api/entries/" + entryId + "/read", {
-      type: "POST"
+      type: "POST",
+      error: function () {
+        FeedMe.vent.trigger("errorFlash", "Server error - Could not mark entry as read.");
+      }
     });
   },
 

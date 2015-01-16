@@ -7,7 +7,7 @@
     <img src="<%= user.get('image_url') %>" alt="Profile Picture">
   </div>
 
-  <input type="file" name="user[image]" id="user_image_input" class="user-image">
+  <input type="file" name="user[image]" id="user_image" class="user-image">
 
   <label for="user_description">About You:</label>
   <textarea name="user[description]" id="user_description"><%= user.escape('description') %></textarea>

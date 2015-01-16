@@ -24,7 +24,9 @@ window.FeedMe = {
         new FeedMe.Routers.Router ({
           $mainEl:    $("main"),
           $sidebarEl: $("#sidebar-sec"),
-          $modalEl:   $("#modal-sec")
+          $modalEl:   $("#modal-sec"),
+          $errorEl:   $("#error-sec"),
+          $noticeEl:  $("#notice-sec")
         });
         Backbone.history.start();
       },

@@ -19,6 +19,11 @@ FeedMe.Views.SessionNew = Backbone.View.extend({
     FeedMe.currentUser.save(attrs, {
       success: function () {
         Backbone.history.navigate("", { trigger: true });
+      },
+
+      error: function (model, resp) {
+        var error = resp.responseJSON.errors;
+        FeedMe.vent.trigger("errorFlash", error);
       }
     });
   }

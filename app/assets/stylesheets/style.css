@@ -75,6 +75,16 @@ section.content {
   background: #ccc;
 }
 
+.message {
+  display: block;
+  font-weight: bold;
+  font-size: 24px;
+  width: 400px;
+  text-align: center;
+  margin-left: 200px;
+  padding: 5px 10px;
+}
+
 
 /* forms */
 

@@ -15,28 +15,24 @@ class Api::UsersController < ApplicationController
   end
 
   def create
+    check_password_confirmation
     @user = User.new(user_params)
-    if (params[:user][:password] != params[:user][:password_confirmation])
-        render json: {errors: "Password does not match Password Confirmation"}
-    elsif @user.save
+    if @user.save
       AuthMailer.signup_email(@user).deliver
       render json: {notice: "You have successfully created an account. Please click on the link in your activation email to login."}
     else
-      render json: @user.errors.full_messages
+      render :errors, status: :unprocessable_entity
     end
   end
 
   def update
     params[:user][:password] = nil if params[:user][:password] === ""
-
-    if (params[:user][:password] != params[:user][:password_confirmation]) &&
-      !params[:user][:password].nil?
-    @user = User.find(params[:id])
-      render json: {errors: "Password does not match Password  Confirmation"}
-    elsif  @user.update(user_params)
+    params[:user][:password_confirmation] = nil if params[:user][:password_confirmation] === ""
+    check_password_confirmation
+    if  @user.update(user_params)
       render :show
     else
-      render json: @user.errors.full_messages, status: :unprocessable_entity
+      render json: :errors, status: :unprocessable_entity
     end
   end
 
@@ -71,6 +67,13 @@ end
   def require_ownership
     unless current_user.id.to_s == params[:id]
       render json: {errors: "You cannot edit another user's profile. Not cool."}
+    end
+  end
+
+  def check_password_confirmation
+    if (params[:user][:password] != params[:user][:password_confirmation])
+      @user.errors.add(:password, "does not match Password Confirmation")
+      render :errors, status: :unprocessable_entity
     end
   end
 

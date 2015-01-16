@@ -6,12 +6,27 @@ FeedMe.Routers.Router = Backbone.Router.extend({
     this.$mainEl = options.$mainEl;
     this.$sidebarEl = options.$sidebarEl;
     this.$modalEl = options.$modalEl;
+    this.$errorEl = options.$errorEl;
+    this.$noticeEl = options.$noticeEl;
 
     keyCommandView = new FeedMe.Views.KeyboardCommands();
     this.$modalEl.append(keyCommandView.render().$el);
 
     sidebarView = new FeedMe.Views.Sidebar();
     this.$sidebarEl.html(sidebarView.render().$el);
+
+    errorView = new FeedMe.Views.ErrorFlash();
+    this.$errorEl.html(errorView.render().$el);
+
+    noticeView = new FeedMe.Views.NoticeFlash();
+    this.$noticeEl.html(noticeView.render().$el);
+
+    // this.listenTo(FeedMe.currentUser, "logout", Backbone.history.navigate.bind(
+    //     Backbone.history,
+    //     "",
+    //     { trigger: true }
+    // ));
+
   },
 
   routes: {
@@ -153,6 +168,7 @@ FeedMe.Routers.Router = Backbone.Router.extend({
   _swapView: function (view) {
     this._currentView && this._currentView.remove();
     this._currentView = view;
+    FeedMe.vent.trigger("clearFlash");
     this.$mainEl.html(view.render().$el);
   },
 

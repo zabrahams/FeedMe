@@ -5,8 +5,6 @@ FeedMe.Models.User = Backbone.Model.extend({
   toJSON: function () {
     var json = { user: _.clone(this.attributes.user) };
 
-    console.log(json);
-
     if (this._image) {
       json.user.image = this._image;
     }
@@ -27,16 +25,15 @@ FeedMe.Models.User = Backbone.Model.extend({
   parse: function(resp) {
 
     if (resp.curators) {
-
       this.curators().set(resp.curators);
       delete resp.curators;
     }
 
     if (resp.watchers) {
-
       this.watchers().set(resp.watchers);
       delete resp.watchers;
     }
+
 
     return resp;
   }
@@ -62,7 +59,8 @@ FeedMe.Models.CurrentUser = FeedMe.Models.User.extend({
       type: "DELETE",
       url: this.url,
       dataType: "json",
-      success: function () {
+      success: function (resp) {
+        FeedMe.vent.trigger("noticeFlash", resp.notice);
         model.clear();
       }
     });

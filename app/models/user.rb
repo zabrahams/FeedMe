@@ -9,12 +9,9 @@ class User < ActiveRecord::Base
   validates :activated, inclusion: [true, false]
   validates :password, length: {minimum: 6, allow_nil: true}
 
-
-
   before_validation :ensure_activation_token, on: :create
   after_create :setup_curated_feed
   after_initialize :ensure_session_token
-
 
   has_many :watcher_user_follows,
            class_name: "UserFollow",
@@ -88,7 +85,7 @@ class User < ActiveRecord::Base
 
   def setup_curated_feed
     self.curated_feed = Feed.new(
-      name: "#{self.username}'s Recent Reading!'",
+      name: "#{self.username}'s Recent Reading!",
       url:  "Local Feed",
       curated: true,
     )

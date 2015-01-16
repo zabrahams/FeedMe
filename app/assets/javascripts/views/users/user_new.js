@@ -21,8 +21,8 @@ FeedMe.Views.UserNew = Backbone.View.extend({
       console.log("Password and Confirmation do not match.")
       return;
     } else {
-      delete attrs["user"]["password_confirmation"]
       user = new FeedMe.Models.User();
+      console.log(attrs); 
       user.set(attrs);
 
       user.save({}, {

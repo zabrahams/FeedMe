@@ -1,0 +1,9 @@
+Hi <%= @user.username %>!
+
+Welcome to FeedMe! Thanks for registering for an account. We we can help you share and consume the internet! Click on the link below to activate your account!
+
+<%= activation_api_user_url(@user) %>?activation_token=<%= @user.activation_token %>
+
+You need news and we've got more than enough!
+
+The FeedMe team

@@ -4,9 +4,8 @@
      class="entry-feed">
     <%= entry.escape("feed_name") %>
   </a>
-  <a href="#" class="entry-title" id="entry-title-<%= entry.id %>"><%= entry.escape("title") %></a>
+  <a href="<%= entry.escape('link') %>" class="entry-title" id="entry-title-<%= entry.id %>"><%= entry.escape("title") %></a>
   <time class="pub-diff"><%= TimeUtils.getTimeDiff(entry.escape("published_at"))%></time>
-  <input type="hidden" value="<%= entry.get('link') %>" class="hidden-link">
   <article class="entry closed" id="article-entry-<%= entry.id %>" data-id="<%= entry.id %>"></article>
 </li>
 <% }); %>

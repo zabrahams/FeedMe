@@ -101,7 +101,7 @@ FeedMe.Views.EntryList = Backbone.ListView.extend({
       entryId = $title.siblings("article.entry").data('id');
       this.markRead(entryId, $title);
 
-      urlToOpen = $selected.find(".hidden-link").attr('value');
+      urlToOpen = $title.attr("href");
       window.open(urlToOpen);
     }
   },

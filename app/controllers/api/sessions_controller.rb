@@ -15,9 +15,11 @@ class Api::SessionsController < ApplicationController
   def create
     @user = User.find_by_credentials(params[:user][:username],
     params[:user][:password])
-    if @user
+    if @user && @user.activated
       login(@user)
       render json: @user;
+    elsif @user
+      render json: {error: "Please activate your account before logging in."}
     else
       render json: {errors: "Invalid Username/Password."}
     end

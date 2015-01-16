@@ -13,7 +13,6 @@ window.FeedMe = {
 
     FeedMe.vent = _.extend({}, Backbone.Events);
     $(document).bind('keydown', function (event) {
-      console.log("hello")
       var key = event.keyCode;
       FeedMe.vent.trigger("keyEvent", key);
     })

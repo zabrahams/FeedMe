@@ -1,0 +1,13 @@
+<h1>Welcome to FeedMe!</h1>
+
+Hi <%= @user.username %>!
+
+<p>Welcome to FeedMe! Thanks for registering for an account. We we can help you share and consume the internet! Click on the link below to activate your account!</p>
+
+<a href="<%= activation_api_user_url(@user) %>?activation_token=<%= @user.activation_token %>">
+	Click here to activate!
+</a>
+
+</p>You need news and we've got more than enough!</p>
+
+<p>The FeedMe team<p>

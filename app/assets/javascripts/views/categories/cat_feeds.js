@@ -36,7 +36,7 @@ FeedMe.Views.CatFeeds = Backbone.View.extend({
         this.render();
       }.bind(this),
       error: function () {
-        console.log("Error deleting category.");
+        FeedMe.vent.trigger("errorFlash", "Error deleting category.");
       }
     });
   },
@@ -56,7 +56,7 @@ FeedMe.Views.CatFeeds = Backbone.View.extend({
       }.bind(this),
 
       error: function () {
-        console.log("Error updating the catgory.");
+        FeedMe.vent.trigger("errorFlash", "Error updating the catgory.");
       }
     });
   },
@@ -78,7 +78,7 @@ FeedMe.Views.CatFeeds = Backbone.View.extend({
       }.bind(this),
 
       error: function () {
-        console.log("Error updating the catgory.");
+        FeedMe.vent.trigger("errorFlash", "Error updating the catgory.");
       }
     });
   },

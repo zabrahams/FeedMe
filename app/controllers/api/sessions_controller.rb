@@ -8,7 +8,7 @@ class Api::SessionsController < ApplicationController
       @user = current_user
       render 'api/users/show'
     else
-      render json: {errors: "Problem logging in."}
+      render json: {notice: "Please log in."}
     end
   end
 
@@ -17,11 +17,14 @@ class Api::SessionsController < ApplicationController
     params[:user][:password])
     if @user && @user.activated
       login(@user)
+      @user.notice = "You are now logged in."
       render json: @user;
     elsif @user
-      render json: {error: "Please activate your account before logging in."}
+      render json: {errors: "Please activate your account before logging in."},
+             status: :unprocessable_entry
     else
-      render json: {errors: "Invalid Username/Password."}
+      render json: {errors: "Invalid Username/Password."},
+             status:  :unprocessable_entry
     end
   end
 

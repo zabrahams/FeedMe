@@ -38,6 +38,7 @@ class User < ActiveRecord::Base
   has_many :read_entries, through: :user_read_entries, source: :entry
 
   attr_reader :password
+  attr_accessor :notice
 
   def self.find_by_credentials(username, password)
     user = User.find_by(username: username)

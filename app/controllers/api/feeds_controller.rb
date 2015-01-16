@@ -26,7 +26,7 @@ class Api::FeedsController < ApplicationController
   end
 
   def remove
-    if @feed.user_feeds.size == 1
+    if @feed.user_feeds.size == 1 && !@feed.curated
       @feed.destroy
     else
       current_user.feeds.delete(@feed)

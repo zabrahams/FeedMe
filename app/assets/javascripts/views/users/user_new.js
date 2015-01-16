@@ -18,20 +18,21 @@ FeedMe.Views.UserNew = Backbone.View.extend({
     attrs = this.$("form").serializeJSON();
 
     if (attrs.user.password !== attrs.user.password_confirmation) {
-      console.log("Password and Confirmation do not match.")
+      FeedMe.vent.trigger("errorFlash", "Password and Confirmation do not match.")
       return;
     } else {
       user = new FeedMe.Models.User();
-      console.log(attrs); 
       user.set(attrs);
 
       user.save({}, {
-        success: function () {
+        success: function (model, resp) {
           FeedMe.users.add(user);
           Backbone.history.navigate("", { trigger: true });
+          console.log(resp.notice)
+          FeedMe.vent.trigger("noticeFlash", resp.notice)
         },
-        error: function () {
-          console.log("Error saving new user.");
+        error: function (model, resp) {
+          FeedMe.vent.trigger("errorFlash", resp.responseJSON.errors);
         }
       });
     }

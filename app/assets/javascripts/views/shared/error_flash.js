@@ -7,7 +7,7 @@ FeedMe.Views.ErrorFlash = Backbone.View.extend({
 
   tagName: "section",
 
-  className: "flash error-flash",
+  className: "flash error-flash closed",
 
   template: JST['shared/error_flash'],
 
@@ -22,10 +22,14 @@ FeedMe.Views.ErrorFlash = Backbone.View.extend({
       msg = msg.join("<br>");
     }
     this.$(".message").html(msg);
+    this.$el.removeClass("closed");
   },
 
   clearFlash: function () {
-    this.$(".message").empty();
+    if (!this.$el.hasClass("closed")) {
+      this.$(".message").empty();
+      this.$el.addClass("closed");
+    }
   }
 
 });

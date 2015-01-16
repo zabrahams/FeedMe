@@ -7,7 +7,7 @@ FeedMe.Views.NoticeFlash = Backbone.View.extend({
 
   tagName: "section",
 
-  className: "flash notice-flash",
+  className: "flash notice-flash closed",
 
   template: JST['shared/notice_flash'],
 
@@ -19,10 +19,14 @@ FeedMe.Views.NoticeFlash = Backbone.View.extend({
   flashMessage: function (msg) {
     console.log(msg);
     this.$(".message").html(msg);
+    this.$el.removeClass("closed");
   },
 
   clearFlash: function () {
-    this.$(".message").empty();
+    if (!this.$el.hasClass("closed")) {
+      this.$(".message").empty();
+      this.$el.addClass("closed");
+    }
   }
 
 });

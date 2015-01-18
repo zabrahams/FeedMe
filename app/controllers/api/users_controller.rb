@@ -1,7 +1,7 @@
 class Api::UsersController < ApplicationController
   wrap_parameters false
 
-  skip_before_action :require_login, only: [:create, :activation, :reset_email]
+  skip_before_action :require_login, only: [:create, :activation, :reset_email, :reset]
   before_action :require_ownership, only: :update
 
   def index
@@ -75,9 +75,24 @@ class Api::UsersController < ApplicationController
       params[:user][:question_1],
       params[:user][:answer_1]
     )
+      @user.set_reset_token
+      AuthMailer.password_email(@user).deliver
       render json: {notice: "We have sent you a password reset email. Click the link in the email to reset your password."}
     else
       render json: {errors: "You did not answer the security questions correctly."}, status: :unprocessable_entity
+    end
+  end
+
+  def reset
+    @user = User.find(params[:id])
+    if !@user
+      render json: {errors: "Cannot find that user"}, status: :unprocessable_entity
+    elsif @user.has_reset_token?(params[:reset_token])
+      @user.clear_reset_token
+      login(@user)
+      redirect_to "/#/users/edit"
+    else
+      render json: {errors: "Link contained the wrong reset token"}, status: :unprocessable_entity
     end
   end
 

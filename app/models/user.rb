@@ -136,4 +136,18 @@ class User < ActiveRecord::Base
     true
   end
 
+  def set_reset_token
+    self.reset_token = SecureRandom.urlsafe_base64
+    self.save
+  end
+
+  def has_reset_token?(token)
+    token == self.reset_token
+  end
+
+  def clear_reset_token
+    self.reset_token = nil
+    self.save
+  end
+
 end

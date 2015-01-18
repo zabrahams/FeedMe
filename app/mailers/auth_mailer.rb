@@ -9,4 +9,20 @@ class AuthMailer < ActionMailer::Base
     )
   end
 
+  def username_email(user)
+    @user = user
+    mail(
+    to: @user.email,
+    subject: "FeedMe username"
+    )
+  end
+
+  def password_email(user)
+    @user = user
+    mail(
+      to: @user.email,
+      subject: "Feedme password reset"
+    )
+  end
+
 end

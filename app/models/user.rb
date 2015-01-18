@@ -37,6 +37,12 @@ class User < ActiveRecord::Base
   has_many :user_read_entries, dependent: :destroy
   has_many :read_entries, through: :user_read_entries, source: :entry
 
+  has_many :security_question_answers,
+           foreign_key: :user_id,
+           inverse_of: :user,
+           dependent: :destroy
+  has_many :security_questions, through: :security_question_answers
+
   attr_reader :password
   attr_accessor :notice
 
@@ -117,6 +123,32 @@ class User < ActiveRecord::Base
     end
 
     return feed
+  end
+
+  def verify_security_questions(quest_id_0, answer0, quest_id_1, answer1);
+    actual_answer_0 = self
+      .security_question_answers
+      .find_by(question_id: quest_id_0)
+    return false unless actual_answer_0.correct_answer?(answer0)
+    actual_answer_1 = self
+      .security_question_answers
+      .find_by(question_id: quest_id_1)
+    return false unless actual_answer_1.correct_answer?(answer1)
+    true
+  end
+
+  def set_reset_token
+    self.reset_token = SecureRandom.urlsafe_base64
+    self.save
+  end
+
+  def has_reset_token?(token)
+    token == self.reset_token
+  end
+
+  def clear_reset_token
+    self.reset_token = nil
+    self.save
   end
 
 end

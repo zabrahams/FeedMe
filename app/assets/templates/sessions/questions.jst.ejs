@@ -1,0 +1,17 @@
+<form id="security_question_form">
+
+  <% questions.forEach( function (question, i) { %>
+    <label for="user_answer_<%= i %>">
+      <%= question.content %>
+    </label>
+    <input type="text"
+           name="user[answer_<%= i %>]"
+           id="user_answer_<%= i %>">
+    <input type="hidden"
+           name="user[question_<%= i %>]"
+           value="<%= question.id %>">
+  <% }); %>
+
+  <input type="submit" value="Reset!">
+
+</form>

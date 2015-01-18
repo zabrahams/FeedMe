@@ -130,6 +130,7 @@ Table name: users
 |session_token   |:string    | not null|
 |activated       |:boolean   | not null|
 |activation_token|:string    | not null|
+|reset_token     |:string    |         |
 |description     |:text      |         |
 |fname           |:string    |         |
 |lname           |:string    |         |

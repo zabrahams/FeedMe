@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150115173519) do
+ActiveRecord::Schema.define(version: 20150118215240) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -72,6 +72,26 @@ ActiveRecord::Schema.define(version: 20150115173519) do
   add_index "feeds", ["curator_id"], name: "index_feeds_on_curator_id", using: :btree
   add_index "feeds", ["name"], name: "index_feeds_on_name", unique: true, using: :btree
 
+  create_table "security_question_answers", force: true do |t|
+    t.string   "answer_digest", null: false
+    t.integer  "user_id"
+    t.integer  "question_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "security_question_answers", ["question_id"], name: "index_security_question_answers_on_question_id", using: :btree
+  add_index "security_question_answers", ["user_id", "question_id"], name: "index_security_question_answers_on_user_id_and_question_id", unique: true, using: :btree
+  add_index "security_question_answers", ["user_id"], name: "index_security_question_answers_on_user_id", using: :btree
+
+  create_table "security_questions", force: true do |t|
+    t.text     "content",    null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "security_questions", ["content"], name: "index_security_questions_on_content", unique: true, using: :btree
+
   create_table "user_feeds", force: true do |t|
     t.integer  "user_id",          null: false
     t.integer  "feed_id",          null: false
@@ -122,6 +142,7 @@ ActiveRecord::Schema.define(version: 20150115173519) do
     t.string   "image_content_type"
     t.integer  "image_file_size"
     t.datetime "image_updated_at"
+    t.string   "reset_token"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

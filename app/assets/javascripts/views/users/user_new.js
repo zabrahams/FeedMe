@@ -1,5 +1,9 @@
 FeedMe.Views.UserNew = Backbone.View.extend({
 
+  initialize: function () {
+    this.listenTo(this.collection, "add remove reset", this.render)
+  },
+
   events: {
     "submit form": "createUser"
   },
@@ -7,7 +11,10 @@ FeedMe.Views.UserNew = Backbone.View.extend({
   template: JST['users/new'],
 
   render: function () {
-    this.$el.html(this.template({ user: this.model}));
+    this.$el.html(this.template({
+      user: this.model,
+      questions: this.collection
+    }));
     return this;
   },
 
@@ -22,6 +29,7 @@ FeedMe.Views.UserNew = Backbone.View.extend({
       return;
     } else {
       user = new FeedMe.Models.User();
+
       user.set(attrs);
 
       user.save({}, {

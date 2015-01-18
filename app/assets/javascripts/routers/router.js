@@ -30,19 +30,21 @@ FeedMe.Routers.Router = Backbone.Router.extend({
   },
 
   routes: {
-    "":              "splash",
-    "feeds":          "feedsIndex",
-    "feeds/new":      "feedNew",
-    "feeds/:id":      "feedShow",
-    "entries" :       "entryIndex",
-    "entries/recent": "recentlyRead",
-    "categories":     "categoryIndex",
-    "categories/:id": "categoryShow",
-    "users":          "userIndex",
-    "users/new":      "userNew",
-    "users/edit":     "userEdit",
-    "users/:id":      "userShow",
-    "session/new":    "sessionNew"
+    "":                 "splash",
+    "feeds":            "feedsIndex",
+    "feeds/new":        "feedNew",
+    "feeds/:id":        "feedShow",
+    "entries" :         "entryIndex",
+    "entries/recent":   "recentlyRead",
+    "categories":       "categoryIndex",
+    "categories/:id":   "categoryShow",
+    "users":            "userIndex",
+    "users/new":        "userNew",
+    "users/edit":       "userEdit",
+    "users/:id":        "userShow",
+    "session/new":      "sessionNew",
+    "session/username": "sessionUsername",
+    "session/password": "sessionPassword"
   },
 
   feedsIndex: function () {
@@ -117,11 +119,13 @@ FeedMe.Routers.Router = Backbone.Router.extend({
   },
 
   userNew: function () {
-    var user, userNewView;
+    var user, userNewView, questions;
 
+    questions = new FeedMe.Collections.SecurityQuestions();
+    questions.fetch();
     if (!this._requireLogout()) {return false;}
     user = new FeedMe.Models.User();
-    userNewView = new FeedMe.Views.UserNew({ model: user });
+    userNewView = new FeedMe.Views.UserNew({ model: user, collection: questions });
     this._swapView(userNewView);
   },
 
@@ -163,6 +167,22 @@ FeedMe.Routers.Router = Backbone.Router.extend({
     if (!this._requireLogout()) {return false;}
     sessionNewView = new FeedMe.Views.SessionNew();
     this._swapView(sessionNewView);
+  },
+
+  sessionUsername: function () {
+    var sessionUsername;
+
+    if (!this._requireLogout()) { return false;}
+    sessionUsername = new FeedMe.Views.SessionUsername();
+    this._swapView(sessionUsername);
+  },
+
+  sessionPassword: function () {
+    var sessionPassword;
+
+    if (!this._requireLogout()) { return false;}
+    sessionPassword = new FeedMe.Views.SessionPassword();
+    this._swapView(sessionPassword);
   },
 
   _swapView: function (view) {

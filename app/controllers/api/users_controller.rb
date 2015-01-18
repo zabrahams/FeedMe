@@ -1,7 +1,7 @@
 class Api::UsersController < ApplicationController
   wrap_parameters false
 
-  skip_before_action :require_login, only: [:create, :activation]
+  skip_before_action :require_login, only: [:create, :activation, :reset_email, :reset]
   before_action :require_ownership, only: :update
 
   def index
@@ -17,11 +17,25 @@ class Api::UsersController < ApplicationController
   def create
     check_password_confirmation
     @user = User.new(user_params)
-    if @user.save
+
+    @user.security_question_answers.new(
+      question_id: params[:user][:sec_question_1],
+      answer: params[:user][:sec_answer_1]
+    )
+    @user.security_question_answers.new(
+      question_id: params[:user][:sec_question_2],
+      answer: params[:user][:sec_answer_2]
+    )
+
+    if (params[:user][:password] != params[:user][:password_confirmation])
+        render json: {errors: "Password does not match Password Confirmation"}, status: :unprocessable_entity
+    elsif @user.save
+
       AuthMailer.signup_email(@user).deliver
-      render json: {notice: "You have successfully created an account. Please click on the link in your activation email to login."}
+      render json: {notice: "You have successfully created an account. Please click on the link in your email to activate this account."}
+      login(@user)
     else
-      render :errors, status: :unprocessable_entity
+      render json: @user.errors.full_messages, status: :unprocessable_entity
     end
   end
 
@@ -48,9 +62,38 @@ class Api::UsersController < ApplicationController
         login(@user)
         redirect_to root_url
       else
-        render text: "We apolize but there is a problem with your authentication. Please try again. If you continue having difficulties, please email support@feed--me.herokuapp.com"
+        render json: {error: "We apolize but there is a problem with your authentication. Please try again. If you continue having difficulties, please email support@feed--me.herokuapp.com"}
+      end
   end
-end
+
+  def reset_email
+    @user = User.find(params[:id])
+    if @user.verify_security_questions(
+      params[:user][:question_0],
+      params[:user][:answer_0],
+      params[:user][:question_1],
+      params[:user][:answer_1]
+    )
+      @user.set_reset_token
+      AuthMailer.password_email(@user).deliver
+      render json: {notice: "We have sent you a password reset email. Click the link in the email to reset your password."}
+    else
+      render json: {errors: "You did not answer the security questions correctly."}, status: :unprocessable_entity
+    end
+  end
+
+  def reset
+    @user = User.find(params[:id])
+    if !@user
+      render json: {errors: "Cannot find that user"}, status: :unprocessable_entity
+    elsif @user.has_reset_token?(params[:reset_token])
+      @user.clear_reset_token
+      login(@user)
+      redirect_to "/#/users/edit"
+    else
+      render json: {errors: "Link contained the wrong reset token"}, status: :unprocessable_entity
+    end
+  end
 
   private
 

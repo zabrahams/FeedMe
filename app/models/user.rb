@@ -37,6 +37,9 @@ class User < ActiveRecord::Base
   has_many :user_read_entries, dependent: :destroy
   has_many :read_entries, through: :user_read_entries, source: :entry
 
+  has_many :security_question_answers
+  has_many :security_questions, through: :security_quesiton_answers
+
   attr_reader :password
 
   def self.find_by_credentials(username, password)

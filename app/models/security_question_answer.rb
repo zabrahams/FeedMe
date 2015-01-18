@@ -1,4 +1,4 @@
-class SecurityQuestionAnswer < ActiveRecord::Base
+  class SecurityQuestionAnswer < ActiveRecord::Base
   validates :answer_digest, :user, :question_id, presence: true
   validates :user, uniqueness: { scope: :question_id }
 
@@ -11,7 +11,7 @@ class SecurityQuestionAnswer < ActiveRecord::Base
     self.answer_digest = BCrypt::Password.create(answer)
   end
 
-  def correctAnswer?(attempt)
+  def correct_answer?(attempt)
     BCrypt::Password.new(self.answer_digest).is_password?(attempt)
   end
 

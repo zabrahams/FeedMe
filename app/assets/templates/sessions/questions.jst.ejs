@@ -2,7 +2,7 @@
 
   <% questions.forEach( function (question, i) { %>
     <label for="user_answer_<%= i %>">
-      <%= question.escape("content") %>
+      <%= question.content %>
     </label>
     <input type="text"
            name="user[answer_<%= i %>]"

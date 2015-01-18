@@ -124,4 +124,16 @@ class User < ActiveRecord::Base
     return feed
   end
 
+  def verify_security_questions(quest_id_0, answer0, quest_id_1, answer1);
+    actual_answer_0 = self
+      .security_question_answers
+      .find_by(question_id: quest_id_0)
+    return false unless actual_answer_0.correct_answer?(answer0)
+    actual_answer_1 = self
+      .security_question_answers
+      .find_by(question_id: quest_id_1)
+    return false unless actual_answer_1.correct_answer?(answer1)
+    true
+  end
+
 end

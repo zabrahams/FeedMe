@@ -1,7 +1,7 @@
 class Api::UsersController < ApplicationController
   wrap_parameters false
 
-  skip_before_action :require_login, only: [:create, :activation]
+  skip_before_action :require_login, only: [:create, :activation, :reset_email]
   before_action :require_ownership, only: :update
 
   def index
@@ -64,8 +64,22 @@ class Api::UsersController < ApplicationController
         redirect_to root_url
       else
         render json: {error: "We apolize but there is a problem with your authentication. Please try again. If you continue having difficulties, please email support@feed--me.herokuapp.com"}
+      end
   end
-end
+
+  def reset_email
+    @user = User.find(params[:id])
+    if @user.verify_security_questions(
+      params[:user][:question_0],
+      params[:user][:answer_0],
+      params[:user][:question_1],
+      params[:user][:answer_1]
+    )
+      render json: {notice: "We have sent you a password reset email. Click the link in the email to reset your password."}
+    else
+      render json: {errors: "You did not answer the security questions correctly."}, status: :unprocessable_entity
+    end
+  end
 
   private
 

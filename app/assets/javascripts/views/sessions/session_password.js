@@ -1,7 +1,8 @@
 FeedMe.Views.SessionPassword = Backbone.View.extend({
 
   events: {
-    "submit form": "getQuestions"
+    "submit form#email-form": "getQuestions",
+    "submit form#security_question_form": "resetPassword"
   },
 
   template: JST['sessions/password'],
@@ -17,10 +18,8 @@ FeedMe.Views.SessionPassword = Backbone.View.extend({
     var $form, attrs, userQuestions;
 
     event.preventDefault();
-    $form = this.$("form");
+    $form = $(event.currentTarget);
     attrs = $form.serializeJSON();
-
-    console.log(attrs);
 
     userQuestions = new FeedMe.Collections.SecurityQuestions();
     userQuestions.fetch({
@@ -36,7 +35,28 @@ FeedMe.Views.SessionPassword = Backbone.View.extend({
   },
 
   questionsForm: function (userQuestions) {
-    this.$el.append(this.questTemplate( {questions: userQuestions }));
+    console.log(userQuestions.first().get('user_id'));
+    this._userId = userQuestions.first().get('user_id')
+    this.$el.append(this.questTemplate( {questions: userQuestions.first().get("questions") }));
+  },
+
+  resetPassword: function (event) {
+
+    event.preventDefault();
+    $form = $(event.currentTarget);
+    attrs = $form.serializeJSON();
+    $.ajax({
+      url: "api/users/" + this._userId + "/reset",
+      type: "POST",
+      data: attrs,
+      dataType: "json",
+      success: function () {
+        console.log("Success!");
+      },
+      error: function () {
+        console.log("Failure!");
+      }
+    });
   }
 
 });

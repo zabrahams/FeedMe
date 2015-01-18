@@ -16,13 +16,24 @@ class Api::UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
+    @user.security_question_answers.new(
+      question_id: params[:user][:sec_question_1],
+      answer: params[:user][:sec_answer_1]
+    )
+    @user.security_question_answers.new(
+      question_id: params[:user][:sec_question_2],
+      answer: params[:user][:sec_answer_2]
+    )
+
     if (params[:user][:password] != params[:user][:password_confirmation])
-        render json: {errors: "Password does not match Password Confirmation"}
+        render json: {errors: "Password does not match Password Confirmation"}, status: :unprocessable_entity
     elsif @user.save
+
       AuthMailer.signup_email(@user).deliver
-      render json: {notice: "You have successfully created an account. Please click on the link in your activation email to login."}
+      render json: {notice: "You have successfully created an account. Please click on the link in your email to activate this account."}
+      login(@user)
     else
-      render json: @user.errors.full_messages
+      render json: @user.errors.full_messages, status: :unprocessable_entity
     end
   end
 

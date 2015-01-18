@@ -28,6 +28,27 @@
          name="user[password_confirmation]"
          value="">
 
+  <label for="user_sec_question_1">First Security Question</label>
+  <select id="user_sec_question_1" name="user[sec_question_1]">
+    <% questions.forEach(function (question) { %>
+      <option value="<%= question.id %>"><%= question.escape("content")%></option>
+    <% }); %>
+  </select>
+
+  <label for="user_sec_answer_1">Answer:</label>
+  <input type="text" id="user_sec_answer_1", name="user[sec_answer_1]">
+
+
+  <label for="user_sec_question_2">Second Security Question</label>
+  <select id="user_sec_question_2" name="user[sec_question_2]">
+    <% questions.forEach(function (question) { %>
+      <option value="<%= question.id %>"><%= question.escape("content") %></option>
+      <% }); %>
+    </select>
+  <label for="user_sec_answer_2">Answer</label>
+  <input type="text" id="user_sec_answer_2", name="user[sec_answer_2]">
+
+
   <input type="submit" value="Sign Up!">
 
 </form>

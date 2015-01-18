@@ -28,7 +28,8 @@ FeedMe.Routers.Router = Backbone.Router.extend({
     "users/edit":       "userEdit",
     "users/:id":        "userShow",
     "session/new":      "sessionNew",
-    "session/username": "sessionUsername"
+    "session/username": "sessionUsername",
+    "session/password": "sessionPassword"
   },
 
   feedsIndex: function () {
@@ -103,11 +104,13 @@ FeedMe.Routers.Router = Backbone.Router.extend({
   },
 
   userNew: function () {
-    var user, userNewView;
+    var user, userNewView, questions;
 
+    questions = new FeedMe.Collections.SecurityQuestions();
+    questions.fetch();
     if (!this._requireLogout()) {return false;}
     user = new FeedMe.Models.User();
-    userNewView = new FeedMe.Views.UserNew({ model: user });
+    userNewView = new FeedMe.Views.UserNew({ model: user, collection: questions });
     this._swapView(userNewView);
   },
 
@@ -157,6 +160,14 @@ FeedMe.Routers.Router = Backbone.Router.extend({
     if (!this._requireLogout()) { return false;}
     sessionUsername = new FeedMe.Views.SessionUsername();
     this._swapView(sessionUsername);
+  },
+
+  sessionPassword: function () {
+    var sessionPassword;
+
+    if (!this._requireLogout()) { return false;}
+    sessionPassword = new FeedMe.Views.SessionPassword();
+    this._swapView(sessionPassword);
   },
 
   _swapView: function (view) {

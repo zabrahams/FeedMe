@@ -4,7 +4,6 @@ FactoryGirl.define do
     title "the best title"
     link "www.awesomesauce.com"
     published_at Time.now
-    feed_id 1
     json "'content':'cool stuff'"
   end
 

@@ -37,8 +37,11 @@ class User < ActiveRecord::Base
   has_many :user_read_entries, dependent: :destroy
   has_many :read_entries, through: :user_read_entries, source: :entry
 
-  has_many :security_question_answers
-  has_many :security_questions, through: :security_quesiton_answers
+  has_many :security_question_answers,
+           foreign_key: :user_id,
+           inverse_of: :user,
+           dependent: :destroy
+  has_many :security_questions, through: :security_question_answers
 
   attr_reader :password
 

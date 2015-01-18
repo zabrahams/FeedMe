@@ -5,13 +5,9 @@ RSpec.describe Entry do
 
   it { should validate_presence_of(:guid) }
   it { should validate_presence_of(:published_at) }
-  it { should validate_presence_of(:feed_id) }
   it { should validate_presence_of(:json) }
 
   it { should validate_uniqueness_of(:guid) }
-
-  it { should belong_to(:feed) }
-
   it { should have_many(:user_read_entries) }
 
 end

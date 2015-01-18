@@ -19,6 +19,8 @@ Rails.application.routes.draw do
     resource :session, only: [:show, :create, :destroy] do
       post 'username', on: :collection
     end
+
+    resources :security_questions, only: :index
   end
 
   root to: 'static_pages#root'

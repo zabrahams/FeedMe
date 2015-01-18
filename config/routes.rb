@@ -16,7 +16,9 @@ Rails.application.routes.draw do
       get 'activation', on: :member
       resource :followings, only: [:create, :destroy]
     end
-    resource :session, only: [:show, :create, :destroy]
+    resource :session, only: [:show, :create, :destroy] do
+      post 'username', on: :collection
+    end
   end
 
   root to: 'static_pages#root'

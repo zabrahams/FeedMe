@@ -9,4 +9,12 @@ class AuthMailer < ActionMailer::Base
     )
   end
 
+  def username_email(user)
+    @user = user
+    mail(
+    to: @user.email,
+    subject: "FeedMe username"
+    )
+  end
+
 end

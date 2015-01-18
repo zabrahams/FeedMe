@@ -1,7 +1,7 @@
 class Api::SessionsController < ApplicationController
   wrap_parameters false
 
-  skip_before_action :require_login, only: [:show, :create]
+  skip_before_action :require_login, only: [:show, :create, :username]
 
   def show
     if current_user
@@ -28,5 +28,15 @@ class Api::SessionsController < ApplicationController
   def destroy
     logout
     render json: {notice: "You are logged out."}
+  end
+
+  def username
+    @user = User.find_by(email: params[:user][:email])
+    if @user
+      AuthMailer.username_email(@user).deliver
+      render json: {notice: "An email contianing your username has been sent to #{@user.email}."}
+    else
+      render json: {errors: "There is no user with that email."}, status: :unprocessable_entity
+    end
   end
 end

@@ -28,19 +28,22 @@ FeedMe.Views.UserNew = Backbone.View.extend({
       FeedMe.vent.trigger("errorFlash", "Password and Confirmation do not match.")
       return;
     } else {
+
       user = new FeedMe.Models.User();
-
       user.set(attrs);
-
       user.save({}, {
         success: function (model, resp) {
           FeedMe.users.add(user);
-          Backbone.history.navigate("", { trigger: true });
-          console.log(resp.notice)
-          FeedMe.vent.trigger("noticeFlash", resp.notice)
+          FeedMe.currentUser.fetch({
+            success: function () {
+              Backbone.history.navigate("", { trigger: true });
+              FeedMe.vent.trigger("noticeFlash", resp.notice);
+            }
+          });
         },
         error: function (model, resp) {
-          FeedMe.vent.trigger("errorFlash", resp.responseJSON.errors);
+          console.log(resp.responseJSON)
+          FeedMe.vent.trigger("errorFlash", resp.responseJSON);
         }
       });
     }

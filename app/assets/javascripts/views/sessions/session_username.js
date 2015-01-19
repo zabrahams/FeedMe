@@ -24,15 +24,12 @@ FeedMe.Views.SessionUsername = Backbone.View.extend({
       dataType: "json",
       data: email,
       success: function (resp) {
-        console.log(resp.responseJSON.notice);
+        FeedMe.vent.trigger("noticeFlash", resp.notice);
       },
-
       error: function (resp) {
-        console.log(resp.responseJSON.errors);
+        FeedME.vent.trigger("errorFlash", resp.errors);
       }
-    })
-
-
+    });
   }
 
 });

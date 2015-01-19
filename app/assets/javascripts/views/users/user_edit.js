@@ -21,17 +21,31 @@ FeedMe.Views.UserEdit = Backbone.View.extend({
     event.preventDefault();
 
     attrs = this.$("form").serializeJSON();
-    this.model.set(attrs);
-    this.model.save({}, {
-       error: function(model, resp) {
-         FeedMe.vent.trigger("errorFlash", resp.responseJSON);
-       },
 
-       success: function() {
-         FeedMe.vent.trigger("noticeFlash", "Profile Updated");
-       }
-    });
+    if (attrs.user.password !== attrs.user.password_confirmation) {
+      FeedMe.vent.trigger("errorFlash", "Password and Confirmation do not match.")
+      return;
+    } else {
 
+      // Since a blank password is "" and not nil, it causes problems if
+      // uploaded to the server. So I delete it from params client-side.
+      if (attrs.user.password.length === 0) {
+        console.log("in password deletion")
+        delete attrs.user.password
+        delete attrs.user.password_confirmation
+      }
+
+      this.model.set(attrs);
+      this.model.save({}, {
+         error: function(model, resp) {
+           FeedMe.vent.trigger("errorFlash", resp.responseJSON);
+         },
+
+         success: function() {
+           FeedMe.vent.trigger("noticeFlash", "Profile Updated");
+         }
+      });
+    }
   },
 
   fileInputChange: function (event) {

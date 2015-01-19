@@ -32,8 +32,8 @@ class Api::UsersController < ApplicationController
     elsif @user.save
 
       AuthMailer.signup_email(@user).deliver
-      render json: {notice: "You have successfully created an account. Please click on the link in your email to activate this account."}
       login(@user)
+      render json: {notice: "You have successfully created an account. Please click on the link in your email to activate this account."}
     else
       render json: @user.errors.full_messages, status: :unprocessable_entity
     end
@@ -41,8 +41,6 @@ class Api::UsersController < ApplicationController
 
   def update
     @user = User.find(params[:id])
-    params[:user][:password] = nil if params[:user][:password] === ""
-    params[:user][:password_confirmation] = nil if params[:user][:password_confirmation] === ""
     if  @user.update(user_params) && check_password_confirmation
       render :show
     else
@@ -86,6 +84,8 @@ class Api::UsersController < ApplicationController
     @user = User.find(params[:id])
     if !@user
       render json: {errors: "Cannot find that user"}, status: :unprocessable_entity
+    elsif !@user.activated
+      render json: {errors: "You must activate your account before you can reset your password"}
     elsif @user.has_reset_token?(params[:reset_token])
       @user.clear_reset_token
       login(@user)

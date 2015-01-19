@@ -140,6 +140,23 @@ form input[type=submit]:hover {
   background: #999;
 }
 
+form select {
+  display: block;
+  width: 300px;
+  margin: 20px auto;
+  border: 1px solid #999;
+  border-radius: 5px;
+  padding: 5px 10px;
+  background: #fff;
+  color: #000;
+}
+
+form a {
+  text-align: center;
+  display: block;
+  margin: 20px auto;
+}
+
 /* Generic Lists */
 
 .gen-list-item:last-child {

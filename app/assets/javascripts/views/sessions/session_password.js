@@ -29,7 +29,7 @@ FeedMe.Views.SessionPassword = Backbone.View.extend({
         this.questionsForm(userQuestions);
       }.bind(this),
       error: function () {
-        console.log("Couldn't find the questions.")
+        FeedMe.vent.trigger("errorFlash", "Couldn't find the questions.")
       }
     });
   },
@@ -50,11 +50,12 @@ FeedMe.Views.SessionPassword = Backbone.View.extend({
       type: "POST",
       data: attrs,
       dataType: "json",
-      success: function () {
-        console.log("Success!");
+      success: function (resp) {
+        console.log(resp)
+        FeedMe.vent.trigger("noticeFlash", resp.notice);
       },
-      error: function () {
-        console.log("Failure!");
+      error: function (resp) {
+        FeedMe.vent.trigger("errorFlash", resp.errrors);
       }
     });
   }

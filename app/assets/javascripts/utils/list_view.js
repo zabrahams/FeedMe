@@ -23,6 +23,10 @@ Backbone.ListView = Backbone.View.extend({
     this._elemViews.forEach( function (elemView) {
       elemView.remove();
     });
+  },
+
+  clearElemViews: function () {
+    this._elemViews = []
   }
 
 })

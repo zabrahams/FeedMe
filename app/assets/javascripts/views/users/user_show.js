@@ -2,6 +2,13 @@ FeedMe.Views.UserShow = Backbone.View.extend({
 
   initialize: function () {
     this.listenTo(this.model, 'sync', this.render);
+    this.comments = new FeedMe.Collections.Comments({ commentable: this.model });
+    this.comments.fetch({
+      success: function () {
+        this._commentIndexView = new FeedMe.Views.CommentList( {collection: this.comments })
+        this.render();
+      }.bind(this)
+    });
   },
 
   events: {
@@ -11,12 +18,10 @@ FeedMe.Views.UserShow = Backbone.View.extend({
   template: JST['users/show'],
 
   render: function () {
-    var buttonText, curators;
+    var buttonText, curators, commentIndexView;
 
     curators = FeedMe.currentUser.curators();
-    console.log(curators);
 
-    console.log(this.weakContains(curators, this.model));
     if (this.weakContains(curators, this.model)) {
       buttonText = "DeWatch!";
     } else {
@@ -27,6 +32,9 @@ FeedMe.Views.UserShow = Backbone.View.extend({
       user: this.model,
       buttonText: buttonText
       }));
+
+    this._commentIndexView && this.$el.append(this._commentIndexView.render().$el)
+
     return this;
   },
 
@@ -76,6 +84,11 @@ FeedMe.Views.UserShow = Backbone.View.extend({
       }
       return false;
     });
+  },
+
+  remove: function () {
+    this._commentIndexView.remove();
+    Backbone.view.remove.call(this);
   }
 
 });

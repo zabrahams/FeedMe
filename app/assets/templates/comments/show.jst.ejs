@@ -1,0 +1,5 @@
+<p class="comment-body"><%= comment.escape("body") %></p>
+<p class="commenttauthor">posted by <em><%= comment.escape("author") %></em></p>
+<p class="comment-time">
+  posted <em><%= TimeUtils.getTimeDiff(comment.escape("created_at")) %></em>
+</p>

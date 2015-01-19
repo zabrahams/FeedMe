@@ -6,6 +6,7 @@ class Entry < ActiveRecord::Base
   has_many :feed_entries
   has_many :feeds, through: :feed_entries, source: :feed
   has_many :user_read_entries, dependent: :destroy
+  has_many :comments, as: :commentable, dependent: :destroy
 
 
 

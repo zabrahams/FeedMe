@@ -27,6 +27,8 @@ Rails.application.routes.draw do
       post 'username', on: :collection
     end
 
+    resources :comments, only: [:index]
+
     resources :security_questions, only: :index
   end
 

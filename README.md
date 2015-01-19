@@ -237,3 +237,17 @@ Table name: category_feeds
 |category_id     |:integer  | not null, foreign key|
 |created_at      |:datetime |            |
 |updated_at      |:datetime |            ||
+
+### Comment
+
+Table name: comments
+
+|Column          | Type     |  Properties|
+|----------------|----------|------------|
+|id              |:integer  | not null, primary key|
+|body            |:text     | not null   |
+|author_id       |:integer  | not null, foreign key|
+|commentable_id  |:integer  | not null, foreign key|
+|commentable_type|:string   | not null   |
+|created_at      |:datetime |            |
+|updated_at      |:datetime |            ||

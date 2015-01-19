@@ -43,6 +43,12 @@ class User < ActiveRecord::Base
            dependent: :destroy
   has_many :security_questions, through: :security_question_answers
 
+  has_many :comments, as: :commentable, dependent: :destroy
+  has_many :authored_comments,
+           class_name: "Comment",
+           foreign_key: :author_id,
+           dependent: :destroy
+
   attr_reader :password
   attr_accessor :notice
 

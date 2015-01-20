@@ -20,7 +20,7 @@ window.FeedMe = {
 
     this.currentUser = new FeedMe.Models.CurrentUser();
     this.currentUser.fetch({
-      success: function () {
+      complete: function () {
         new FeedMe.Routers.Router ({
           $mainEl:    $("main"),
           $sidebarEl: $("#sidebar-sec"),
@@ -29,15 +29,6 @@ window.FeedMe = {
           $noticeEl:  $("#notice-sec")
         });
         Backbone.history.start();
-      },
-
-        error: function () {
-        new FeedMe.Routers.Router ({
-          $mainEl:    $("main"),
-          $sidebarEl: $("#sidebar-sec")
-        });
-        Backbone.history.start();
-
       }
     });
 

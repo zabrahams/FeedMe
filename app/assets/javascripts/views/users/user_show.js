@@ -47,7 +47,6 @@ FeedMe.Views.UserShow = Backbone.View.extend({
     ajaxUrl = "api/users/" + this.model.id + "/followings";
 
     if (this.weakContains(curators, this.model)) {
-      console.log("hi");
       $.ajax({
         type: "DELETE",
         dataType: "json",
@@ -61,7 +60,6 @@ FeedMe.Views.UserShow = Backbone.View.extend({
         }
       });
     } else {
-      console.log("bye");
       $.ajax({
         type: "POST",
         dataType: "json",
@@ -88,7 +86,7 @@ FeedMe.Views.UserShow = Backbone.View.extend({
 
   remove: function () {
     this._commentIndexView.remove();
-    Backbone.view.remove.call(this);
+    Backbone.View.prototype.remove.call(this);
   }
 
 });

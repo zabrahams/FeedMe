@@ -35,7 +35,6 @@ FeedMe.Views.SessionPassword = Backbone.View.extend({
   },
 
   questionsForm: function (userQuestions) {
-    console.log(userQuestions.first().get('user_id'));
     this._userId = userQuestions.first().get('user_id')
     this.$el.append(this.questTemplate( {questions: userQuestions.first().get("questions") }));
   },
@@ -51,7 +50,6 @@ FeedMe.Views.SessionPassword = Backbone.View.extend({
       data: attrs,
       dataType: "json",
       success: function (resp) {
-        console.log(resp)
         FeedMe.vent.trigger("noticeFlash", resp.notice);
       },
       error: function (resp) {

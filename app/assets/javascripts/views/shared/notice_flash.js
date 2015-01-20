@@ -17,7 +17,6 @@ FeedMe.Views.NoticeFlash = Backbone.View.extend({
   },
 
   flashMessage: function (msg) {
-    console.log(msg);
     this.$(".message").html(msg);
     this.$el.removeClass("closed");
   },

@@ -135,16 +135,12 @@ FeedMe.Views.EntryList = Backbone.ListView.extend({
   },
 
   _keepEntryOpen: function (entryId) {
-    console.log("trying to keep it open");
-    console.log(this._openEntries);
     var entry, $article, $title;
 
     $article = $("#article-entry-" + entryId);
     $article.removeClass("closed");
     $title = $("#entry-title-" + entryId);
     entry = this.collection.get(entryId);
-    console.log(this.collection);
-    console.log(entry);
     this.addElemView($article, entry);
     $title.addClass("been-opened");
   }

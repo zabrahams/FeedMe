@@ -7,4 +7,13 @@ class Comment < ActiveRecord::Base
              class_name: "User",
              foreign_key: :author_id
 
+  def is_by?(user)
+    author_id === user.id
+  end
+
+  def is_about?(user)
+    self.commentable_type === "User" &&
+    self.commentable_id === user.id
+  end
+
 end

@@ -30,7 +30,6 @@ FeedMe.Views.UserEdit = Backbone.View.extend({
       // Since a blank password is "" and not nil, it causes problems if
       // uploaded to the server. So I delete it from params client-side.
       if (attrs.user.password.length === 0) {
-        console.log("in password deletion")
         delete attrs.user.password
         delete attrs.user.password_confirmation
       }

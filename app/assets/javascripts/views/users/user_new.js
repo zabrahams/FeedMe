@@ -42,7 +42,6 @@ FeedMe.Views.UserNew = Backbone.View.extend({
           });
         },
         error: function (model, resp) {
-          console.log(resp.responseJSON)
           FeedMe.vent.trigger("errorFlash", resp.responseJSON);
         }
       });

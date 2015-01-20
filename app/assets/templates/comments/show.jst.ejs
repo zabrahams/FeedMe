@@ -1,5 +1,9 @@
 <p class="comment-body"><%= comment.escape("body") %></p>
-<p class="commenttauthor">posted by <em><%= comment.escape("author") %></em></p>
+<p class="commenttauthor">posted by <em><%= comment.escape("author") %></em>
+  <% if (this.model.isAboutCurrUser() || this.model.isByCurrUser()) { %>
+  <button class="remove-comment delete" data-id=<%=comment.id%>>x</button>
+  <% } %>
+</p>
 <p class="comment-time">
   posted <em><%= TimeUtils.getTimeDiff(comment.escape("created_at")) %></em>
 </p>

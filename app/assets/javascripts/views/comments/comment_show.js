@@ -9,7 +9,8 @@ FeedMe.Views.CommentShow = Backbone.View.extend({
   className: "comment",
 
   events: {
-    "click button.delete": "deleteComment"
+    "click button.delete": "deleteComment",
+    "click button.edit":   "editComment"
   },
 
   template: JST["comments/show"],
@@ -28,6 +29,21 @@ FeedMe.Views.CommentShow = Backbone.View.extend({
         FeedMe.vent.trigger("errorFlash", resp.responseJSON.errors);
       }
     });
+  },
+
+  editComment: function (event) {
+    var commentForm;
+
+    event.preventDefault();
+    var commentForm = new FeedMe.Views.CommentForm( {
+      collection: this.parent.collection,
+      commentableType: this.parent.commentableType,
+      commentableId: this.parent.commentableId,
+      parent: this,
+      model: this.model
+    });
+
+    this.$el.html(commentForm.render().$el);
   },
 
   remove: function () {

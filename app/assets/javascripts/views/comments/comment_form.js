@@ -1,4 +1,4 @@
-FeedMe.Views.CommentNew = Backbone.View.extend({
+FeedMe.Views.CommentForm = Backbone.View.extend({
 
   initialize: function (options) {
     this.commentableType = options.commentableType;
@@ -12,10 +12,10 @@ FeedMe.Views.CommentNew = Backbone.View.extend({
 
   tagName: "form",
 
-  template: JST["comments/new"],
+  template: JST["comments/form"],
 
   render: function () {
-    this.$el.html(this.template());
+    this.$el.html(this.template( {comment: this.model} ));
     return this;
   },
 
@@ -24,12 +24,17 @@ FeedMe.Views.CommentNew = Backbone.View.extend({
     event.preventDefault();
 
     attrs = this.$el.serializeJSON();
+
     attrs.comment.commentable_type = this.commentableType;
     attrs.comment.commentable_id = this.commentableId;
-    console.log(attrs);
 
-    comment = new FeedMe.Models.Comment();
-    comment.save(attrs, {
+    comment = this.model;
+
+    attrs = attrs.comment
+    console.log(attrs);
+    comment.set(attrs);
+    console.log(comment);
+    comment.save({}, {
       success: function (model) {
         this.collection.add(model);
       }.bind(this),

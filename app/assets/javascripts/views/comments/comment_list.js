@@ -37,11 +37,12 @@ FeedMe.Views.CommentList = Backbone.ListView.extend({
   },
 
   attachFormView: function () {
-    var commentForm = new FeedMe.Views.CommentNew( {
+    var commentForm = new FeedMe.Views.CommentForm( {
       collection: this.collection,
       commentableType: this.commentableType,
       commentableId: this.commentableId,
-      parent: this
+      parent: this,
+      model: new FeedMe.Models.Comment()
     });
 
     this._elemViews.push(commentForm);

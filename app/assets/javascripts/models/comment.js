@@ -8,6 +8,6 @@ FeedMe.Models.Comment = Backbone.Model.extend({
   },
 
   isByCurrUser: function () {
-    return (this.author === FeedMe.currentUser.escape("username"));
+    return (this.escape("author") === FeedMe.currentUser.escape("username"));
   }
 });

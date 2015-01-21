@@ -5,7 +5,13 @@ FeedMe.Views.UserShow = Backbone.View.extend({
     this.comments = new FeedMe.Collections.Comments({ commentable: this.model });
     this.comments.fetch({
       success: function () {
-        this._commentIndexView = new FeedMe.Views.CommentList( {collection: this.comments })
+        console.log("Comments fetched")
+        this._commentIndexView = new FeedMe.Views.CommentList({
+          collection: this.comments,
+          commentableType: "User",
+          commentableId: this.model.id.toString()
+        });
+
         this.render();
       }.bind(this)
     });

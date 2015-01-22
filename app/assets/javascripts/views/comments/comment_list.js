@@ -10,13 +10,14 @@ FeedMe.Views.CommentList = Backbone.ListView.extend({
 
   tagName: "ul",
 
-  className: "comment-list",
+  className: "comment-list closed",
 
   template: JST['comments/list'],
 
   render: function () {
     this.$el.html(this.template());
     if (this._elemViews.length === 0) {
+      console.log("updating view");
       this.updateViews()
     }
     this.renderElems();
@@ -25,13 +26,13 @@ FeedMe.Views.CommentList = Backbone.ListView.extend({
 
   updateViews: function () {
     this.collection.each(function (comment) {
+      console.log("adding comment to list!");
       var commentView = new FeedMe.Views.CommentShow( {
         model: comment,
         parent: this
         });
       this._elemViews.push(commentView);
       this.$el.append(commentView.render().$el)
-
     }.bind(this));
     this.attachFormView();
   },

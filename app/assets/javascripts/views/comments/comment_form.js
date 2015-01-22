@@ -7,7 +7,8 @@ FeedMe.Views.CommentForm = Backbone.View.extend({
   },
 
   events: {
-    "submit": "createComment"
+    "submit": "createComment",
+    "keydown textarea": "preventBubble"
   },
 
   tagName: "form",
@@ -42,8 +43,14 @@ FeedMe.Views.CommentForm = Backbone.View.extend({
         FeedMe.vent.trigger("errorFlash", resp.responseJSON);
       }
     });
+  },
+
+  preventBubble: function (event) {
+    event.stopPropagation();
+    console.log(event.isPropagationStopped());
+    // $textarea = this.$("textarea");
+    // oldText = $textarea.text();
+    // $textarea.text(oldText + event.key)
   }
-
-
 
 });

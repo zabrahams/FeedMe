@@ -18,7 +18,8 @@ FeedMe.Views.UserShow = Backbone.View.extend({
   },
 
   events: {
-    "click button.follow-btn": "toggleFollow"
+    "click button.follow-btn": "toggleFollow",
+    "click a.toggle-comments": "toggleComments"
   },
 
   template: JST['users/show'],
@@ -79,6 +80,11 @@ FeedMe.Views.UserShow = Backbone.View.extend({
         }
       });
     }
+  },
+
+  toggleComments: function (event) {
+    event.preventDefault();
+    this._commentIndexView.$el.toggleClass("closed");
   },
 
   weakContains: function(collection, model) {

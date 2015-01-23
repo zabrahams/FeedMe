@@ -78,3 +78,17 @@ article.entry {
   text-align: center;
   margin-top: 10px;
 }
+
+@media (max-width: 1200px) {
+  .entry-list-elem .entry-feed {
+    width: 1000px;
+  }
+
+  .entry-list-elem .entry-title {
+    width: 1000px;
+  }
+
+  .entry-list-elem time {
+    width: 1000px;
+  }
+}

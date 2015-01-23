@@ -5,6 +5,10 @@ FeedMe.Views.UserIndex = Backbone.View.extend({
     this.listenTo(this.collection, "add remove reset", this.render);
   },
 
+  tagName: "section",
+
+  className: "user-page group",
+
   template: JST['users/index'],
 
   render: function () {

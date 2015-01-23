@@ -3,6 +3,10 @@ FeedMe.Views.CategoryShow = Backbone.View.extend({
     this.listenTo( this.model, "sync", this.render );
   },
 
+  tagName: "section",
+
+  className: "group cat-page",
+
   template: JST['categories/show'],
 
   render: function () {

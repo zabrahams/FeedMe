@@ -4,6 +4,11 @@ FeedMe.Views.CategoryIndex = Backbone.CompositeView.extend({
     this.listenTo(this.collection, "add remove reset", this.render);
   },
 
+
+  tagName: "section",
+
+  className: "group cat-page",
+
   events: {
     "click section.new-category label": "newCategory"
   },

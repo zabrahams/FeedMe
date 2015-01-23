@@ -1,4 +1,11 @@
 /* Category list and edit styles */
+
+.cat-page {
+  display: block;
+  width: 1200px;
+  margin: 30px auto;
+}
+
 .category-list-item {
   display: block;
   width: 400px;
@@ -53,16 +60,16 @@
 .cat-list-container {
   display: block;
   float: right;
-  width: 400px;
-  margin-right: 150px;
-  margin-top: 30px;
+  width: 440px;
+  margin-top: 10px;
 }
 
 
 .cat-feed-list-container {
-  width: 400px;
-  margin-left: 150px;
-  margin-top: 50px;
+  display: block;
+  float: left;
+
+  width: 443px;
 }
 
 .cat-feed-list {
@@ -107,4 +114,19 @@ form.new-cat-form input[type=text] {
   width: 220px;
   display: block;
   border: 1px solid #ccc;
+}
+
+@media (max-width: 1500px) {
+  .cat-page {
+    width: 900px;
+  }
+}
+
+@media (max-width: 1300px) {
+  .cat-page {
+    width: 500px;
+  }
+  .cat-list-container {
+    float: left;
+  }
 }

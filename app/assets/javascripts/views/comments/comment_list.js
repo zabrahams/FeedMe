@@ -10,7 +10,7 @@ FeedMe.Views.CommentList = Backbone.ListView.extend({
 
   tagName: "ul",
 
-  className: "comment-list closed",
+  className: "comment-list gen-list closed",
 
   template: JST['comments/list'],
 

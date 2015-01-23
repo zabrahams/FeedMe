@@ -1,0 +1,33 @@
+/* Flash */
+
+/* notifications */
+
+.message {
+  position: absolute;
+  font-weight: bold;
+  font-size: 24px;
+  width: 400px;
+  text-align: center;
+  margin-left: 220px;
+  margin-top: 20px;
+  padding: 5px 10px;
+  z-index: 1;
+}
+
+.notice-message {
+  color:  #84D66F;
+  border: 1px solid #5DAD49;
+  background: #ccc;
+  opacity: .9;
+  border-radius: 5px;
+  text-shadow: 1px 1px #666, 1px -1px #666, -1px -1px #666, -1px 1px #666;
+}
+
+.error-message {
+  color:  #6EC9D4;
+  border: 1px solid #59A3AB;
+  background: #ccc;
+  opacity: .9;
+  border-radius: 5px;
+  text-shadow: 1px 1px #666, 1px -1px #666, -1px -1px #666, -1px 1px #666;
+}

@@ -1,0 +1,51 @@
+/* Main Layout */
+
+section.content {
+  min-height: 500px;
+  position: relative;
+  font-weight: 16px;
+
+}
+
+main.display {
+  position: absolute;
+  left: 191px;
+  right: 0px;
+  top: 0px;
+  min-height: 500px;
+  padding: 20px;
+}
+
+header {
+  margin-bottom: 30px;
+  display: block;
+
+}
+
+.page-title {
+  font-weight: bold;
+  text-transform: lowercase;
+  font-size: 36px;
+  text-align: center;
+}
+
+
+/* Splash Page */
+
+.banner {
+  font-size: 84px;
+  text-align: center;
+  width: 700px;
+  padding: 50px 100px;
+  margin: auto;
+  margin-top: 100px;
+
+  font-weight: bold;
+}
+
+.splash-text {
+  font-size: 36px;
+  text-align: center;
+  display: block;
+  padding: 25px 100px
+}

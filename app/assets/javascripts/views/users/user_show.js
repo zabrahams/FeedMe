@@ -17,6 +17,8 @@ FeedMe.Views.UserShow = Backbone.View.extend({
     });
   },
 
+  className: "user-show-page",
+
   events: {
     "click button.follow-btn": "toggleFollow",
     "click a.toggle-comments": "toggleComments"

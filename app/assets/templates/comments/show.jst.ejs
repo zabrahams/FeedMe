@@ -1,15 +1,18 @@
 <p class="comment-body"><%= comment.escape("body") %></p>
-<p class="commenttauthor">posted by <em><%= comment.escape("author") %></em>
+<p class="comment-author">posted by <em><%= comment.escape("author") %></em>
+</p>
+<p class="comment-time">
+  posted <em><%= TimeUtils.getTimeDiff(comment.escape("created_at")) %></em>
+</p>
 
+<nav class="comment-nav">
   <% if (this.model.isAboutCurrUser() || this.model.isByCurrUser()) { %>
     <button class="remove-comment delete"
             data-id="<%=comment.id%>">x</button>
   <% } %>
   <% if (this.model.isByCurrUser()) { %>
+    <span class="comment-spacer">| </span>
     <button class="edit-comment edit"
-            data-id="<%=comment.id%>">Edit</button>
+          data-id="<%=comment.id%>">Edit</button>
   <% } %>
-</p>
-<p class="comment-time">
-  posted <em><%= TimeUtils.getTimeDiff(comment.escape("created_at")) %></em>
-</p>
+</nav>

@@ -1,0 +1,110 @@
+/* Category list and edit styles */
+.category-list-item {
+  display: block;
+  width: 400px;
+  padding: 10px 20px;
+  border: 1px solid #999;
+  border-radius: 5px;
+  margin-top: 30px;
+}
+
+.category-list-item .category-title {
+  display: block;
+  float: left;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.category-list-item .delete {
+  display: block;
+  float: right;
+}
+
+.category-list-item .edit {
+  display: block;
+  float: right;
+  padding-right: 5px;
+  margin-right: 5px;
+  border-right: 1px solid #999;
+}
+
+.category-list-item .edit:hover {
+  color: #f280a1;
+}
+
+.category-list-item.highlighted {
+  border: 1px solid #f280a1;
+}
+
+.category-feed-item {
+  margin-top: 5px;
+  padding-top: 5px;
+  border-top: 1px dotted #999;
+}
+
+.category-feed-label {
+  display: block;
+  float: left;
+  width: 270px;
+  height: 20px;
+  overflow: hidden;
+}
+
+.cat-list-container {
+  display: block;
+  float: right;
+  width: 400px;
+  margin-right: 150px;
+  margin-top: 30px;
+}
+
+
+.cat-feed-list-container {
+  width: 400px;
+  margin-left: 150px;
+  margin-top: 50px;
+}
+
+.cat-feed-list {
+  width: 400px;
+}
+
+
+.cat-list-item {
+  width: 400px;
+}
+
+.new-category {
+  display: block;
+  width: 400px;
+  font-size: 18px;
+  font-weight: bold;
+  padding: 10px 20px;
+  border-radius: 5px;
+  border: 1px solid #999;
+}
+
+.new-category > label {
+  display: block;
+}
+
+.new-category:hover {
+  border: 1px solid #f280a1;
+}
+.new-category form.new-cat-form {
+  background: #eee;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+form.new-cat-form input {
+  background: white;
+}
+
+form.new-cat-form input[type=text] {
+  width: 220px;
+  display: block;
+  border: 1px solid #ccc;
+}

@@ -1,0 +1,51 @@
+.gen-list.comment-list {
+  margin-top: 20px;
+  display: block;
+  float: none;
+}
+
+.user-show-page .comment-list {
+  float: left;
+}
+
+.comment-list-item {
+  border-bottom: 1px dotted #ccc;
+  padding: 5px;
+}
+
+.comment-author {
+  font-size: 12px;
+  margin-right: 10px;
+}
+
+.comment-time {
+  font-size: 12px;
+  color: #f280a1;
+  width: 150px;
+  display: block;
+  float: left;
+}
+
+.edit-comment {
+  font-size: 12px;
+}
+.comment-spacer {
+  content: "| ";
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.edit-comment:hover {
+  color:  #f280a1;
+}
+
+.comment-nav {
+  display: block;
+  float: right;
+  width: 150px;
+  text-align: right;
+}
+
+.comment-list.closed {
+  display: none;
+}

@@ -4,9 +4,9 @@ FeedMe.Views.CommentShow = Backbone.View.extend({
     this.parent = options.parent
   },
 
-  tagName: "article",
+  tagName: "li",
 
-  className: "comment",
+  className: "comment-list-item gen-list-item group",
 
   events: {
     "click button.delete": "deleteComment",

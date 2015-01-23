@@ -1,0 +1,134 @@
+/* Colors:
+
+notice green: #35D4B7
+error red:    #
+everything pink: #f280a1 */
+
+
+
+/* general styles */
+
+body {
+  word-wrap: break-word;
+}
+
+.group::after {
+  content: "";
+  display: block;
+  clear: both;
+}
+
+.closed {
+  display: none;
+}
+
+ul {
+  list-style: none;
+}
+
+em {
+  color: #f280a1;
+}
+
+a:hover {
+  color: #f280a1;
+}
+
+/* buttons */
+.delete {
+  font-weight: bold;
+  font-family: sans-serif;
+  font-size: 18px;
+}
+
+.delete:hover {
+  color: #f280a1;
+  cursor: pointer;
+}
+
+/* selected */
+
+.selected {
+  background: #ddd;
+}
+
+
+/* forms */
+
+form {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 20px 40px;
+  margin: 0px auto;
+}
+
+form label {
+  display: block;
+  text-align: center;
+  font-weight: bold;
+  text-transform: lowercase;
+}
+
+form input[type=text], input[type=password] {
+  display: block;
+  width: 300px;
+  margin: 20px auto;
+  border: 1px solid #999;
+  border-radius: 5px;
+  padding: 5px 10px;
+}
+
+form input[type=submit] {
+  width: 100px;
+  border: 1px solid #999;
+  border-radius: 5px;
+  margin-top: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 5px 10px;
+  text-align: center;
+  display: block;
+  cursor: pointer;
+}
+
+form input[type=submit]:hover {
+  background: #999;
+}
+
+form select {
+  display: block;
+  width: 300px;
+  margin: 20px auto;
+  border: 1px solid #999;
+  border-radius: 5px;
+  padding: 5px 10px;
+  background: #fff;
+  color: #000;
+}
+
+form a {
+  text-align: center;
+  display: block;
+  margin: 20px auto;
+}
+
+/* Generic Lists */
+
+
+.gen-list-header{
+  font-size: 18px;
+  font-weight: bold;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #999;
+  margin-top: 20px;
+}
+
+.gen-list {
+  display: block;
+  float: left;
+  width: 400px;
+  border: 1px solid #999;
+  border-radius: 5px;
+  padding: 10px 20px;
+  margin: 10px auto;
+}

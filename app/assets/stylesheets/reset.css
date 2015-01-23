@@ -1,0 +1,33 @@
+/* Reset */
+
+div, section, article, main, h1, h2, h3, h4, p, a, form, button, input,
+body, ul, li, em {
+  padding: 0;
+  margin: 0;
+  border: 0;
+  font: inherit;
+  text-decoration: inherit;
+  text-align: inherit;
+  color: inherit;
+  background: transparent;
+}
+
+button:focus {
+  outline: none;
+}
+
+input[type=text] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+input[type=text]:focus {
+  outline: none;
+  border-color: #f280a1;
+}
+
+input[type=password]:focus {
+  outline: none;
+  border-color:  #f280a1;
+}

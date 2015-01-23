@@ -1,0 +1,69 @@
+/* sidebar */
+
+nav.sidebar {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 150px;
+  background: #ccc;
+  border-right: 1px solid grey;
+  padding: 20px;
+
+}
+
+.logo {
+  font-weight: bold;
+  font-size: 24px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #999;
+  text-align: center;
+}
+
+.sidebar .nav-list {
+  margin-top: 30px;
+  font-variant: small-caps;
+}
+
+.nav-list-item {
+  display: block;
+  padding-left: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px dotted #999;
+  margin-bottom: 10px;
+}
+
+nav.sidebar a {
+  display: block;
+}
+
+a.user-link {
+  font-weight: bold;
+  font-size: 16px;
+  margin-top: 20px;
+  text-align: center;
+}
+
+nav a:hover {
+  color: #999;
+}
+
+.sidebar-form {
+  border: 0;
+  padding: 0px;
+  margin: 0px auto;
+}
+
+.logout {
+  display: block;
+  background: #ddd;
+  padding: 5px 10px;
+  border: 1px solid grey;
+  border-radius: 5px;
+  margin: 10px auto;
+}
+
+.logout:hover {
+  background: #999;
+  color: #ccc;
+}

@@ -1,0 +1,80 @@
+/* Entry Lists */
+
+ul.entry-list {
+  border-top: 1px solid #999;
+  width: 1000px;
+  margin: 0px auto;
+  padding-top: 30px;
+}
+
+.entry-list-elem {
+  padding: 5px;
+  border-bottom: 1px dotted #999;
+}
+
+.entry-list-elem:hover {
+  background: #ccc;
+}
+
+.entry-list-elem .entry-feed {
+  color: #666;
+  display: block;
+  width: 250px;
+  float: left;
+}
+
+.entry-list-elem .entry-title {
+  display: block;
+  width: 650px;
+  padding-left: 5px;
+  float: left;
+}
+
+.entry-list-elem time {
+  color: #f280a1;   /* Light pink */
+  display: block;
+  float: left;
+  width: 75px;
+  padding-left: 5px;
+}
+
+/* entry show styles */
+
+article.entry {
+  margin: 20px auto;
+  padding: 20px 0;
+  width: 850px;
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+}
+
+.entry .link-to-original {
+  display: block;
+  color: #f280a1;
+  font-variant: small-caps;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 10px
+}
+
+.entry img {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.entry div {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.entry p {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.entry-author {
+  display: block;
+  color: #f280a1;
+  text-align: center;
+  margin-top: 10px;
+}

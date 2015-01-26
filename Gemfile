@@ -43,8 +43,11 @@ gem "aws-sdk"
 # Sets up backbone
 gem "backbone-on-rails"
 
-# User faker for seeding the db
+# Uses faker for seeding the db
 gem 'faker'
+
+# Uses kaminari for pagination
+gem 'kaminari'
 
 group :development, :test do
   gem 'rspec-rails'

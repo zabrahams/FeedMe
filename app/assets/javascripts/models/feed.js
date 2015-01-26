@@ -15,7 +15,7 @@ FeedMe.Models.Feed = Backbone.Model.extend({
     var entries;
 
     if (resp.entries) {
-      this.entries().set(resp.entries);
+      this.entries().add(resp.entries, {merge: true });
       delete resp.entries;
     }
 

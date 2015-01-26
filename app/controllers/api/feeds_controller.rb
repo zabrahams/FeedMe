@@ -21,7 +21,10 @@ class Api::FeedsController < ApplicationController
     if @feed.updated_at < 30.seconds.ago && !@feed.curated
       Resque.enqueue(UpdateEntries, @feed.id)
     end
-    @entries = @feed.entries.order(published_at: :desc)
+    @entries = @feed
+      .entries
+      .order(published_at: :desc)
+      .page(params[:page]).per(10)
     render :show
   end
 

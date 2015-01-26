@@ -6,6 +6,8 @@ window.FeedMe = {
   initialize: function() {
     this.feeds = new FeedMe.Collections.Feeds();
     this.feeds.fetch();
+    this.entries = new FeedMe.Collections.Entries();
+    this.entries.fetch();
     this.categories = new FeedMe.Collections.Categories();
     this.categories.fetch();
     this.users = new FeedMe.Collections.Users();

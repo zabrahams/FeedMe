@@ -75,14 +75,13 @@ FeedMe.Routers.Router = Backbone.Router.extend({
   },
 
   entryIndex: function () {
-    var entries, entryIndexView;
+    var entryIndexView;
 
     if (!this._requireLogin()) {return false;}
-    entries = new FeedMe.Collections.Entries();
-    entries.fetch(
+    FeedMe.entries.fetch(
 
     );
-    entryIndexView = new FeedMe.Views.EntryIndex({ collection: entries });
+    entryIndexView = new FeedMe.Views.EntryIndex({ collection: FeedMe.entries });
     this._swapView(entryIndexView);
   },
 

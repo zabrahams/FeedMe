@@ -20,7 +20,7 @@ FeedMe.Models.Category = Backbone.Model.extend({
     var entries;
 
     if (resp.entries) {
-      this.entries().set(resp.entries);
+      this.entries().add(resp.entries, {merge: true});
       delete resp.entries;
     }
 
@@ -38,7 +38,7 @@ FeedMe.Models.Category = Backbone.Model.extend({
       } else if (resp.updating === false) {
         this.update_limit = 0;
       }
-      
+
       delete resp.updating;
     }
 

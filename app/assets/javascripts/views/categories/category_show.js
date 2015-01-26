@@ -7,7 +7,10 @@ FeedMe.Views.CategoryShow = Backbone.View.extend({
 
   render: function () {
     this.$el.html(this.template({ category: this.model }));
-    var entryList = new FeedMe.Views.EntryList({ collection: this.model.entries() });
+    var entryList = new FeedMe.Views.EntryList({
+      collection: this.model.entries(),
+      model:      this.model
+    });
     this._swapEntryList(entryList);
     return this;
   },

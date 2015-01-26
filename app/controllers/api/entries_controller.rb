@@ -7,7 +7,11 @@ class Api::EntriesController < ApplicationController
         Resque.enqueue(UpdateEntries, feed.id)
       end
     end
-    @entries = current_user.entries.includes(:feeds).order(published_at: :desc)
+    @entries = current_user
+      .entries
+      .includes(:feeds)
+      .order(published_at: :desc)
+      .page(params[:page])
     render :index
   end
 

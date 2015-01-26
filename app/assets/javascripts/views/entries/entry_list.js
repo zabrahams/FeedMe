@@ -5,6 +5,7 @@ FeedMe.Views.EntryList = Backbone.ListView.extend({
     this.listenTo(this.collection, "add remove reset sync", this.render);
     this.listenTo(FeedMe.vent, "keyEvent", this.keyAction.bind(this));
     this._openEntries = [];
+    this.page = 1;
     // this.$el
     //   .ajaxStart(this.displayProgressBar)
     //   .ajaxStop(this.hideProgressBar);
@@ -16,7 +17,8 @@ FeedMe.Views.EntryList = Backbone.ListView.extend({
   className: "entry-list",
 
   events: {
-    "click a.entry-title": "toggleEntry"
+    "click a.entry-title": "toggleEntry",
+    "click a.next-page-link": "nextPage"
   },
 
   template: JST['entries/list'],
@@ -125,6 +127,30 @@ FeedMe.Views.EntryList = Backbone.ListView.extend({
       this.toggleEntry();
     }
 
+  },
+
+  nextPage: function (event) {
+    event.preventDefault();
+
+    this.page += 1;
+    if (this.model == void 0) {
+      var nextPageEntries = new FeedMe.Collections.Entries();
+      nextPageEntries.fetch({
+      data: {"page": this.page},
+      success: function () {
+        this.collection.add(nextPageEntries.models);
+      }.bind(this)
+    });
+    } else {
+      var nextPageModel = this.model.clone();
+      nextPageModel.fetch({
+        data: {"page": this.page},
+        success: function () {
+          console.log(nextPageModel.entries());
+          this.collection.add(nextPageModel.entries().models);
+        }.bind(this)
+      });
+    }
   },
 
   // displayProgressBar: function () {

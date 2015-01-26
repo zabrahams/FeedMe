@@ -17,7 +17,11 @@ class Api::CategoriesController < ApplicationController
       end
     end
 
-    @entries = @category.entries.includes(:feeds).order(published_at: :desc)
+    @entries = @category
+      .entries
+      .includes(:feeds)
+      .order(published_at: :desc)
+      .page(params[:page])
     render :show
   end
 

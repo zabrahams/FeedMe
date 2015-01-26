@@ -13,14 +13,17 @@ FeedMe.Views.CommentList = Backbone.ListView.extend({
   className: "comment-list gen-list closed",
 
   template: JST['comments/list'],
-
   render: function () {
+
     this.$el.html(this.template());
+    console.log(this._elemViews);
     if (this._elemViews.length === 0) {
       console.log("updating view");
       this.updateViews()
     }
-    this.renderElems();
+    this.attachElemViews();
+    console.log(this._elemViews.length);
+    console.log(this.$el.children().length);
     return this;
   },
 
@@ -32,12 +35,17 @@ FeedMe.Views.CommentList = Backbone.ListView.extend({
         parent: this
         });
       this._elemViews.push(commentView);
-      this.$el.append(commentView.render().$el)
     }.bind(this));
-    this.attachFormView();
+    this.createFormView();
   },
 
-  attachFormView: function () {
+  attachElemViews: function () {
+    this._elemViews.forEach(function (elemView) {
+      this.$el.append(elemView.render().$el);
+    }.bind(this));
+  },
+
+  createFormView: function () {
     var commentForm = new FeedMe.Views.CommentForm( {
       collection: this.collection,
       commentableType: this.commentableType,
@@ -47,7 +55,7 @@ FeedMe.Views.CommentList = Backbone.ListView.extend({
     });
 
     this._elemViews.push(commentForm);
-    this.$el.append(commentForm.render().$el)
+    console.log(this.$el);
   }
 
 });

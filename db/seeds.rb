@@ -14,7 +14,7 @@ users = []
     username:    Faker::Internet.user_name,
     email:       Faker::Internet.email,
     password:    "123456",
-    image:       Faker::Avatar.image,
+    # image:       Faker::Avatar.image,
     fname:       Faker::Name.first_name,
     lname:       Faker::Name.last_name,
     description: Faker::Company.bs,

@@ -17,6 +17,13 @@ window.FeedMe = {
       FeedMe.vent.trigger("keyEvent", key);
     })
 
+    $(document)
+      .ajaxStart(function () {
+        $("#progressbar").progressbar({value: false});
+      })
+      .ajaxStop(function () {
+        $("#progressbar").progressbar("destroy");
+      });
 
     this.currentUser = new FeedMe.Models.CurrentUser();
     this.currentUser.fetch({

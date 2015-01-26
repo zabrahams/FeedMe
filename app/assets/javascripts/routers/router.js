@@ -79,7 +79,9 @@ FeedMe.Routers.Router = Backbone.Router.extend({
 
     if (!this._requireLogin()) {return false;}
     entries = new FeedMe.Collections.Entries();
-    entries.fetch();
+    entries.fetch(
+
+    );
     entryIndexView = new FeedMe.Views.EntryIndex({ collection: entries });
     this._swapView(entryIndexView);
   },

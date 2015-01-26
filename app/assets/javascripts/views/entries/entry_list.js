@@ -5,6 +5,10 @@ FeedMe.Views.EntryList = Backbone.ListView.extend({
     this.listenTo(this.collection, "add remove reset sync", this.render);
     this.listenTo(FeedMe.vent, "keyEvent", this.keyAction.bind(this));
     this._openEntries = [];
+    // this.$el
+    //   .ajaxStart(this.displayProgressBar)
+    //   .ajaxStop(this.hideProgressBar);
+
   },
 
   tagName: "ul",
@@ -122,6 +126,18 @@ FeedMe.Views.EntryList = Backbone.ListView.extend({
     }
 
   },
+
+  // displayProgressBar: function () {
+  //   console.log("in ajax start response");
+  //   $("#progressbar").progressbar({
+  //     value: false
+  //   });
+  // },
+  //
+  // hideProgressBar: function () {
+  //   console.log("in ajax stop response");
+  //   $("#progressbar").progressbar("destroy");
+  // },
 
   _toggleOpenEntry: function (entryId) {
     var entryIndex;

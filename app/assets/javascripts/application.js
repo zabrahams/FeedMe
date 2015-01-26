@@ -12,7 +12,9 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require jquery-ui
+//= require jquery-ui/draggable
+//= require jquery-ui/droppable
+//= require jquery-ui/progressbar
 //= require underscore
 //= require backbone
 //= require jquery.serializejson

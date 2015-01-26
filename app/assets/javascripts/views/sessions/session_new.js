@@ -1,4 +1,4 @@
-  FeedMe.Views.SessionNew = Backbone.View.extend({
+FeedMe.Views.SessionNew = Backbone.View.extend({
 
   events: {
     "submit form": "login",

@@ -7,6 +7,7 @@ FeedMe.Views.FeedShow = Backbone.View.extend({
   template: JST['feeds/show'],
 
   render: function () {
+    console.log("rendering from Feed");
     this.$el.html(this.template({ feed: this.model }));
     var entryList = new FeedMe.Views.EntryList({ collection: this.model.entries() });
     this._swapEntryList(entryList);

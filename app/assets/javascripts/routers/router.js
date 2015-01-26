@@ -21,12 +21,6 @@ FeedMe.Routers.Router = Backbone.Router.extend({
     noticeView = new FeedMe.Views.NoticeFlash();
     this.$noticeEl.html(noticeView.render().$el);
 
-    // this.listenTo(FeedMe.currentUser, "logout", Backbone.history.navigate.bind(
-    //     Backbone.history,
-    //     "",
-    //     { trigger: true }
-    // ));
-
   },
 
   routes: {

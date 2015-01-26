@@ -156,5 +156,4 @@ class User < ActiveRecord::Base
     self.reset_token = nil
     self.save
   end
-
 end

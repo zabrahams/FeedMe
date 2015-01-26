@@ -60,9 +60,9 @@ FeedMe.Models.CurrentUser = FeedMe.Models.User.extend({
       url: this.url,
       dataType: "json",
       success: function (resp) {
-        Backbone.history.navigate("", { trigger: true });
         FeedMe.vent.trigger("noticeFlash", resp.notice);
         model.clear();
+        Backbone.history.navigate("", { trigger: true });
       }
     });
 

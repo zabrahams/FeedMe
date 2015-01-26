@@ -4,6 +4,10 @@
   float: none;
 }
 
+.comment-form {
+  margin-top: 20px;
+}
+
 .user-show-page .comment-list {
   float: left;
 }
@@ -48,4 +52,12 @@
 
 .comment-list.closed {
   display: none;
+}
+
+.form-comment-body {
+  margin: 20px auto;
+  display: block;
+  width: 300px;
+  min-height: 150px;
+  padding: 5px;
 }

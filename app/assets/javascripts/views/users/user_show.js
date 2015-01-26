@@ -42,7 +42,7 @@ FeedMe.Views.UserShow = Backbone.View.extend({
       buttonText: buttonText
       }));
 
-    this._commentIndexView && this.$el.append(this._commentIndexView.render().$el)
+    this._commentIndexView && this.$el.find('.profile-comments').append(this._commentIndexView.render().$el)
 
     return this;
   },

@@ -1,3 +1,8 @@
-<label for="comment_body">New Comment:</label>
-<textarea id="comment_body" name="comment[body]"><%= comment.escape("body") %></textarea>
+<label for="comment_body"
+       class="form-comment-body-label">New Comment:</label>
+
+<textarea class="form-comment-body"
+          id="comment_body"
+          name="comment[body]"><%= comment.escape("body") %></textarea>
+
 <input type="submit" value="Post!">

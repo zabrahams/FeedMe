@@ -13,6 +13,8 @@ FeedMe.Views.CommentForm = Backbone.View.extend({
 
   tagName: "form",
 
+  className: "comment-form",
+
   template: JST["comments/form"],
 
   render: function () {
@@ -48,9 +50,6 @@ FeedMe.Views.CommentForm = Backbone.View.extend({
   preventBubble: function (event) {
     event.stopPropagation();
     console.log(event.isPropagationStopped());
-    // $textarea = this.$("textarea");
-    // oldText = $textarea.text();
-    // $textarea.text(oldText + event.key)
   }
 
 });

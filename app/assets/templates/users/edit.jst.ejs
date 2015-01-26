@@ -1,6 +1,10 @@
+<header>
+  <h1 class="page-title">Edit Your Profile!</h1>
+</header>
+
 <form class="user-edit-form group">
 
-<section class="profile-left">
+<section class="profile-group">
 
   <label for="user_image">Profile Picture:</label>
   <div class="profile-pic">
@@ -13,7 +17,7 @@
   <textarea name="user[description]" id="user_description"><%= user.escape('description') %></textarea>
 </section>
 
-<section class="profile-right">
+<section class="profile-group">
 
   <label for="user_fname">First Name:</label>
   <input type="text" name="user[fname]" id="user_fname" value="<%= user.escape('fname') %>">
@@ -31,6 +35,6 @@
   <label for="user_password_confirmation">Password Confirmation:</label>
   <input type="password" name="user[password_confirmation]" id="user_password_confirmation">
 
-</section>
   <input type="submit" value="Update!">
+</section>
 </form>

@@ -4,16 +4,16 @@
 
 <section class="show-user">
 
-  <section class="profile-left">
+  <section class="profile-group">
   <div class="profile-pic">
     <img src="<%= user.get('image_url') %>" alt="Profile Picture">
   </div>
 
-  <label for="user_description" class="user-info">About <%= user.escape("username")%>:</label>
+  <label for="user_description" class="user-label">About <%= user.escape("username")%>:</label>
   <p class="user-description"><%= user.escape('description') %></p>
   </section>
 
-  <section class="profile-right">
+  <section class="profile-group">
 
     <label class="user-label" for="user_fname">First Name:</label>
     <p class="user-info" id="user_fname" ><%= user.escape('fname') %></p>
@@ -24,6 +24,8 @@
   <button class="follow-btn"><%= buttonText %></button>
   </section>
 
-  <a href="#" class="toggle-comments">Comments</a>
+  <section class="profile-comments">
+    <a href="#" class="toggle-comments">Comments</a>
+  </section>
 
 </section>

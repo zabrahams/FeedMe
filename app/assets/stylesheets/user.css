@@ -1,24 +1,31 @@
 /* user Profiles */
 
 .user-edit-form {
-  width: 1200px;
+  width: 1300px;
+  border: 0;
 }
 
-.profile-left {
+.profile-group {
   display: block;
   float: left;
   width: 500px;
+  border: 1px solid #999;
+  border-radius: 5px;
+  margin: 30px;
+  padding: 20px;
 }
 
-.profile-right {
+.profile-comments {
   display: block;
-  float: right;
-  width: 700px;
+  float: left;
+  width: 500px;
+  margin-left: 30px;
+  padding: 20px;
 }
+
 .user-edit-form textarea {
   display: block;
   padding: 5px 10px;
-  outline: none;
   height: 200px;
   width: 200px;
   border: 1px solid #999;
@@ -56,26 +63,33 @@
 
 .user-info {
   font-size: 24px;
-  padding: 20px 60px;
+  padding: 5px 60px;
+  margin-bottom: 15px;
+  border-bottom: 1px dotted #ccc;
 }
 
 p.user-description {
-  width: 500px;
-  margin-left: 100px;
-  margin-top: 20px
+  width: 400px;
+  padding: 20px;
+  border: 1px solid #999;
+  border-radius: 5px;
+  margin: 20px auto;
 }
 
-.show-user button {
+.follow-btn {
   padding: 80px 160px;
+  width: 300px;
   font-size: 24px;
   font-variant: small-caps;
   border: 1px solid #999;
   border-radius: 5px;
-  margin-top: 50px;
+  margin-top: 30px;
+  margin-left: 80px;
+  margin-right: 80px;
   background: #eee;
 }
 
-.show-user button:hover {
+.follow-btn:hover {
   background: #f280a1;
   color: #555;
 }

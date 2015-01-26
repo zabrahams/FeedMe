@@ -17,8 +17,19 @@ users = []
     image:       Faker::Avatar.image,
     fname:       Faker::Name.first_name,
     lname:       Faker::Name.last_name,
-    description: Faker::Company.bs                       )
+    description: Faker::Company.bs,
+    activated:   true                       )
 end
+
+SecurityQuestion.create(content: "What is your mother's maiden name?")
+SecurityQuestion.create(content: "What was the name of your first pet?")
+SecurityQuestion.create(content: "What was the name of your first school?")
+SecurityQuestion.create(content: "What is your least favourite word?")
+SecurityQuestion.create(content: "What was the first street you lived on?")
+SecurityQuestion.create(content: "Where did you meet your current partner?")
+SecurityQuestion.create(content: "Where is your ideal vacation spot?")
+SecurityQuestion.create(content: "What is your favorite plant?")
+
 
 feed1 = Feed.create(url: "http://feeds.feedburner.com/Metafilter")
 feed2 = Feed.create( url: "http://feeds.feedburner.com/AskMetafilter")

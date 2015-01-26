@@ -30,7 +30,7 @@ class User < ActiveRecord::Base
           foreign_key: :curator_id,
           dependent: :destroy
 
-  has_many :user_feeds, dependent: :destroy
+  has_many :user_feeds, inverse_of: :user, dependent: :destroy
   has_many :categories, dependent: :destroy
   has_many :feeds, through: :user_feeds
   has_many :entries, through: :feeds

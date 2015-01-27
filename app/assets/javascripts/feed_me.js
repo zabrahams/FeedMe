@@ -19,6 +19,13 @@ window.FeedMe = {
       FeedMe.vent.trigger("keyEvent", key);
     })
 
+    $(window).bind('scroll', function(){
+      if ($(window).scrollTop() == $(document).height() - $(window).height()) {
+        FeedMe.vent.trigger("bottomScroll");
+        console.log("bottomScroll");
+      }
+    });
+
     $(document)
       .ajaxStart(function () {
         $("#progressbar").progressbar({value: false});

@@ -24,7 +24,7 @@ class Api::FeedsController < ApplicationController
     @entries = @feed
       .entries
       .order(published_at: :desc)
-      .page(params[:page]).per(10)
+      .page(params[:page])
     render :show
   end
 

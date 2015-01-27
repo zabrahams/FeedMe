@@ -131,23 +131,29 @@ FeedMe.Views.EntryList = Backbone.ListView.extend({
 
   nextPage: function () {
 
-    this.page += 1;
-    if (this.model == void 0) {
-      var nextPageEntries = new FeedMe.Collections.Entries();
-      nextPageEntries.fetch({
-      data: {"page": this.page},
-      success: function () {
-        this.collection.add(nextPageEntries.models);
-      }.bind(this)
-    });
-    } else {
-      var nextPageModel = this.model.clone();
-      nextPageModel.fetch({
+    if ($('#list-end').length === 0) {
+      this.page += 1;
+
+      if (this.model === void 0 ) {
+        var nextPage = new FeedMe.Collections.Entries();
+      } else {
+        var nextPage = this.model.clone();
+      }
+      nextPage.fetch({
         data: {"page": this.page},
         success: function () {
-          this.collection.add(nextPageModel.entries().models);
-        }.bind(this)
+        var newEntries = (this.model === void 0) ? nextPage.models : nextPage.entries().models
+          this.collection.add(newEntries);
+        }.bind(this),
+        error: this._pastLastPage.bind(this)
       });
+    }
+  },
+
+  _pastLastPage: function () {
+    if ($('#list-end').length === 0) {
+      console.log("in if")
+      this.$el.append("<div id='list-end' class='entry-list-end'></div>");
     }
   },
 

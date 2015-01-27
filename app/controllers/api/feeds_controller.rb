@@ -18,14 +18,20 @@ class Api::FeedsController < ApplicationController
   end
 
   def show
-    if @feed.updated_at < 30.seconds.ago && !@feed.curated
+    if @feed.need_update? && !@feed.curated
       Resque.enqueue(UpdateEntries, @feed.id)
     end
     @entries = @feed
       .entries
       .order(published_at: :desc)
       .page(params[:page])
-    render :show
+      .per(30)
+      if params[:page] && params[:page].to_i > @entries.total_pages
+        render json: {errors: "All entries sent.",
+          total_pages: @entries.total_pages}, status: :unprocessable_entity
+      else
+        render :show
+      end
   end
 
   def remove

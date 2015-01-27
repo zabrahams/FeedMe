@@ -10,7 +10,8 @@ FeedMe.Views.Sidebar = Backbone.View.extend({
 
   events: {
     "click a.key-command-open": "openKeyCommand",
-    "click button.logout": "logoutCurrentUser"
+    "click button.logout": "logoutCurrentUser",
+    "submit form.demo-user-form": "loginDemoUser"
   },
 
   template: function () {
@@ -37,6 +38,23 @@ FeedMe.Views.Sidebar = Backbone.View.extend({
   logoutCurrentUser: function () {
     FeedMe.currentUser.logout();
   },
+
+  loginDemoUser: function (event) {
+    var attrs, session;
+
+    event.preventDefault();
+    attrs = this.$('form').serializeJSON();
+    FeedMe.currentUser.save(attrs, {
+      success: function () {
+        Backbone.history.navigate("", { trigger: true });
+      },
+
+      error: function (model, resp) {
+        var error = resp.responseJSON.errors;
+        FeedMe.vent.trigger("errorFlash", error);
+      }
+    });
+  }
 
 
 });

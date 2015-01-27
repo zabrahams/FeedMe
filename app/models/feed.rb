@@ -21,6 +21,7 @@ class Feed < ActiveRecord::Base
 
   attr_accessor :feed
 
+
   def set_name
     unless self.curated
       self.feed || self.feed = Feedjira::Feed.fetch_and_parse(self.url)
@@ -62,6 +63,10 @@ class Feed < ActiveRecord::Base
   # are updated every n-minutes by a scheduled process. Less
   # popular feeds are updated using update_entries when there is a need
   # for them. For now I'm just updated everything as used.
+  def need_update?
+    self.updated_at < 3.minutes.ago
+  end
+
   def update_entries
     self.feed || self.feed = Feedjira::Feed.fetch_and_parse(self.url)
     curr_entries = self.feed.entries

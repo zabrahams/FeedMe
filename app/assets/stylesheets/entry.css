@@ -38,6 +38,15 @@ ul.entry-list {
   padding-left: 5px;
 }
 
+.entry-list-end {
+  border-top: 1px solid #999;
+  border-bottom: 1px solid #999;
+  height: 10px;
+  margin-top: 10px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
 /* entry show styles */
 
 article.entry {

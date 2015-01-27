@@ -67,3 +67,12 @@ nav a:hover {
   background: #999;
   color: #ccc;
 }
+
+.demo-user-form {
+  padding: 0;
+  margin: 0;
+}
+
+.demo-user-form input.demo-user-submit {
+  margin: 0;
+}

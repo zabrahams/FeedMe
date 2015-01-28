@@ -21,6 +21,13 @@ header {
   display: block;
 
 }
+.progressbar-container {
+  position: fixed;
+  bottom: 0;
+  left: 191px;
+  right: 0;
+
+}
 
 .page-title {
   font-weight: bold;

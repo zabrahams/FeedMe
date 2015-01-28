@@ -25,7 +25,7 @@ class Api::FeedsController < ApplicationController
       .entries
       .order(published_at: :desc)
       .page(params[:page])
-      .per(30)
+      .per(40)
       if params[:page] && params[:page].to_i > @entries.total_pages
         render json: {errors: "All entries sent.",
           total_pages: @entries.total_pages}, status: :unprocessable_entity

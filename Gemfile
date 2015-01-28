@@ -49,6 +49,9 @@ gem 'faker'
 # Uses kaminari for pagination
 gem 'kaminari'
 
+# Icons
+gem 'font-awesome-rails'
+
 group :development, :test do
   gem 'rspec-rails'
   gem 'factory_girl_rails'

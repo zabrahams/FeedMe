@@ -8,6 +8,13 @@ RSpec.describe Entry do
   it { should validate_presence_of(:json) }
 
   it { should validate_uniqueness_of(:guid) }
-  it { should have_many(:user_read_entries) }
+
+  it { should have_many(:feed_entries) }
+  it { should have_many(:feeds)
+    .through(:feed_entries)
+    .source(:feed)
+  }
+  it { should have_many(:user_read_entries).dependent(:destroy) }
+  it { should have_many(:comments).dependent(:destroy) }
 
 end

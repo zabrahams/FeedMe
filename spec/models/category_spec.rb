@@ -9,6 +9,7 @@ RSpec.describe Category do
   it { should validate_uniqueness_of(:name).scoped_to(:user_id) }
 
   it { should belong_to(:user) }
-  it { should have_many(:category_feeds) }
-  it { should have_many(:feeds) }
+  it { should have_many(:category_feeds).dependent(:destroy) }
+  it { should have_many(:feeds).through(:category_feeds) }
+  it { should have_many(:entries).through(:feeds) }
 end

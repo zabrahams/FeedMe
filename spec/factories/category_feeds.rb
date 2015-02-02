@@ -1,7 +1,6 @@
 FactoryGirl.define do
   factory :category_feed do
-    feed_id 1
-    category_id 1
+    feed_id { rand(50) }
+    category_id { rand(50) }
   end
-
 end

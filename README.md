@@ -1,119 +1,50 @@
 # FeedMe
 
-This project is a clone of [feedly](www.feedly.com), adding a number of social features.
+## Description
 
+FeedMe is a social news reader that lets users share and comment on what they are reading.
 
-## Features
+FeedMe is live at [www.feed--me.com](http://www.feed--me.com)
 
-### MVP Features
+FeedMe users can add feeds, organize feeds into custom categories. They can view the aggregate entries from all their feeds or from a particular category. FeedMe also helps users see the articles they have read recently, and share that reading list with the world.
 
-* Users can sign up.
-* Users can sign in.
-* Users can sign out.
-* Users can subscribe to feeds.
-* Users can unsubscribe from feeds.
-* Users can display the subscribed feeds individually.
-* Users can display an aggregate feed comprising all their subscribed feeds.
-* Feeds will update when displayed.
-* Users can place feeds in categories.
-* Users can remove feeds from categories.
-* Users can display an aggregate feed comprising all the feeds in a given category.
-* Users can view each item in a feed.
-* Users can mark an item as read.
-* Users can unmark an item as read.
-* Users can view feeds including read items.
-* Users can mark an item as archived.
-* Users can unmark and item as archived.
-* Users can view feeds including archived items.
-* Feeds can be updated to not display items that have been read.
-* Users can refresh feeds
-* Email verification of user accounts.
-* Password reset emails
-* Profile allows updating password.
+FeedMe publishes an RSS feed for every user containing their recently read entries, but it also makes these curated feeds easily accessible to other users. By following other users, a watcher automatically gets the curators feed added to her overall list of feeds.  
 
-### Important Features
-* Publishes a user's recently read articles as a new feed.
-* Find Username features
-* Allows a user to set their recently read feed to publc or private.
-* Generates an aggregate feed of a user's recently read articles.
-* User profile with image and profile-description
-* Users can comment on other users profiles
-* Users can comment on articles.
-* Users can follow other users.
-* Users can view comments made by users they follow.
-* Portal that suggests popular feeds based on categories.
-* Users can assign different colors to feeds, changing the background of items that appear in aggregate feeds.
-* Allows logins from multiple sources.
-* Responsive design
+Users can comment on each other's profiles or on a particular entry.  These comments are visible to all other users, allowing conversation to spring up among diverse users over interesting articles.
 
-### Further Features
-* Automatically archive old items in a feed.
-* Create keyboard interface for going through feeds.
-* Keyboard commands:
-  * ? - display keyboard shortcuts
-  * n - next article
-  * p - previous article
-  * shift-n - next feed
-  * shift-p - previous feed
-  * \#(number) select article by number
-  * v - view article inline/close article view
-  * g - guilt read an article
-  * o - open article in new tab
-  * m - mark article as read
-  * shift-m - mark all as read
-  * a - archive article
-  * shift-a - mark all as archived
-  * r - refresh feed
-  * ta - go to all aggregation
-  * tg - open feed search bar
-* Tutorial that demonstrates how to use.
-* Help page that documents where to find features.
-* About pages that lists information about the app.
-* Different styles of display:  
-  * Title
-  * Magazine
-  * Cards
-* Users can see graphs of:
-  * Most viewed feeds.
-  * Articles archived and read in a feed
-  * Overall articles read in different time-frames
-* Users can delete accounts
+## Technical Features
 
-### Group Features
-* Users can form groups.
-* Users can join groups.
-* Users can leave groups.
-* Users can comment on group articles.
-* Users can be group administrators.
-* Group administrators can set an aggregate feed for the group.
-* Group administrators can see which articles members have read.
-* Group members can see how many reads articles have.
-
-### Pie-In-The-Sky Features
-* Browser extensions to easily add  feeds to an account.
-* Users can import feeds in OPML format.
+* Single page Backbone.js Application.
+* Consumes a Rails JSON API.
+* Custom built authentication uses BCrypt for encrypting passwords and security question answers.
+* Leverages sendmail for activation and password reset emails.
+* Uses feedjira to fetch and parse feeds.
+* Uses Redis and Resque to update feeds in background jobs.
+* Uses unicorn to run worker and web processes on a single heroku web dyno.
+* Implements a keyboard interface and flash message system using an event aggregator that allows for communication across Backbone views.
+* Extends Backbone.View with listView and compositeView classes to create nested Backbone views.
+* Polymorphic comments model allows comments to be placed on users or on entries.
+* Stores profiles pictures on Amazon S3. Uses Paperclip for image uploads to S3.
+* Backend test suite uses RSpec, shoulda-matchers, factory girl and faker.
+* Uses Kaminari pagination for an infinite scroll on pages that list entries.  Not only is it a nice interface, it also seriously reduces load time by limiting the number of entries downloaded in a request.
+* JQuery UI is used for the drag and drop editing of categories and the indefinite progress bar that displays during AJAX requests.
 
 
 ## Models
 
-### MVP
-* User
-* UserFeed
-* Feed
-* Article
-* UserArticle
 * Category
-* FeedCategory
-
-### Important
+* CategoryFeed
 * Comment
-* ?Article Archive?
+* Entry
+* FeedEntry
+* Feed
+* SecurityQuestionAnswer
+* SecurityQuestion
+* UserFeed
+* UserFollow
+* UserReadEntries
+* User
 
-### Group
-* Group
-* GroupMembership
-* GroupFeed
-* GroupArticle
 
 ## Schema
 
@@ -138,15 +69,15 @@ Table name: users
 |created_at      |:datetime  |         |
 |updated_at      |:datetime  |         ||
 
-### UserFollows
+### UserFollow
 
 Table name: user_follows
 
 |Column         | Type     |  Properties|
 |---------------|----------|------------|
 |id             |:integer  | not null, primary key|
-|followed_id    |:integer  | not null   |
-|following_id   |:integer  | not null   |
+|watcher_id     |:integer  | not null, foreign key|
+|curator_id     |:integer  | not null, foreign key|
 |created_at     |:datetime | not null   |
 |updated_at     |:datetime | not null   ||
 
@@ -160,9 +91,20 @@ Table name: feeds
 |name           |:string   | not null |
 |url            |:string   | not null |
 |curated        |:boolean  | default false|
-|curator_id     |:integer  |
+|curator_id     |:integer  | foreign_key  |
 |created_at     |:datetime |         |
 |updated_at     |:datetime |         ||
+
+### FeedEntry
+
+|Column          | Type     |  Properties|
+|----------------|----------|------------|
+|id              |:integer  | not null, primary key|
+|entry_id        |:integer  | not null, foreign key|
+|feed_id         |:integer  | not null, foreign key|
+|created_at      |:datetime |         |
+|updated_at      |:datetime |         ||
+
 
 ### UserFeed
 
@@ -193,15 +135,7 @@ Table name: entries
 |created_at      |:datetime |            |
 |updated_at      |:datetime |            ||
 
-### FeedEntry
-
-|Column          | Type     |  Properties|
-|----------------|----------|------------|
-|id              |:integer  | not null, primary key|
-|entry_id        |:integer  | not null   |
-|feed_id         |:integer  | not null   ||
-
-### UserReadEntries
+### UserReadEntry
 
 Table name: user_read_entries
 
@@ -209,7 +143,7 @@ Table name: user_read_entries
 |----------------|----------|------------|
 |id              |:integer  | not null, primary key|
 |user_id         |:integer  | not null, foreign key|
-|entry_id      |:integer  | not null, foreign key|
+|entry_id        |:integer  | not null, foreign key|
 |created_at      |:datetime |            |
 |updated_at      |:datetime |            ||
 
@@ -249,5 +183,29 @@ Table name: comments
 |author_id       |:integer  | not null, foreign key|
 |commentable_id  |:integer  | not null, foreign key|
 |commentable_type|:string   | not null   |
+|created_at      |:datetime |            |
+|updated_at      |:datetime |            ||
+
+### SecurityQuestion
+
+Table name: security_questions
+
+|Column          | Type     |  Properties|
+|----------------|----------|------------|
+|id              |:integer  | not null, primary key|
+|content         |:text     | not null   |
+|created_at      |:datetime |            |
+|updated_at      |:datetime |            ||
+
+### SecurityQuestionAnswer
+
+Table name: security_question_answers
+
+|Column          | Type     |  Properties|
+|----------------|----------|------------|
+|id              |:integer  | not null, primary key|
+|answer_digest   |:string   | not null   |
+|question_id     |:integer  | not null, foreign key|
+|user_id         |:integer  | not null, foreign key|
 |created_at      |:datetime |            |
 |updated_at      |:datetime |            ||

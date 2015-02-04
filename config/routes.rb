@@ -25,5 +25,5 @@ Rails.application.routes.draw do
 
   root to: 'static_pages#root'
 
-  mount Resque::Server.new, at: "/resque"
+  # mount Resque::Server.new, at: "/resque"
 end

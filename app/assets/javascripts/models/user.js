@@ -54,10 +54,10 @@ FeedMe.Models.CurrentUser = FeedMe.Models.User.extend({
 
   logout: function () {
     var model = this;
-
+    console.log(this.url);
     $.ajax({
       type: "DELETE",
-      url: this.url,
+      url: model.url,
       dataType: "json",
       success: function (resp) {
         FeedMe.vent.trigger("noticeFlash", resp.notice);

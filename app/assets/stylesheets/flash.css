@@ -4,8 +4,7 @@
 
 .message {
   position: absolute;
-  font-weight: bold;
-  font-size: 24px;
+  font-size: 20px;
   width: 400px;
   text-align: center;
   margin-left: 220px;
@@ -15,19 +14,17 @@
 }
 
 .notice-message {
-  color:  #84D66F;
-  border: 1px solid #5DAD49;
-  background: #ccc;
-  opacity: .9;
+  color: #61A06E;
+  border: 1px solid #61A06E;
+  background: #C9E5CC;
+  opacity: ..75;
   border-radius: 5px;
-  text-shadow: 1px 1px #666, 1px -1px #666, -1px -1px #666, -1px 1px #666;
 }
 
 .error-message {
-  color:  #6EC9D4;
-  border: 1px solid #59A3AB;
-  background: #ccc;
-  opacity: .9;
+  color: #8B72AA;
+  border: 1px solid #8B72AA;
+  background: #E5D7F7;
+  opacity: .75;
   border-radius: 5px;
-  text-shadow: 1px 1px #666, 1px -1px #666, -1px -1px #666, -1px 1px #666;
 }

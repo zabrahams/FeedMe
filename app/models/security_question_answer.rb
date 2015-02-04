@@ -1,6 +1,6 @@
   class SecurityQuestionAnswer < ActiveRecord::Base
   validates :answer_digest, :user, :question_id, presence: true
-  validates :user, uniqueness: { scope: :question_id }
+  validates :user_id, uniqueness: { scope: :question_id }
 
   belongs_to :security_question, foreign_key: :question_id
   belongs_to :user
@@ -12,7 +12,7 @@
   end
 
   def correct_answer?(attempt)
-    BCrypt::Password.new(self.answer_digest).is_password?(attempt)
+        BCrypt::Password.new(self.answer_digest).is_password?(attempt)
   end
 
 end

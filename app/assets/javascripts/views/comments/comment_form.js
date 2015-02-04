@@ -3,7 +3,6 @@ FeedMe.Views.CommentForm = Backbone.View.extend({
   initialize: function (options) {
     this.commentableType = options.commentableType;
     this.commentableId   = options.commentableId;
-    console.log(options.commentableType)
   },
 
   events: {
@@ -34,9 +33,7 @@ FeedMe.Views.CommentForm = Backbone.View.extend({
     comment = this.model;
 
     attrs = attrs.comment
-    console.log(attrs);
     comment.set(attrs);
-    console.log(comment);
     comment.save({}, {
       success: function (model) {
         this.collection.add(model);
@@ -49,7 +46,6 @@ FeedMe.Views.CommentForm = Backbone.View.extend({
 
   preventBubble: function (event) {
     event.stopPropagation();
-    console.log(event.isPropagationStopped());
   }
 
 });

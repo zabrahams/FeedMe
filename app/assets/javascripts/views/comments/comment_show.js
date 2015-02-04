@@ -49,7 +49,6 @@ FeedMe.Views.CommentShow = Backbone.View.extend({
   remove: function () {
     var viewIdx;
 
-    console.log(this.parent);
     viewIdx = this.parent._elemViews.indexOf(this);
     this.parent._elemViews.splice(viewIdx, 1);
     Backbone.View.prototype.remove.call(this);

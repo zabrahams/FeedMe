@@ -30,9 +30,6 @@ FeedMe.Models.Category = Backbone.Model.extend({
     }
 
     if (resp.updating) {
-      console.log(resp.updating);
-      console.log(resp.updated_at);
-      console.log(resp.name);
       if (resp.updating === true && this.update_limit < 2) {
         window.setTimeout( this.fetch.bind(this), Constants.UPDATING_TIMEOUT);
         this.update_limit ++;

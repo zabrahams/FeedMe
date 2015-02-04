@@ -12,10 +12,6 @@ FeedMe.Collections.Entries = Backbone.Collection.extend({
   parse: function (resp) {
     if (resp.updating) {
 
-      console.log(resp.updating);
-      console.log(resp.updated_at);
-      console.log(resp.name);
-      console.log(this.update_limit);
       if (resp.updating === true && this.update_limit < 2) {
         window.setTimeout( this.fetch.bind(this, { remove: false}), Constants.UPDATING_TIMEOUT);
         this.update_limit ++;

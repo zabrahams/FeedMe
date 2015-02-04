@@ -116,7 +116,6 @@ FeedMe.Views.EntryList = Backbone.ListView.extend({
   },
 
   keyAction: function (key) {
-    console.log(key);
     if (key === Constants.KEYS.n) {
       this.selectNext();
     } else if (key === Constants.KEYS.o) {
@@ -152,22 +151,9 @@ FeedMe.Views.EntryList = Backbone.ListView.extend({
 
   _pastLastPage: function () {
     if ($('#list-end').length === 0) {
-      console.log("in if")
       this.$el.append("<div id='list-end' class='entry-list-end'></div>");
     }
   },
-
-  // displayProgressBar: function () {
-  //   console.log("in ajax start response");
-  //   $("#progressbar").progressbar({
-  //     value: false
-  //   });
-  // },
-  //
-  // hideProgressBar: function () {
-  //   console.log("in ajax stop response");
-  //   $("#progressbar").progressbar("destroy");
-  // },
 
   _toggleOpenEntry: function (entryId) {
     var entryIndex;

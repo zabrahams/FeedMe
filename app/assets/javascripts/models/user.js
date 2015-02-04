@@ -54,7 +54,6 @@ FeedMe.Models.CurrentUser = FeedMe.Models.User.extend({
 
   logout: function () {
     var model = this;
-    console.log(this.url);
     $.ajax({
       type: "DELETE",
       url: model.url,

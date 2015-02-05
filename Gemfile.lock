@@ -308,6 +308,7 @@ DEPENDENCIES
   kaminari
   launchy
   letter_opener
+  nokogiri
   paperclip
   pg
   pry-rails

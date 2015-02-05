@@ -49,6 +49,9 @@ gem 'faker'
 # Uses kaminari for pagination
 gem 'kaminari'
 
+# Uses nokogiri for scraping rss feeds from homepages
+gem 'nokogiri'
+
 # Icons
 gem 'font-awesome-rails'
 

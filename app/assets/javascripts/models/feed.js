@@ -19,6 +19,7 @@ FeedMe.Models.Feed = Backbone.Model.extend({
       delete resp.entries;
     }
 
+    console.log(resp.updating)
     if (resp.updating) {
       if (resp.updating === true && this.update_limit < 2) {
         window.setTimeout( this.fetch.bind(this), Constants.UPDATING_TIMEOUT);

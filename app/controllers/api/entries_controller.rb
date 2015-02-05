@@ -7,6 +7,7 @@ class Api::EntriesController < ApplicationController
         Resque.enqueue(UpdateEntries, feed.id)
       end
     end
+
     @entries = current_user
       .entries
       .includes(:feeds)
@@ -25,6 +26,9 @@ class Api::EntriesController < ApplicationController
   def read
     @entry = Entry.find(params[:id])
     current_user.read_entry(@entry)
+    if current_user.curated_feed.entries.count > 40
+			current_user.curated_feed.entries.delete(current_user.curated_feed.entries.last)
+    end
 
     render json: @entry
   end

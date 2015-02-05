@@ -5,9 +5,9 @@ json.entries do
 end
 
 if @feed.need_update?
-  json.updating false
-else
   json.updating true
+else
+  json.updating false
 end
 
 json.updated_at @feed.updated_at

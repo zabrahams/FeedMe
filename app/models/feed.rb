@@ -15,20 +15,32 @@ class Feed < ActiveRecord::Base
   has_many :categories, through: :category_feeds
   belongs_to :curator, class_name: "User", foreign_key: "curator_id"
 
-  before_validation :set_name, on: :create
+  before_validation :set_name_and_url, on: :create
   after_save :fetch_entries, on: :create
   before_destroy :destroy_entries_unless_curated
 
   attr_accessor :feed
 
+  # I need to change this, because the external requests shouldn't be called as part
+  # of the feeds create controller action
 
-  def set_name
+  def set_name_and_url
     unless self.curated
       self.feed || self.feed = Feedjira::Feed.fetch_and_parse(self.url)
-      unless feed.is_a?(Fixnum) # Feedjira::Feed.fetch_and_parse returns a status code on failure
-        puts feed
-        self.name = self.feed.title
+
+      # TODO: Harden this to account for nil urls
+      if feed.is_a?(Fixnum) # Feedjira::Feed.fetch_and_parse returns a status code on failure
+
+        rss_url = scrape_page_for_rss_url
+        return rss_url if rss_url.nil? || rss_url.is_a?(Fixnum)
+
+        self.feed = Feedjira::Feed.fetch_and_parse(rss_url)
+        return feed if feed.is_a?(Fixnum)
+
+        self.url = rss_url
       end
+
+      self.name = self.feed.title
     end
   end
 
@@ -53,7 +65,7 @@ class Feed < ActiveRecord::Base
 
     self.entries.create(new_entries)
     # saved_entries = new_entries.map { |entry| Entry.create(entry) }
-    # saved_entries.each { |saved_entry| self.entries << saved_entry }
+    # saved_entries.escrape_url_for_rss_urlach { |saved_entry| self.entries << saved_entry }
     end
   end
 
@@ -68,30 +80,34 @@ class Feed < ActiveRecord::Base
   end
 
   def update_entries
-    self.feed || self.feed = Feedjira::Feed.fetch_and_parse(self.url)
-    curr_entries = self.feed.entries
-    curr_entries = curr_entries[0...40] if curr_entries.length > 40
-    oldest = curr_entries.last
+    if self.entries = []
+      self.fetch_entries
+    else
+      self.feed || self.feed = Feedjira::Feed.fetch_and_parse(self.url)
+      curr_entries = self.feed.entries
+      curr_entries = curr_entries[0...40] if curr_entries.length > 40
+      oldest = curr_entries.last
 
-    # Delete would reduce queries, but I'd need to manually need to delete the
-    # dependent user_read_entries
-    self.entries.where("published_at < ?", oldest.published || 1.second.ago).destroy_all
+      # Delete would reduce queries, but I'd need to manually need to delete the
+      # dependent user_read_entries
+      self.entries.where("published_at < ?", oldest.published || 1.second.ago)
+        .each { |entry| entry.destroy }
 
 
-    new_entries = curr_entries.select do |curr_entry|
-      !curr_entry.published || curr_entry.published > self.updated_at
+      new_entries = curr_entries.select do |curr_entry|
+        !curr_entry.published || curr_entry.published > self.updated_at
+      end
+
+      new_entries = new_entries.map do |entry|
+        {
+          guid: entry.entry_id || SecureRandom.urlsafe_base64,
+          title: entry.title,
+          link: entry.url,
+          published_at: (entry.published || Time.now) ,
+          json: entry_to_json(entry)
+        }
+      end
     end
-
-    new_entries = new_entries.map do |entry|
-      {
-        guid: entry.entry_id || SecureRandom.urlsafe_base64,
-        title: entry.title,
-        link: entry.url,
-        published_at: (entry.published || Time.now) ,
-        json: entry_to_json(entry)
-      }
-    end
-
 
 
     self.entries.create(new_entries)
@@ -121,7 +137,22 @@ class Feed < ActiveRecord::Base
   end
 
   def destroy_entries_unless_curated
-    self.entries.destroy_all unless self.curated
+    self.entries.each { |entry| entry.destroy } unless self.curated
+  end
+
+  def scrape_page_for_rss_url
+    begin
+      url = (self.url[0..3] == "http" ? self.url : "http://#{self.url}")
+      html_doc = Nokogiri.HTML(open(url))
+    rescue Errno::ENOENT
+      return 404
+    end
+
+    rss_tag = html_doc.css("link[type='application/rss+xml']").first
+    return nil if rss_tag.nil?
+    rss_url = rss_tag.attributes['href'].value
+    rss_url = "#{self.url}#{rss_url}" if rss_url[0] == "/"
+    rss_url
   end
 
 end

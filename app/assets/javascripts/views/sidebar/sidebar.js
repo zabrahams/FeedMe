@@ -17,7 +17,7 @@ FeedMe.Views.Sidebar = Backbone.View.extend({
   },
 
   template: function () {
-    if (FeedMe.currentUser.loggedIn() === true) {
+      if (FeedMe.currentUser.loggedIn() === true) {
       return JST['sidebar/logged_in'];
     } else {
       return JST['sidebar/not_logged_in'];

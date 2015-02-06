@@ -8,7 +8,7 @@ class Feed < ActiveRecord::Base
   has_many :user_feeds, dependent: :destroy
   has_many :users, through: :user_feeds
 
-  has_many :feed_entries
+  has_many :feed_entries, dependent: :destroy
   has_many :entries, through: :feed_entries, source: :entry
 
   has_many :category_feeds, inverse_of: :feed, dependent: :destroy
@@ -34,8 +34,7 @@ class Feed < ActiveRecord::Base
   end
 
 
-  # I need to change this, because the external requests shouldn't be called as part
-  # of the feeds create controller action
+  # TODO: change this, because the external requests shouldn't be called as part of the feeds create controller action
 
 
   def self.scrape_page_for_rss_url(given_url)
@@ -109,23 +108,31 @@ class Feed < ActiveRecord::Base
   end
 
   def update_entries
-    if self.entries = []
+    if self.entries == []
       self.fetch_entries
+      self.touch
     else
       self.feed || self.feed = Feedjira::Feed.fetch_and_parse(self.url)
+      return nil if self.feed.is_a?(Fixnum) || self.feed == {}
       curr_entries = self.feed.entries
       curr_entries = curr_entries[0...40] if curr_entries.length > 40
       oldest = curr_entries.last
 
       # Delete would reduce queries, but I'd need to manually need to delete the
       # dependent user_read_entries
-      self.entries.where("published_at < ?", oldest.published || 1.second.ago)
+      self.entries
+        .where("published_at < ?", 1.month.ago)
         .each { |entry| entry.destroy }
 
+      puts "remainder"
+      puts self.entries
 
       new_entries = curr_entries.select do |curr_entry|
         !curr_entry.published || curr_entry.published > self.updated_at
       end
+
+      puts "new_entries"
+      puts new_entries
 
       new_entries = new_entries.map do |entry|
         {
@@ -136,11 +143,11 @@ class Feed < ActiveRecord::Base
           json: entry_to_json(entry)
         }
       end
+      self.entries.create(new_entries)
+      self.touch;
     end
 
 
-    self.entries.create(new_entries)
-    self.touch;
   end
 
   private

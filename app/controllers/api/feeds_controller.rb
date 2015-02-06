@@ -8,7 +8,7 @@ class Api::FeedsController < ApplicationController
   end
 
   def create
-    @feed = Feed.find_or_create_by(url: params[:feed][:url])
+    @feed = Feed.find_scrape_or_create(params[:feed][:url])
     if @feed.persisted?
       current_user.feeds << @feed
       render json: @feed

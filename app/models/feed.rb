@@ -2,7 +2,7 @@ class Feed < ActiveRecord::Base
   include Feedjira
 
   validates :url, presence: true
-  validates :name, uniqueness: {scope: :url}
+  validates :name, uniqueness: true
   validate :url_must_lead_to_rss_feed
 
   has_many :user_feeds, dependent: :destroy
@@ -21,8 +21,37 @@ class Feed < ActiveRecord::Base
 
   attr_accessor :feed
 
+  def self.find_scrape_or_create(url)
+    return_feed = self.find_by(url: url)
+    unless return_feed
+      return_feed = self.find_by(url: self.scrape_page_for_rss_url(url))
+    end
+    unless return_feed
+      return_feed = self.create(url: url)
+    end
+
+    return_feed
+  end
+
+
   # I need to change this, because the external requests shouldn't be called as part
   # of the feeds create controller action
+
+
+  def self.scrape_page_for_rss_url(given_url)
+    begin
+      url = (given_url[0..3] == "http" ? given_url : "http://#{given_url}")
+      html_doc = Nokogiri.HTML(open(url))
+    rescue Errno::ENOENT
+      return 404
+    end
+
+    rss_tag = html_doc.css("link[type='application/rss+xml']").first
+    return nil if rss_tag.nil?
+    rss_url = rss_tag.attributes['href'].value
+    rss_url = "#{given_url}#{rss_url}" if rss_url[0] == "/"
+    rss_url
+  end
 
   def set_name_and_url
     unless self.curated
@@ -31,7 +60,7 @@ class Feed < ActiveRecord::Base
       # TODO: Harden this to account for nil urls
       if feed.is_a?(Fixnum) # Feedjira::Feed.fetch_and_parse returns a status code on failure
 
-        rss_url = scrape_page_for_rss_url
+        rss_url = ActiveRecord::Base::Feed.scrape_page_for_rss_url(self.url)
         return rss_url if rss_url.nil? || rss_url.is_a?(Fixnum)
 
         self.feed = Feedjira::Feed.fetch_and_parse(rss_url)
@@ -138,21 +167,6 @@ class Feed < ActiveRecord::Base
 
   def destroy_entries_unless_curated
     self.entries.each { |entry| entry.destroy } unless self.curated
-  end
-
-  def scrape_page_for_rss_url
-    begin
-      url = (self.url[0..3] == "http" ? self.url : "http://#{self.url}")
-      html_doc = Nokogiri.HTML(open(url))
-    rescue Errno::ENOENT
-      return 404
-    end
-
-    rss_tag = html_doc.css("link[type='application/rss+xml']").first
-    return nil if rss_tag.nil?
-    rss_url = rss_tag.attributes['href'].value
-    rss_url = "#{self.url}#{rss_url}" if rss_url[0] == "/"
-    rss_url
   end
 
 end

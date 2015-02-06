@@ -13,6 +13,7 @@ FeedMe.Views.Sidebar = Backbone.View.extend({
     "click button.logout": "logoutCurrentUser",
     "submit form.demo-user-form": "loginDemoUser",
     "transitionend": "showSidebar",
+    "mousemove": "showSidebar",
     "mouseleave": "hideSidebar"
   },
 
@@ -63,7 +64,7 @@ FeedMe.Views.Sidebar = Backbone.View.extend({
 
   showSidebar: function (event) {
     console.log(this.$el[0].clientWidth)
-    if (this.$el[0].clientWidth > 100) {
+    if (this.$el[0].clientWidth >= 180) {
       this.$('#sidebar-content').removeClass("closed");
     }
   },

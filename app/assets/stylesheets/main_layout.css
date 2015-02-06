@@ -9,7 +9,7 @@ section.content {
 
 main.display {
   position: absolute;
-  left: 191px;
+  left: 81px;
   right: 0px;
   top: 0px;
   min-height: 500px;
@@ -24,7 +24,7 @@ header {
 .progressbar-container {
   position: fixed;
   bottom: 0;
-  left: 191px;
+  left: 81px;
   right: 0;
 
 }

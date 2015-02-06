@@ -16,13 +16,13 @@
  *= require main_layout
  *= require sidebar
  *= requrie flash
- *= require user
  *= require feed
  *= require entry
  *= require category
- *= require modal
  *= require comment
  *= require reset
  *= require general
+ *= require user
+ *= require modal
  *= require_tree .
  */

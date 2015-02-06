@@ -1,5 +1,9 @@
 /* Modals */
 
+.modal-section {
+  z-index: 2;
+}
+
 .modal-background {
   background:  #aaa;
   opacity: .6;
@@ -14,7 +18,7 @@
   height: 420px;
   width: 600px;
   background: #fff;
-  z-index: 1;
+  z-index: 2;
   position: fixed;
   margin-left: -300px;
   left: 50%;

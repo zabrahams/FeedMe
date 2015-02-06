@@ -74,7 +74,7 @@ class Feed < ActiveRecord::Base
 
   def fetch_entries
     if self.curated
-      self.entries === self.curator.read_entries
+      self.entries == self.curator.read_entries
     else
       self.feed || self.feed = Feedjira::Feed.fetch_and_parse(self.url)
 

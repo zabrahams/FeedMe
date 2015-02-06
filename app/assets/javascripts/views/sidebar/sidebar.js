@@ -11,7 +11,9 @@ FeedMe.Views.Sidebar = Backbone.View.extend({
   events: {
     "click a.key-command-open": "openKeyCommand",
     "click button.logout": "logoutCurrentUser",
-    "submit form.demo-user-form": "loginDemoUser"
+    "submit form.demo-user-form": "loginDemoUser",
+    "transitionend": "showSidebar",
+    "mouseleave": "hideSidebar"
   },
 
   template: function () {
@@ -24,6 +26,9 @@ FeedMe.Views.Sidebar = Backbone.View.extend({
 
   render: function () {
     this.$el.html(this.template()( { user: FeedMe.currentUser } ));
+    if (this.$el[0].clientWidth > 100) {
+      this.$('#sidebar-content').removeClass("closed");
+    }
     return this;
   },
 
@@ -54,7 +59,17 @@ FeedMe.Views.Sidebar = Backbone.View.extend({
         FeedMe.vent.trigger("errorFlash", error);
       }
     });
-  }
+  },
 
+  showSidebar: function (event) {
+    console.log(this.$el[0].clientWidth)
+    if (this.$el[0].clientWidth > 100) {
+      this.$('#sidebar-content').removeClass("closed");
+    }
+  },
+
+  hideSidebar: function (event) {
+    this.$('#sidebar-content').addClass("closed");
+  }
 
 });

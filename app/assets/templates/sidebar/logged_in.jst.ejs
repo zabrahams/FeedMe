@@ -1,33 +1,35 @@
+<i class="fa fa-align-justify fa-2x menu-icon"></i>
 
-  <h3 class="logo">FeedMe</h3>
+<div id="sidebar-content" class="closed">
+  <h3 class="logo ">FeedMe</h3>
 
-    <a href="#/users/edit" class="user-link">
-      <%= user.escape("username") %>
-    <a>
+  <a href="#/users/edit" class="user-link sidebar-link">
+    <%= user.escape("username") %>
+  <a>
 
-    <button class="logout">logout</button>
+  <button class="logout">logout</button>
 
-      <ul class="nav-list">
-        <li class="nav-list-item">
-          <a href="/#/feeds/new">Add New Feed</a>
-        </li>
-        <li class="nav-list-item">
-          <a href="/#/feeds">All Feeds</a>
-        </li>
-        <li class="nav-list-item">
-          <a href="/#/entries">All Entries</a>
-        </li>
-        <li class="nav-list-item">
-          <a href="/#/categories">Categories</a>
-        </li>
-        <li class="nav-list-item">
-          <a href="/#/entries/recent"> Recently Read Entries</a>
-        </li>
-        <li class="nav-list-item">
-          <a href="/#/users">Find Curators</a>
-        </li>
-        <li class="nav-list-item">
-          <a href="#" class="key-command-open">Keyboard Commands</a>
-        </li>
-      </ul>
-  </nav>
+  <ul class="nav-list">
+    <li class="nav-list-item">
+      <a href="/#/feeds/new" class="sidebar-link">Add New Feed</a>
+    </li>
+    <li class="nav-list-item">
+      <a href="/#/feeds" class="sidebar-link">All Feeds</a>
+    </li>
+    <li class="nav-list-item">
+      <a href="/#/entries" class="sidebar-link">All Entries</a>
+    </li>
+    <li class="nav-list-item">
+      <a href="/#/categories" class="sidebar-link">Categories</a>
+    </li>
+    <li class="nav-list-item">
+      <a href="/#/entries/recent" class="sidebar-link"> Recently Read Entries</a>
+    </li>
+    <li class="nav-list-item">
+      <a href="/#/users" class="sidebar-link">Find Curators</a>
+    </li>
+    <li class="nav-list-item">
+      <a href="#" class="key-command-open" class="sidebar-link">Keyboard Commands</a>
+    </li>
+  </ul>
+</div>

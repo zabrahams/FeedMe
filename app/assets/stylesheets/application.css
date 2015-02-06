@@ -13,8 +13,6 @@
  *= require jquery-ui/progressbar
  *= require_self
  *= require font-awesome
- *= require reset
- *= require general
  *= require main_layout
  *= require sidebar
  *= requrie flash
@@ -24,5 +22,7 @@
  *= require category
  *= require modal
  *= require comment
+ *= require reset
+ *= require general
  *= require_tree .
  */

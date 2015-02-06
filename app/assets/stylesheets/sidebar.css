@@ -1,16 +1,17 @@
 /* sidebar */
 
-nav.sidebar {
+.sidebar {
   position: fixed;
   top: 0;
   bottom: 0;
   left: 0;
-  width: 150px;
+  width: 40px;
   background: #ccc;
   border-right: 1px solid grey;
   padding: 20px;
-
+  transition: width 0.4s ease;
 }
+
 
 .logo {
   font-weight: bold;
@@ -20,11 +21,23 @@ nav.sidebar {
   text-align: center;
 }
 
+
+
 .sidebar .nav-list {
   margin-top: 30px;
   font-variant: small-caps;
+  font-weight: bold;
 }
 
+.sidebar:hover > .menu-icon {
+  display: none;
+}
+
+.menu-icon {
+  display: block;
+  width: 30px;
+  margin: auto;
+}
 .nav-list-item {
   display: block;
   padding-left: 10px;
@@ -33,19 +46,15 @@ nav.sidebar {
   margin-bottom: 10px;
 }
 
-nav.sidebar a {
+.sidebar-link {
   display: block;
 }
 
-a.user-link {
+.user-link {
   font-weight: bold;
   font-size: 16px;
   margin-top: 20px;
   text-align: center;
-}
-
-nav a:hover {
-  color: #999;
 }
 
 .sidebar-form {
@@ -75,4 +84,11 @@ nav a:hover {
 
 .demo-user-form input.demo-user-submit {
   margin: 0;
+  padding: 2px;
+  width: 130px;
+}
+
+
+.sidebar:hover {
+  width: 150px;
 }

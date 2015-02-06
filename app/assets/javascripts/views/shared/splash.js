@@ -1,5 +1,7 @@
 FeedMe.Views.Splash = Backbone.View.extend({
 
+  className: "splash",
+
   template: JST['shared/splash'],
 
   render: function () {

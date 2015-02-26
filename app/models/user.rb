@@ -4,16 +4,16 @@ class User < ActiveRecord::Base
   has_attached_file :image, default_url: "fly_trap.jpg"
 
   validates_attachment_content_type :image, :content_type => /\Aimage\/.*\Z/
-  validates :username, :email, :password_digest, :session_token, presence: true
+  validates :username, :email, :password_digest, :session_token, :activation_token, presence: true
   validates :username, :email, :session_token, uniqueness: true
   validates :activated, inclusion: [true, false]
   validates :password, length: {minimum: 6, allow_nil: true}
 
-  before_validation :ensure_activation_token, on: :create
   after_create :setup_curated_feed
   after_initialize :ensure_session_token
+  after_initialize :ensure_activation_token
 
-  has_many :watcher_user_follows,
+  has_many :watcher_user_follows,\
            class_name: "UserFollow",
            foreign_key: :curator_id,
            dependent: :destroy
@@ -66,28 +66,6 @@ class User < ActiveRecord::Base
     BCrypt::Password.new(self.password_digest).is_password?(password)
   end
 
-  def ensure_session_token
-    self.session_token || self.session_token = unique_session_token
-  end
-
-  def reset_session_token!
-    self.session_token = unique_session_token
-    self.save!
-  end
-
-  def ensure_activation_token
-    self.activation_token || self.activation_token = SecureRandom.urlsafe_base64
-  end
-
-  def unique_session_token
-    users = User.all # is there a way to do this while caching users?
-    new_token = SecureRandom.urlsafe_base64
-    until users.none { |user| user.session_token == new_token }
-      new_token = SecureRandom.urlsafe_base64
-    end
-
-    new_token
-  end
 
   def read_entry(entry)
     unless self.read_entries.include?(entry)
@@ -156,4 +134,31 @@ class User < ActiveRecord::Base
     self.reset_token = nil
     self.save
   end
+
+
+  def reset_session_token!
+    self.session_token = unique_session_token
+    self.save!
+  end
+
+  private
+
+  def ensure_activation_token
+    self.activation_token || self.activation_token = SecureRandom.urlsafe_base64
+  end
+
+  def ensure_session_token
+    self.session_token || self.session_token = unique_session_token
+  end
+
+  def unique_session_token
+    users = User.all # is there a way to do this while caching users?
+    new_token = SecureRandom.urlsafe_base64
+    until users.none { |user| user.session_token == new_token }
+      new_token = SecureRandom.urlsafe_base64
+    end
+
+    new_token
+  end
+
 end

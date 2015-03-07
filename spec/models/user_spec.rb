@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe User do
-  subject { FactoryGirl.build(:user) }
+  subject { FactoryGirl.create(:user) }
 
   it { should validate_presence_of(:username) }
   it { should validate_presence_of(:email) }
@@ -31,7 +31,7 @@ RSpec.describe User do
   it { should have_many(:security_questions) }
 
   describe "::find_by_credentials" do
-    let(:found_user) { FactoryGirl.create(:user) }
+    let(:found_user) { FactoryGirl.build(:user) }
     before { found_user.save }
 
     it "should return a user if given a valid username and password" do
@@ -76,42 +76,75 @@ RSpec.describe User do
   end
 
   describe "#read_entry" do
+    let(:entry) { FactoryGirl.create(:entry) }
+    before { subject.read_entry(entry) }
 
-    it "should add a new entry to read_entries if entry isn't there."
+    it "should add a new entry to read_entries if entry isn't there." do
+      expect(subject.read_entries.first).to eq(entry)
+    end
 
-    it "should add a new entry to the curated feed if entry isn't there."
+    it "should add a new entry to the curated feed if entry isn't
+    there." do
+      expect(subject.curated_feed.entries.first).to be(entry)
+    end
 
-    it "should do nothing if entry is already read"
+    it "should do nothing if entry is already read" do
+      old_count = subject.read_entries.count
+      subject.read_entry(entry)
+      expect(subject.read_entries.count).to eq(old_count)
+    end
 
   end
 
   describe "#setup_curated_feed" do
+    let(:curator) { FactoryGirl.build(:user) }
+    before { curator.setup_curated_feed }
 
-    it "should create a curated feed"
+    it "should create a curated feed" do
+      expect(curator.curated_feed).to_not be_nil
+    end
 
-    it "should name the feed Username's Recent Reading!"
+    it "should name the feed Username's Recent Reading!" do
+      expect(curator.curated_feed.name).to eq("#{curator.username}'s Recent Reading!")
+    end
 
-    it "should create a feed with url: 'Local Feed'"
+    it "should create a feed with url: 'Local Feed'" do
+      expect(curator.curated_feed.url).to eq("Local Feed")
+    end
 
-    it "should create a feed with curated flagged as true"
+    it "should create a feed with curated flagged as true" do
+      expect(curator.curated_feed.curated).to be(true)
+    end
 
   end
 
   describe "#make_feed" do
+    let(:feed) { subject.make_feed }
 
-    it "should return an rss feed"
+    it "should return an rss feed" do
+      expect(feed.class).to eq(RSS::Atom::Feed)
+    end
 
     describe "feed" do
 
-      it "should have the user's username as author"
+      it "should have the user's username as author" do
+        expect(feed.author.name.content).to eq(subject.username)
+      end
 
       it "should have been last updated when created"
 
-      it "should have as a title: Username's FeedMe Feed!!!"
+      it "should have as a title: Username's FeedMe Feed!!!!" do
+        expect(feed.title.content).to eq("#{subject.username}'s FeedMe Feed!!!!")
+      end
 
-      it "should have as a url: feed--me.com/api/user/:id/personal_feed"
+      it "should have as a url: feed--me.com/api/user/:id/personal_feed" do
+        expect(feed.id.content).to eq("http://feed--me.com/api/user/#{subject.id}/personal_feed")
+      end
 
-      it "should have an item for each read entries"
+      it "should have an item for each read entries" do
+        expect(feed.entries.count).to eq(subject.read_entries.count)
+        puts feed.entries.count
+      end
 
       describe "item" do
 
@@ -140,18 +173,30 @@ RSpec.describe User do
   end
 
   describe "#set_reset_token" do
+    before { subject.set_reset_token }
 
-    it "should set a reset token"
+    it "should set a reset token" do
+      expect(subject.reset_token).to_not be_nil
+    end
 
-    it "should override a previous reset token"
-
+    it "should override a previous reset token" do
+      old_token = subject.reset_token
+      subject.set_reset_token
+      expect(subject.reset_token).to_not eq(old_token)
+    end
   end
 
   describe "#has_reset_token?" do
+    before { subject.set_reset_token }
+    let(:token) { subject.reset_token }
 
-    it "should return true if the user has a reset token"
+    it "should return true if the user has that reset token" do
+      expect(subject.has_reset_token?(token)).to be true
+    end
 
-    it "should return false if the user doesn't have a reset token"
+    it "should return false if the user doesn't have that reset token" do
+      expect(subject.has_reset_token?("bad_token")).to be false
+    end
 
   end
 

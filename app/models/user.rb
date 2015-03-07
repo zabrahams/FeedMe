@@ -70,7 +70,7 @@ class User < ActiveRecord::Base
   def read_entry(entry)
     unless self.read_entries.include?(entry)
       self.read_entries << entry
-      self.curated_feed.entries << entry
+      self.curated_feed.entries << entry if self.curated_feed
     end
   end
 
@@ -87,8 +87,8 @@ class User < ActiveRecord::Base
 
       maker.channel.author = self.username
       maker.channel.updated = Time.now.to_s
-      maker.channel.title = "#{self.username}'s FeedMe Feed!!!!'"
-      maker.channel.about = "http://google.com"
+      maker.channel.title = "#{self.username}'s FeedMe Feed!!!!"
+      maker.channel.about = "http://feed--me.com/api/user/#{self.id}/personal_feed"
 
       self.read_entries[0...20].each do |entry|
         maker.items.new_item do |item|
@@ -106,7 +106,7 @@ class User < ActiveRecord::Base
 
     end
 
-    return feed
+    feed
   end
 
   def verify_security_questions(quest_id_0, answer0, quest_id_1, answer1);

@@ -162,13 +162,25 @@ RSpec.describe User do
 
   end
 
-  describe "#verify_security_questions" do
+  describe "#verify_security_question" do
+    let(:question) { FactoryGirl.create(:security_question) }
+    let(:answer) { FactoryGirl.create(
+        :security_question_answer,
+        question_id: question.id,
+        user_id: subject.id,
+        answer: "GoodAnswer") }
+    before do
+      question.save
+      answer.save
+    end
 
-    it "should return false if the first answer is wrong"
+    it "should return false if the answer is wrong" do
+      expect(subject.verify_security_question(question.id, "BadAnswer")).to be false
+    end
 
-    it "should return false if the second answer is wrong"
-
-    it "should return true if both answers are right"
+    it "should return true if the answer is right" do
+      expect(subject.verify_security_question(question.id, "GoodAnswer")).to be true
+    end
 
   end
 
@@ -201,18 +213,28 @@ RSpec.describe User do
   end
 
   describe "clear_reset_token" do
+    before { subject.set_reset_token }
 
-    it "should set the reset token to nil"
+    it "should set the reset token to nil" do
+      subject.clear_reset_token
+      expect(subject.reset_token).to be_nil
+    end
 
   end
 
   describe "#reset_session_token!" do
+    before { subject.session_token = nil }
+    before { subject.reset_session_token! }
 
-    it "should assign a session token"
+    it "should assign a session token" do
+      expect(subject.session_token).to_not be_nil
+    end
 
-    it "should overwrite the previosu session token"
+    it "should overwrite the previous session token" do
+      old_token = subject.session_token
+      subject.reset_session_token!
+      expect(subject.session_token).to_not eq(old_token)
+    end
 
   end
-
-
 end

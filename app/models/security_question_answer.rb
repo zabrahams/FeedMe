@@ -12,7 +12,7 @@
   end
 
   def correct_answer?(attempt)
-        BCrypt::Password.new(self.answer_digest).is_password?(attempt)
+    BCrypt::Password.new(self.answer_digest).is_password?(attempt)
   end
 
 end

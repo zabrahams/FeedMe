@@ -1,3 +1,4 @@
+require 'webmock/rspec'
 require 'rails_helper'
 
 RSpec.describe Feed do
@@ -30,6 +31,8 @@ RSpec.describe Feed do
   # write test for callbacks: before_validation, after_save, before_destroy
 
   describe "Feed#set_name" do
+    stub_request(:any, 'www.testfreed.com')
+    
 
     it "should set self.name if self.url points to a feed"
 

@@ -39,7 +39,20 @@ header {
 
 /* Splash Page */
 
+.mouth-icon {
+  height: 300px;
+  display: block;
+}
+
+.mouth-container {
+  display: block;
+  float: left;
+  margin-top: -80px;
+  margin-left: 90px;
+}
+
 .banner {
+  display: block;
   font-size: 84px;
   text-align: center;
   width: 400px;
@@ -55,4 +68,24 @@ header {
   text-align: center;
   display: block;
   padding: 25px 100px
+}
+
+
+@media (max-width: 1180px) {
+  .mouth-container {
+    width: 400px;
+    margin: auto;
+    /*margin-right: 100px;*/
+    float: none;
+    text-align: center;
+  }
+
+  .mouth-icon {
+    margin: auto;
+  }
+
+  .banner {
+    margin-top: 0;
+    padding-top: 0;
+  }
 }

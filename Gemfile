@@ -76,6 +76,7 @@ group :test do
   gem 'launchy'
   gem 'guard-rspec'
   gem 'shoulda-matchers'
+  gem 'webmock'
 end
 
 group :production do

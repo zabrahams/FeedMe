@@ -1,7 +1,5 @@
 FactoryGirl.define do
   factory :feed do
-    # name "metafilter"
-    url "http://feeds.feedburner.com/Metafilter"
+    url "file:///home/zach/aa/FeedMe/spec/models/feeds_data/test_feed.xml"
   end
-
 end

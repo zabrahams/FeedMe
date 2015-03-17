@@ -1,11 +1,15 @@
 require 'webmock/rspec'
+require 'feedjira'
 require 'rails_helper'
+require 'byebug'
 
 RSpec.describe Feed do
   subject { FactoryGirl.build(:feed) }
 
-  it { should validate_presence_of(:url)}
-  it { should validate_uniqueness_of(:name).scoped_to(:url) }
+  it { should validate_presence_of(:url).on(:save) }
+
+  it { should validate_uniqueness_of(:name).on(:save) }
+
 
 
   it { should have_many(:user_feeds).dependent(:destroy) }
@@ -30,14 +34,41 @@ RSpec.describe Feed do
   # Write tests for custom validation: url_must_lead to rss Feed
   # write test for callbacks: before_validation, after_save, before_destroy
 
-  describe "Feed#set_name" do
-    stub_request(:any, 'www.testfreed.com')
-    
+  describe "Feed#set_name_and_url" do
+    it "should set self.name if self.url points to a feed" do
+      #  name_feed = FactoryGirl.build(:feed, url: 'www.testfeed.com')
+      # expect(Feedjira::Feed.fetch_and_parse('')).to eq(4)
+      subject.set_name_and_url
+      expect(subject.name).to eq("TestFeed")
+    end
 
-    it "should set self.name if self.url points to a feed"
+    describe "if the url doesn't point to a feed" do
+      let(:bad_feed) { FactoryGirl.build(:feed, url: "file:///absent.xml") }
 
-    it "should not set self.name if self.url doesn't point to a feed."
+      describe "but the page has a link to an rss feed" do
+        before do
+          WebMock::API::stub_request(:any, "http://file///absent.xml")
+            .to_return(body: '<link rel="alternate" type="application/rss+xml" title="test_feed" href="file:///home/zach/aa/FeedMe/spec/models/feeds_data/test_feed.xml">')
+        end
+        before { bad_feed.set_name_and_url}
 
+        it "should find the new url" do
+          expect(bad_feed.url).to eq("file:///home/zach/aa/FeedMe/spec/models/feeds_data/test_feed.xml")
+        end
+
+        it "should set the name" do
+          expect(bad_feed.name).to eq("TestFeed")
+        end
+      end
+
+      it "should not set self.name if self.url doesn't point to a feed." do
+        WebMock::API::stub_request(:any, "http://file///absent.xml")
+            .to_return(body: "Not a Feed")
+        bad_feed.set_name_and_url
+        expect(bad_feed.name).to be_nil
+      end
+
+    end
   end
 
   describe "Feed#fetch_entries" do
@@ -86,11 +117,20 @@ RSpec.describe Feed do
   end
 
   describe "Feed#destroy_entries_unless_curated" do
+    before { subject.save }
 
-    it "destroys all entries if feed isn't curated"
+    it "destroys all entries if feed isn't curated" do
+      debugger
+      expect(subject.entries.length).to eq(2)
+      subject.destroy_entries_unless_curated
+      expect(subject.entries.length).to eq(0)
+    end
 
-    it "doesn't destroy entries if feed is curated"
-
+    it "doesn't destroy entries if feed is curated" do
+      subject.curated = true;
+      subject.destroy_entries_unless_curated
+      expect(subject.entries.length).to eq(2)
+    end
   end
 
 end

@@ -57,17 +57,16 @@ class Feed < ActiveRecord::Base
       self.feed || self.feed = Feedjira::Feed.fetch_and_parse(self.url)
 
       # TODO: Harden this to account for nil urls
-      if feed.is_a?(Fixnum) # Feedjira::Feed.fetch_and_parse returns a status code on failure
+      if self.feed.is_a?(Fixnum) # Feedjira::Feed.fetch_and_parse returns a status code on failure
 
         rss_url = ActiveRecord::Base::Feed.scrape_page_for_rss_url(self.url)
         return rss_url if rss_url.nil? || rss_url.is_a?(Fixnum)
 
         self.feed = Feedjira::Feed.fetch_and_parse(rss_url)
-        return feed if feed.is_a?(Fixnum)
+        return self.feed if self.feed.is_a?(Fixnum)
 
         self.url = rss_url
       end
-
       self.name = self.feed.title
     end
   end
@@ -150,17 +149,6 @@ class Feed < ActiveRecord::Base
 
   end
 
-  private
-
-  def url_must_lead_to_rss_feed
-    unless self.curated
-      self.feed || self.feed = Feedjira::Feed.fetch_and_parse(self.url)
-      if self.feed.is_a?(Fixnum)
-        errors.add(:url, " is not the location of an RSS feed.")
-      end
-    end
-  end
-
   def entry_to_json(entry)
     convertable_entry = {}
     properties = %w(title summary content author url entry_id published)
@@ -175,5 +163,17 @@ class Feed < ActiveRecord::Base
   def destroy_entries_unless_curated
     self.entries.each { |entry| entry.destroy } unless self.curated
   end
+
+  private
+
+  def url_must_lead_to_rss_feed
+    unless self.curated
+      self.feed || self.feed = Feedjira::Feed.fetch_and_parse(self.url)
+      if self.feed.is_a?(Fixnum)
+        errors.add(:url, " is not the location of an RSS feed.")
+      end
+    end
+  end
+
 
 end

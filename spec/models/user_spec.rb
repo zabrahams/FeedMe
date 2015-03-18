@@ -147,12 +147,22 @@ RSpec.describe User do
       end
 
       describe "item" do
+        before { subject.read_entry(FactoryGirl.create(:entry,
+          guid: "Test ID",
+          title: "Test Title",
+          link: "http://testlink.com")) }
 
-        it "should have the entry's guid as an id"
+        it "should have the entry's guid as an id" do
+          expect(feed.entries.first.id.content).to eq("Test ID")
+        end
 
-        it "should have the entry's title as a title"
+        it "should have the entry's title as a title" do
+          expect(feed.entries.first.title.content).to eq("Test Title")
+        end
 
-        it "should have the entry's link as a link"
+        it "should have the entry's link as a link" do
+          expect(feed.entries.first.link.href).to eq("http://testlink.com")
+        end
 
         # Include conditional tests for possible entry properties, updated, author, summary and content
 

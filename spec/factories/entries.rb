@@ -4,7 +4,7 @@ FactoryGirl.define do
     title { Faker::Lorem.sentence }
     link { Faker::Internet.url }
     published_at Time.now
-    json "'content':'#{Faker::Company.bs}'"
+    json '{"author": "Test T"}'
   end
 
 end
